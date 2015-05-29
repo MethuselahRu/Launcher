@@ -14,13 +14,13 @@
 	
 	<repositories>
 		<repository>
+			<id>methuselah-repo</id>
+			<url>http://maven.methuselah.ru/</url>
+		</repository>
+		<repository>
 			<id>evil-co</id>
 			<url>http://basket.cindyscats.com/content/repositories/releases/</url>
 		</repository>
-		<!--repository>
-			<id>methuselah-repo</id>
-			<url>https://nexus.methuselah.ru/content/groups/public/</url>
-		</repository-->
 	</repositories>
 	
 	<dependencies>
@@ -52,7 +52,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.2</version>
+				<version>3.3</version>
 				<configuration>
 					<source>1.7</source>
 					<target>1.7</target>
@@ -64,7 +64,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.5</version>
+				<version>2.6</version>
 				<configuration>
 					<archive>
 						<addMavenDescriptor>false</addMavenDescriptor>
@@ -80,7 +80,7 @@
 			<plugin>
 				<groupId>com.github.wvengen</groupId>
 				<artifactId>proguard-maven-plugin</artifactId>
-				<version>2.0.8</version>
+				<version>2.0.10</version>
 				<executions>
 					<execution>
 						<id>obfuscating</id>
@@ -91,7 +91,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<proguardVersion>5.2</proguardVersion>
+					<proguardVersion>5.2.1</proguardVersion>
 					<assembly>
 						<inclusions>
 							<inclusion>
@@ -135,7 +135,7 @@
 					<dependency>
 						<groupId>net.sf.proguard</groupId>
 						<artifactId>proguard-base</artifactId>
-						<version>5.2</version>
+						<version>5.2.1</version>
 						<scope>runtime</scope>
 					</dependency>
 				</dependencies>
