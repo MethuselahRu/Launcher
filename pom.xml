@@ -14,6 +14,11 @@
 	
 	<repositories>
 		<repository>
+			<id>dsol-xml</id>
+			<name>Simulation @ TU Delft</name>
+			<url>http://simulation.tudelft.nl/maven/</url>
+		</repository>
+		<repository>
 			<id>methuselah-repo</id>
 			<url>http://maven.methuselah.ru/</url>
 		</repository>
@@ -183,9 +188,9 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<groupId>org.bluestemsoftware.open.maven.plugin</groupId>
-				<artifactId>launch4j-plugin</artifactId>
-				<version>1.5.0.0</version>
+				<groupId>com.akathist.maven.plugins.launch4j</groupId>
+				<artifactId>launch4j-maven-plugin</artifactId>
+				<version>1.7.7</version>
 				<executions>
 					<execution>
 						<phase>package</phase>
