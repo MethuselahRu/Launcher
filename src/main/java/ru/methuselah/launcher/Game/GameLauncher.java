@@ -56,7 +56,7 @@ public class GameLauncher extends WrappedGameStarter
 						forceUpdate = true;
 					} else {
 						final String script = GlobalConfig.urlScripts
-							+ "client_md5.php?user=" + launcher.authentication.getPlayerName()
+							+ "legacy/client_md5.php?user=" + launcher.authentication.getPlayerName()
 							+ "&client=" + client.caption
 							+ "&hash=" + HashAndCipherUtilities.fileToMD5(clientJarFile);
 						final URL url = new URL(script);
@@ -102,9 +102,9 @@ public class GameLauncher extends WrappedGameStarter
 		// Установка нужных адресов северов
 		GameLaunchHelper.setServersDatTopAddresses(client, new ServersDatEntry[]
 		{
-			new ServersDatEntry("§dОсновной игровой сервер 'Primary'",   "s1.voxile.ru:25575", true),
-			new ServersDatEntry("§dТворческий сервер 'Simple Creative'", "methuselah.ru:2555", true),
-			new ServersDatEntry("§eЦентральное лобби voxile.ru",         "methuselah.ru",      true),
+			new ServersDatEntry("§dОсновной игровой сервер 'Primary'",   "s1.voxile.ru:25575",  true),
+			new ServersDatEntry("§dТворческий сервер 'Simple Creative'", "methuselah.ru:25555", true),
+			new ServersDatEntry("§eЦентральное лобби voxile.ru",         "methuselah.ru",       true),
 		});
 		// Фишки, которые пришли к нам извне! :D
 		final TextProperty[] propsOptifine = new TextProperty[]
