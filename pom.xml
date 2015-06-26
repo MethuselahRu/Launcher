@@ -170,6 +170,7 @@
 									<include>com.google.code.findbugs:jsr305</include>
 									<include>org.mockito:mockito-all</include>
 									<include>commons-io:commons-io</include>
+									<include>ru.simsonic:rscUtilityLibrary</include>
 								</includes>
 							</artifactSet>
 							<relocations>
