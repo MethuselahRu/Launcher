@@ -1,4 +1,5 @@
 package ru.methuselah.launcher.GUI;
+
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import javax.swing.JPasswordField;

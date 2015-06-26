@@ -1,4 +1,5 @@
 package ru.methuselah.launcher.Data;
+
 import java.io.File;
 import java.util.ArrayList;
 import ru.methuselah.securitylibrary.Data.MessagesLauncher.AnswerLauncherClients.ClientInfo;

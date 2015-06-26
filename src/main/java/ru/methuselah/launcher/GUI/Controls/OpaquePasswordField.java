@@ -1,4 +1,5 @@
 package ru.methuselah.launcher.GUI.Controls;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.FocusEvent;

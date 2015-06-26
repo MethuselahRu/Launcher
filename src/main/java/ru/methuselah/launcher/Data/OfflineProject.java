@@ -1,4 +1,5 @@
 package ru.methuselah.launcher.Data;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import com.google.gson.stream.JsonWriter;

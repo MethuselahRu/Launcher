@@ -1,4 +1,5 @@
 package ru.methuselah.launcher.GUI.Controls;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Insets;

@@ -1,4 +1,5 @@
 package ru.methuselah.launcher.GUI;
+
 import java.awt.Color;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;

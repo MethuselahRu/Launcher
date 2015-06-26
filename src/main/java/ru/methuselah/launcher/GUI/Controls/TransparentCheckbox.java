@@ -1,4 +1,5 @@
 package ru.methuselah.launcher.GUI.Controls;
+
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Insets;
