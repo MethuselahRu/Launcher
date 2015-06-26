@@ -1,14 +1,14 @@
 package ru.methuselah.launcher;
 
-import ru.methuselah.launcher.GUI.PanelLogin;
-import ru.methuselah.securitylibrary.Data.MessagesWrapper.MessageWrappedGame;
-import ru.methuselah.launcher.Data.OfflineProject;
-import ru.methuselah.securitylibrary.MethuselahPrivate;
-import ru.methuselah.authlib.data.AuthenticatePayload;
-import ru.methuselah.authlib.data.AuthenticateResponse;
 import ru.methuselah.authlib.UserProvider;
 import ru.methuselah.authlib.UserRole;
-import ru.methuselah.authlib.exceptions.ResponseException;
+import ru.methuselah.authlib.data.AuthenticatePayload;
+import ru.methuselah.authlib.data.AuthenticateResponse;
+import ru.methuselah.authlib.methods.ResponseException;
+import ru.methuselah.launcher.Data.OfflineProject;
+import ru.methuselah.launcher.GUI.PanelLogin;
+import ru.methuselah.securitylibrary.Data.MessagesWrapper.MessageWrappedGame;
+import ru.methuselah.securitylibrary.MethuselahPrivate;
 
 public class Authentication
 {

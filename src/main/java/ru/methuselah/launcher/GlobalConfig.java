@@ -1,7 +1,5 @@
 package ru.methuselah.launcher;
 
-import ru.methuselah.launcher.Data.RunType;
-import ru.methuselah.launcher.Data.Platform;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -10,6 +8,8 @@ import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.util.Random;
 import java.util.Scanner;
+import ru.methuselah.launcher.Data.Platform;
+import ru.methuselah.launcher.Data.RunType;
 import ru.simsonic.rscUtilityLibrary.HashAndCipherUtilities;
 import sun.misc.BASE64Decoder;
 

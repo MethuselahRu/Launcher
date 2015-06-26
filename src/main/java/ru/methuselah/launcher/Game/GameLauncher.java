@@ -1,6 +1,5 @@
 package ru.methuselah.launcher.Game;
 
-import ru.methuselah.launcher.Data.Platform;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -11,17 +10,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import javax.net.ssl.SSLServerSocketFactory;
 import javax.net.ssl.SSLSocket;
+import ru.methuselah.launcher.Data.OfflineClient;
+import ru.methuselah.launcher.Data.Platform;
 import ru.methuselah.launcher.Game.GameLaunchHelper.ServersDatEntry;
 import ru.methuselah.launcher.Game.GameLaunchHelper.TextProperty;
 import ru.methuselah.launcher.GlobalConfig;
 import ru.methuselah.launcher.Launcher;
 import ru.methuselah.launcher.Utilities;
 import ru.methuselah.securitylibrary.Data.MessagesWrapper.MessageWrappedGame;
-import ru.methuselah.launcher.Data.OfflineClient;
-import ru.simsonic.rscUtilityLibrary.HashAndCipherUtilities;
 import ru.methuselah.securitylibrary.SecureConnection;
 import ru.methuselah.securitylibrary.SecureSocketWrapper;
 import ru.methuselah.securitylibrary.WrappedGameStarter;
+import ru.simsonic.rscUtilityLibrary.HashAndCipherUtilities;
 
 public class GameLauncher extends WrappedGameStarter
 {

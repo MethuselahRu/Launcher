@@ -6,12 +6,12 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import ru.methuselah.launcher.Data.OfflineProject;
 import ru.methuselah.launcher.GUI.Controls.TransparentLabel;
 import ru.methuselah.launcher.GUI.Controls.TransparentPanel;
 import ru.methuselah.launcher.GlobalConfig;
 import ru.methuselah.launcher.Launcher;
 import ru.methuselah.securitylibrary.Data.MessagesLauncher.AnswerLauncherDesign;
-import ru.methuselah.launcher.Data.OfflineProject;
 
 /*
  * Структура GUI:

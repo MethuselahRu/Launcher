@@ -28,8 +28,8 @@ import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import ru.methuselah.launcher.GUI.Controls.TransparentPanel;
 import ru.methuselah.launcher.Data.OfflineProject;
+import ru.methuselah.launcher.GUI.Controls.TransparentPanel;
 import ru.methuselah.launcher.Launcher;
 import ru.methuselah.securitylibrary.Data.MessagesLauncher.AnswerLauncherProjects;
 

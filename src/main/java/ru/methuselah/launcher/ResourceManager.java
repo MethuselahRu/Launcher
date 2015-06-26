@@ -11,12 +11,12 @@ import java.security.PrivilegedActionException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import ru.methuselah.securitylibrary.Data.Mojang.MojangAssetIndex;
-import ru.methuselah.securitylibrary.Data.Mojang.MojangAssetIndex.AssetObject;
-import ru.methuselah.securitylibrary.Data.MessagesLauncher.AnswerLauncherDesign;
 import ru.methuselah.launcher.Data.MojangInternalIndex;
 import ru.methuselah.launcher.Data.OfflineClient;
 import ru.methuselah.launcher.Data.OfflineProject;
+import ru.methuselah.securitylibrary.Data.MessagesLauncher.AnswerLauncherDesign;
+import ru.methuselah.securitylibrary.Data.Mojang.MojangAssetIndex;
+import ru.methuselah.securitylibrary.Data.Mojang.MojangAssetIndex.AssetObject;
 import ru.simsonic.rscUtilityLibrary.HashAndCipherUtilities;
 
 public class ResourceManager

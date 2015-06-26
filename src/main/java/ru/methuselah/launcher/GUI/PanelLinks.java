@@ -1,11 +1,11 @@
 package ru.methuselah.launcher.GUI;
-import ru.methuselah.launcher.GUI.Controls.TransparentButton;
-import ru.methuselah.launcher.GUI.Controls.TransparentLabel;
-import ru.methuselah.launcher.GUI.Controls.TransparentPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import ru.methuselah.launcher.GUI.Controls.TransparentButton;
+import ru.methuselah.launcher.GUI.Controls.TransparentLabel;
+import ru.methuselah.launcher.GUI.Controls.TransparentPanel;
 
 public class PanelLinks extends TransparentPanel
 {

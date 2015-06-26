@@ -1,9 +1,9 @@
 package ru.methuselah.launcher;
 
-import ru.methuselah.launcher.Data.RunType;
-import ru.methuselah.launcher.Data.Platform;
 import java.io.File;
 import java.io.IOException;
+import ru.methuselah.launcher.Data.Platform;
+import ru.methuselah.launcher.Data.RunType;
 import ru.simsonic.rscUtilityLibrary.HashAndCipherUtilities;
 
 public class LauncherUpdater extends BaseUpdater

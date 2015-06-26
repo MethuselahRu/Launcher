@@ -1,7 +1,5 @@
 package ru.methuselah.launcher;
 
-import ru.methuselah.launcher.Game.GameLauncher;
-import ru.methuselah.launcher.Data.Platform;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.HeadlessException;
@@ -16,22 +14,20 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import ru.methuselah.authlib.methods.ResponseException;
+import ru.methuselah.launcher.Data.OfflineClient;
+import ru.methuselah.launcher.Data.OfflineProject;
+import ru.methuselah.launcher.Data.Platform;
 import ru.methuselah.launcher.GUI.FrameLauncherMain;
 import ru.methuselah.launcher.GUI.FrameProjects;
 import ru.methuselah.launcher.GUI.SplashScreen;
+import ru.methuselah.launcher.Game.GameLauncher;
 import ru.methuselah.securitylibrary.Data.MessagesLauncher.AnswerLauncherClients;
 import ru.methuselah.securitylibrary.Data.MessagesLauncher.AnswerLauncherDesign;
 import ru.methuselah.securitylibrary.Data.MessagesLauncher.AnswerLauncherProjects;
 import ru.methuselah.securitylibrary.Data.MessagesLauncher.AnswerLauncherProjects.ProjectInfo;
 import ru.methuselah.securitylibrary.Data.MessagesLauncher.MessageLauncherGetClients;
-import ru.methuselah.securitylibrary.Data.MessagesLauncher.MessageLauncherRun;
-import ru.methuselah.launcher.Data.OfflineClient;
-import ru.methuselah.launcher.Data.OfflineProject;
-import ru.methuselah.securitylibrary.Defaults.DefaultLauncherRun;
 import ru.methuselah.securitylibrary.MethuselahPrivate;
-import ru.methuselah.securitylibrary.SecureConnection;
-import ru.methuselah.securitylibrary.SecureSocketWrapper;
-import ru.methuselah.authlib.exceptions.ResponseException;
 
 public class Launcher implements Runnable
 {
