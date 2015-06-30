@@ -141,13 +141,12 @@ public class GameLaunchHelper
 							}
 						}
 			} catch(FileNotFoundException ex) {
-			} catch(IOException ex)
-			{
+			} catch(IOException ex) {
 			}
 		} else {
 			try
 			{
-				file.mkdirs();
+				file.getParentFile().mkdirs();
 				file.createNewFile();
 				final FileWriter fw = new FileWriter(file);
 				for(TextProperty prop : props)

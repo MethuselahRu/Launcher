@@ -29,7 +29,7 @@ public final class GlobalConfig
 	public static final String urlNatives          = "https://data.methuselah.ru/clients/";
 	public static final String executableName      = "Launcher";
 	public static final String propertiesFilename  = "launcher-properties.bin";
-	public static final boolean  separateGameProcess = true;
+	public static final boolean  separateGameProcess = false;
 	public static final File     launcherHomeDir = getWorkingDirectory();
 	public static final boolean  bUnderIDE;
 	public static final String   devHashIDE;

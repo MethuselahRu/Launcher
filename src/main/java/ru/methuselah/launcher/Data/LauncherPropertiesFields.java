@@ -2,8 +2,8 @@ package ru.methuselah.launcher.Data;
 
 public class LauncherPropertiesFields
 {
-	public String   lastOpenedProject = "";
-	public String   lastUsedPlayerName = "Player";
+	public String   lastOpenedProject   = "";
+	public String   lastUsedPlayerName  = "Player";
 	public String   lastEnteredPassword = "";
 	public String   lastAuthClientToken = "";
 	public boolean  bSavePassword;

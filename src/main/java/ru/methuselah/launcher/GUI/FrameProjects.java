@@ -32,7 +32,7 @@ import javax.swing.event.ListSelectionListener;
 import ru.methuselah.launcher.Data.OfflineProject;
 import ru.methuselah.launcher.GUI.Controls.TransparentPanel;
 import ru.methuselah.launcher.Launcher;
-import ru.methuselah.securitylibrary.Data.MessagesLauncher.AnswerLauncherProjects;
+import ru.methuselah.securitylibrary.Data.Launcher.LauncherAnswerProjects;
 
 public final class FrameProjects extends JFrame
 {
@@ -114,7 +114,7 @@ public final class FrameProjects extends JFrame
 			stars[2].setIcon(imageStarEmpty);
 			stars[3].setIcon(imageStarEmpty);
 			stars[4].setIcon(imageStarEmpty);
-			float numberOfStars = project.rating * 5.0f / AnswerLauncherProjects.maximumAvailableRating;
+			float numberOfStars = project.rating * 5.0f / LauncherAnswerProjects.maximumAvailableRating;
 			if(numberOfStars > 0.35f)
 				stars[0].setIcon((numberOfStars > 0.65f) ? imageStarFull : imageStarSemi);
 			if(numberOfStars > 1.35f)

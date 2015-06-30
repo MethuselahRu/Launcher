@@ -14,7 +14,7 @@ import java.util.Map;
 import ru.methuselah.launcher.Data.MojangInternalIndex;
 import ru.methuselah.launcher.Data.OfflineClient;
 import ru.methuselah.launcher.Data.OfflineProject;
-import ru.methuselah.securitylibrary.Data.MessagesLauncher.AnswerLauncherDesign;
+import ru.methuselah.securitylibrary.Data.Launcher.LauncherAnswerDesign;
 import ru.methuselah.securitylibrary.Data.Mojang.MojangAssetIndex;
 import ru.methuselah.securitylibrary.Data.Mojang.MojangAssetIndex.AssetObject;
 import ru.simsonic.rscUtilityLibrary.HashAndCipherUtilities;
@@ -36,15 +36,15 @@ public class ResourceManager
 	{
 		return resourcesHome;
 	}
-	public void saveDesignFile(OfflineProject project, AnswerLauncherDesign design)
+	public void saveDesignFile(OfflineProject project, LauncherAnswerDesign design)
 	{
 		final File designFile = new File(project.getProjectHome(), "design.bin");
-		HashAndCipherUtilities.saveEncrypted(designFile, design, AnswerLauncherDesign.class);
+		HashAndCipherUtilities.saveEncrypted(designFile, design, LauncherAnswerDesign.class);
 	}
-	public AnswerLauncherDesign loadDesignFile(OfflineProject project)
+	public LauncherAnswerDesign loadDesignFile(OfflineProject project)
 	{
 		final File designFile = new File(project.getProjectHome(), "design.bin");
-		return HashAndCipherUtilities.loadEncrypted(designFile, AnswerLauncherDesign.class);
+		return HashAndCipherUtilities.loadEncrypted(designFile, LauncherAnswerDesign.class);
 	}
 	public void checkClientAssets(OfflineClient client)
 	{

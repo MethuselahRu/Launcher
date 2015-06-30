@@ -45,6 +45,11 @@
 			<version>0.15a</version>
 		</dependency>
 		<dependency>
+			<groupId>ru.methuselah</groupId>
+			<artifactId>clientsidewrapper</artifactId>
+			<version>0.15a</version>
+		</dependency>
+		<dependency>
 			<groupId>com.evilco.mc</groupId>
 			<artifactId>nbt</artifactId>
 			<version>1.0.2</version>
@@ -164,6 +169,7 @@
 							<artifactSet>
 								<includes>
 									<include>ru.methuselah:authlib</include>
+									<include>ru.methuselah:clientsidewrapper</include>
 									<include>com.google.code.gson:gson</include>
 									<include>com.evilco.mc:nbt</include>
 									<include>com.google.guava:guava</include>

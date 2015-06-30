@@ -23,14 +23,14 @@ import static ru.methuselah.launcher.GUI.Designer.openLink;
 import ru.methuselah.launcher.GlobalConfig;
 import ru.methuselah.launcher.Launcher;
 import ru.methuselah.launcher.Utilities;
-import ru.methuselah.securitylibrary.Data.MessagesLauncher.AnswerLauncherDesign;
+import ru.methuselah.securitylibrary.Data.Launcher.LauncherAnswerDesign;
 
 public final class FrameLauncherMain extends Designer
 {
 	private final InterfaceActions actionExecutor = new InterfaceActions(this);
 	protected final TransparentLabel lnkSwitchToOtherProject =
 		new TransparentLabel("<html><b><u>Переключиться на другой проект</u></b></html>");
-	public FrameLauncherMain(Launcher launcher, OfflineProject project, AnswerLauncherDesign designDesc)
+	public FrameLauncherMain(Launcher launcher, OfflineProject project, LauncherAnswerDesign designDesc)
 	{
 		super(launcher, project, designDesc);
 		setFavicon("favicon.png");

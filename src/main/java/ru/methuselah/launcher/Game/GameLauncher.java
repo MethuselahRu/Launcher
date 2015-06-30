@@ -102,9 +102,9 @@ public class GameLauncher extends WrappedGameStarter
 		// Установка нужных адресов северов
 		GameLaunchHelper.setServersDatTopAddresses(client, new ServersDatEntry[]
 		{
-			new ServersDatEntry("§dОсновной игровой сервер 'Primary'",   "s1.voxile.ru:25575",  true),
-			new ServersDatEntry("§dТворческий сервер 'Simple Creative'", "methuselah.ru:25555", true),
-			new ServersDatEntry("§eЦентральное лобби voxile.ru",         "methuselah.ru",       true),
+			new ServersDatEntry("§dОсновной игровой сервер '§cPrimary§d'",   "s1.voxile.ru:25575",  true),
+			new ServersDatEntry("§dТворческий сервер '§cSimple Creative§d'", "methuselah.ru:25555", true),
+			new ServersDatEntry("§eЦентральное лобби §fvoxile.ru",           "methuselah.ru",       true),
 		});
 		// Фишки, которые пришли к нам извне! :D
 		final TextProperty[] propsOptifine = new TextProperty[]
@@ -121,8 +121,8 @@ public class GameLauncher extends WrappedGameStarter
 			final String clientFolder = client.getClientHome().getAbsolutePath() + File.separator;
 			// Параметры JVM
 			final ArrayList<String> cmdline = new ArrayList<>();
-			cmdline.add((GlobalConfig.platform == Platform.WINDOWS) ? "javaw" : "java");
-			// cmdline.add("-Xdebug");
+			cmdline.add((GlobalConfig.platform.equals(Platform.WINDOWS)) ? "javaw" : "java");
+			cmdline.add("-Xdebug");
 			// cmdline.add("-Xrunjdwp:transport=dt_socket,address=25600,server=y");
 			cmdline.add("-Xmx" + Integer.toString(launcher.properties.data.nMemoryAllocationMB) + "m");
 			cmdline.add("-Xmn128M");
@@ -135,7 +135,7 @@ public class GameLauncher extends WrappedGameStarter
 				cmdline.addAll(Arrays.asList(client.additionalJavaArguments.split("\\s")));
 			cmdline.add("-cp");
 			cmdline.add(clientFolder + client.jarFile);
-			cmdline.add("ru.fourgotten.VoxileWrapper.Wrapper");
+			cmdline.add(ru.methuselah.clientsidewrapper.Wrapper.class.getCanonicalName());
 			cmdline.add("--port");
 			cmdline.add(Integer.toString(startLocalSecureServer(client)));
 			startChildProcess(client, cmdline);
@@ -143,7 +143,7 @@ public class GameLauncher extends WrappedGameStarter
 		} else {
 			WrappedGameStarter.instance = this;
 			final MessageWrappedGame wrapperMessage = createStartupWrapperMessage(client);
-			wrapperMessage.tweakerClass = "ru.fourgotten.VoxileWrapper.Tweaker";
+			wrapperMessage.tweakerClass = ru.methuselah.clientsidewrapper.Tweaker.class.getCanonicalName();
 			startGameInCurrentProcess(wrapperMessage);
 		}
 	}

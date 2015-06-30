@@ -22,11 +22,12 @@ import ru.methuselah.launcher.GUI.FrameLauncherMain;
 import ru.methuselah.launcher.GUI.FrameProjects;
 import ru.methuselah.launcher.GUI.SplashScreen;
 import ru.methuselah.launcher.Game.GameLauncher;
-import ru.methuselah.securitylibrary.Data.MessagesLauncher.AnswerLauncherClients;
-import ru.methuselah.securitylibrary.Data.MessagesLauncher.AnswerLauncherDesign;
-import ru.methuselah.securitylibrary.Data.MessagesLauncher.AnswerLauncherProjects;
-import ru.methuselah.securitylibrary.Data.MessagesLauncher.AnswerLauncherProjects.ProjectInfo;
-import ru.methuselah.securitylibrary.Data.MessagesLauncher.MessageLauncherGetClients;
+import ru.methuselah.securitylibrary.Data.Launcher.LauncherAnswerClients;
+import ru.methuselah.securitylibrary.Data.Launcher.LauncherAnswerDesign;
+import ru.methuselah.securitylibrary.Data.Launcher.LauncherAnswerProjects;
+import ru.methuselah.securitylibrary.Data.Launcher.ClientInfo;
+import ru.methuselah.securitylibrary.Data.Launcher.ProjectInfo;
+import ru.methuselah.securitylibrary.Data.Launcher.LauncherMessageGetClients;
 import ru.methuselah.securitylibrary.MethuselahPrivate;
 
 public class Launcher implements Runnable
@@ -65,7 +66,7 @@ public class Launcher implements Runnable
 		// Load project list from methuselah.ru
 		try
 		{
-			final AnswerLauncherProjects msgProjects = MethuselahPrivate.listProjects();
+			final LauncherAnswerProjects msgProjects = MethuselahPrivate.listProjects();
 			if(msgProjects.projects != null && msgProjects.projects.length > 0)
 				for(ProjectInfo info : msgProjects.projects)
 				{
@@ -96,7 +97,7 @@ public class Launcher implements Runnable
 	{
 		currentProject = project;
 		currentProject.getProjectHome().mkdir();
-		final AnswerLauncherDesign msgDesign = new AnswerLauncherDesign(); // connection.onLauncherLoadDesign(currentProject.code);
+		final LauncherAnswerDesign msgDesign = new LauncherAnswerDesign(); // connection.onLauncherLoadDesign(currentProject.code);
 		resources.saveDesignFile(currentProject, msgDesign);
 		launcherFrame = new FrameLauncherMain(this, currentProject, msgDesign);
 		authentication.restoreSavedUsername(project, launcherFrame.panelLogin);
@@ -106,13 +107,13 @@ public class Launcher implements Runnable
 	public boolean getProjectClients()
 	{
 		// Полученние списка доступных клиентов по SSL
-		final MessageLauncherGetClients payload = new MessageLauncherGetClients();
+		final LauncherMessageGetClients payload = new LauncherMessageGetClients();
 		payload.uuid = authentication.getUUID();
 		payload.accessToken = authentication.getAccessToken();
 		payload.project = currentProject.code;
 		try
 		{
-			final AnswerLauncherClients msgClients = MethuselahPrivate.listProjectClients(payload);
+			final LauncherAnswerClients msgClients = MethuselahPrivate.listProjectClients(payload);
 			if(msgClients == null || msgClients.clients == null)
 			{
 				authentication.logout();
@@ -120,7 +121,7 @@ public class Launcher implements Runnable
 				return false;
 			}
 			final ArrayList<OfflineClient> clientList = new ArrayList<>();
-			for(AnswerLauncherClients.ClientInfo client : msgClients.clients)
+			for(ClientInfo client : msgClients.clients)
 			{
 				final OfflineClient gameInfo = new OfflineClient(currentProject, client);
 				// Ручная ещё пока работа, ёпт...

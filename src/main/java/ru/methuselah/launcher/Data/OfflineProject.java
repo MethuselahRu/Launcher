@@ -6,7 +6,7 @@ import com.google.gson.stream.JsonWriter;
 import java.io.File;
 import java.io.IOException;
 import ru.methuselah.launcher.GlobalConfig;
-import ru.methuselah.securitylibrary.Data.MessagesLauncher.AnswerLauncherProjects.ProjectInfo;
+import ru.methuselah.securitylibrary.Data.Launcher.ProjectInfo;
 import ru.simsonic.rscUtilityLibrary.HashAndCipherUtilities;
 
 public class OfflineProject extends ProjectInfo implements Comparable<OfflineProject>

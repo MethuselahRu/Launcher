@@ -2,7 +2,7 @@ package ru.methuselah.launcher.Data;
 
 import java.io.File;
 import java.util.ArrayList;
-import ru.methuselah.securitylibrary.Data.MessagesLauncher.AnswerLauncherClients.ClientInfo;
+import ru.methuselah.securitylibrary.Data.Launcher.ClientInfo;
 
 public class OfflineClient extends ClientInfo
 {

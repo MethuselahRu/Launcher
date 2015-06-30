@@ -12,7 +12,7 @@ import ru.methuselah.launcher.GUI.Controls.TransparentLabel;
 import ru.methuselah.launcher.GUI.Controls.TransparentPanel;
 import ru.methuselah.launcher.GlobalConfig;
 import ru.methuselah.launcher.Launcher;
-import ru.methuselah.securitylibrary.Data.MessagesLauncher.AnswerLauncherDesign;
+import ru.methuselah.securitylibrary.Data.Launcher.LauncherAnswerDesign;
 
 /*
  * Структура GUI:
@@ -87,7 +87,7 @@ public class Designer extends JFrame
 	protected final TransparentPanel superPanelOptions = new TransparentPanel(new BorderLayout());
 	protected final TransparentPanel superPanelLinks   = new TransparentPanel(new BorderLayout());
 	protected final TransparentLabel linkUpdateJava    = new TransparentLabel(" Вы используете устаревшую версию Java. Щелкните здесь, чтобы обновить. ");
-	protected Designer(Launcher launcher, OfflineProject project, AnswerLauncherDesign designDesc)
+	protected Designer(Launcher launcher, OfflineProject project, LauncherAnswerDesign designDesc)
 	{
 		super(GlobalConfig.createMainFrameCaption(true));
 		this.launcher = launcher;
