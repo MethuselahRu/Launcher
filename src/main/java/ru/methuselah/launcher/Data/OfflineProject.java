@@ -37,7 +37,7 @@ public class OfflineProject extends ProjectInfo implements Comparable<OfflinePro
 			if(projectFolder.isDirectory())
 			{
 				final File projectFile = new File(projectFolder, "project.bin");
-				return HashAndCipherUtilities.loadEncrypted(projectFile, OfflineProject.class);
+				return HashAndCipherUtilities.loadEncryptedObject(projectFile, OfflineProject.class);
 			}
 		}
 		return null;

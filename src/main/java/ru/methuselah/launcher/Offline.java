@@ -25,7 +25,7 @@ public class Offline
 				final File projectFile = new File(dir, "project.bin");
 				if(projectFile.isFile())
 				{
-					OfflineProject loaded = HashAndCipherUtilities.loadEncrypted(projectFile, OfflineProject.class);
+					OfflineProject loaded = HashAndCipherUtilities.loadEncryptedObject(projectFile, OfflineProject.class);
 					if(loaded != null)
 						result.add(loaded);
 				}

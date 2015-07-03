@@ -25,13 +25,13 @@ public final class LauncherProperties
 	}
 	public void reloadFromDisk()
 	{
-		data = HashAndCipherUtilities.loadEncrypted(propertiesFile, LauncherPropertiesFields.class);
+		data = HashAndCipherUtilities.loadEncryptedObject(propertiesFile, LauncherPropertiesFields.class);
 		if(data == null)
 			data = new LauncherPropertiesFields();
 	}
 	public void saveToDisk()
 	{
-		HashAndCipherUtilities.saveEncrypted(propertiesFile, data, LauncherPropertiesFields.class);
+		HashAndCipherUtilities.saveEncryptedObject(propertiesFile, data, LauncherPropertiesFields.class);
 	}
 	public static String getFirstRunProjectCode()
 	{

@@ -39,12 +39,12 @@ public class ResourceManager
 	public void saveDesignFile(OfflineProject project, LauncherAnswerDesign design)
 	{
 		final File designFile = new File(project.getProjectHome(), "design.bin");
-		HashAndCipherUtilities.saveEncrypted(designFile, design, LauncherAnswerDesign.class);
+		HashAndCipherUtilities.saveEncryptedObject(designFile, design, LauncherAnswerDesign.class);
 	}
 	public LauncherAnswerDesign loadDesignFile(OfflineProject project)
 	{
 		final File designFile = new File(project.getProjectHome(), "design.bin");
-		return HashAndCipherUtilities.loadEncrypted(designFile, LauncherAnswerDesign.class);
+		return HashAndCipherUtilities.loadEncryptedObject(designFile, LauncherAnswerDesign.class);
 	}
 	public void checkClientAssets(OfflineClient client)
 	{
