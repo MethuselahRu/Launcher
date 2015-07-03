@@ -4,6 +4,8 @@ import ru.methuselah.authlib.UserProvider;
 import ru.methuselah.authlib.UserRole;
 import ru.methuselah.authlib.data.AuthenticatePayload;
 import ru.methuselah.authlib.data.AuthenticateResponse;
+import ru.methuselah.authlib.links.Links;
+import ru.methuselah.authlib.links.LinksMethuselah;
 import ru.methuselah.authlib.methods.ResponseException;
 import ru.methuselah.launcher.Data.OfflineProject;
 import ru.methuselah.launcher.GUI.PanelLogin;
@@ -22,9 +24,15 @@ public class Authentication
 	private UserRole role = UserRole.nonauth;
 	private UserProvider provider = UserProvider.nonauth;
 	private volatile Thread authenticationThread;
+	private final Links links = new LinksMethuselah();
+	private final MethuselahPrivate caller = new MethuselahPrivate(links);
 	public Authentication(Launcher launcher)
 	{
 		this.launcher = launcher;
+	}
+	public MethuselahPrivate getCaller()
+	{
+		return caller;
 	}
 	public void setSecurityHashCode(String uhash)
 	{
@@ -190,7 +198,7 @@ public class Authentication
 				authenticate.username = tryUsername;
 				authenticate.password = tryPassword;
 			}
-			final AuthenticateResponse response = MethuselahPrivate.authenticate(authenticate);
+			final AuthenticateResponse response = caller.authenticate(authenticate);
 			this.playername = response.selectedProfile.name;
 			this.uuid = response.selectedProfile.id;
 			this.accessToken = response.accessToken;

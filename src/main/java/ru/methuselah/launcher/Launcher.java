@@ -66,7 +66,7 @@ public class Launcher implements Runnable
 		// Load project list from methuselah.ru
 		try
 		{
-			final LauncherAnswerProjects msgProjects = MethuselahPrivate.listProjects();
+			final LauncherAnswerProjects msgProjects = authentication.getCaller().listProjects();
 			if(msgProjects.projects != null && msgProjects.projects.length > 0)
 				for(ProjectInfo info : msgProjects.projects)
 				{
@@ -113,7 +113,7 @@ public class Launcher implements Runnable
 		payload.project = currentProject.code;
 		try
 		{
-			final LauncherAnswerClients msgClients = MethuselahPrivate.listProjectClients(payload);
+			final LauncherAnswerClients msgClients = authentication.getCaller().listProjectClients(payload);
 			if(msgClients == null || msgClients.clients == null)
 			{
 				authentication.logout();
