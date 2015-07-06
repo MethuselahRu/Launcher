@@ -21,7 +21,7 @@ import ru.methuselah.securitylibrary.Data.MessagesWrapper.MessageWrappedGame;
 import ru.methuselah.securitylibrary.SecureConnection;
 import ru.methuselah.securitylibrary.SecureSocketWrapper;
 import ru.methuselah.securitylibrary.WrappedGameStarter;
-import ru.simsonic.rscUtilityLibrary.HashAndCipherUtilities;
+import ru.simsonic.rscCommonsLibrary.HashAndCipherUtilities;
 
 public class GameLauncher extends WrappedGameStarter
 {

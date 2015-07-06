@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import ru.methuselah.launcher.GlobalConfig;
 import ru.methuselah.securitylibrary.Data.Launcher.ProjectInfo;
-import ru.simsonic.rscUtilityLibrary.HashAndCipherUtilities;
+import ru.simsonic.rscCommonsLibrary.HashAndCipherUtilities;
 
 public class OfflineProject extends ProjectInfo implements Comparable<OfflineProject>
 {

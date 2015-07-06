@@ -10,7 +10,7 @@ import java.util.Random;
 import java.util.Scanner;
 import ru.methuselah.launcher.Data.Platform;
 import ru.methuselah.launcher.Data.RunType;
-import ru.simsonic.rscUtilityLibrary.HashAndCipherUtilities;
+import ru.simsonic.rscCommonsLibrary.HashAndCipherUtilities;
 import sun.misc.BASE64Decoder;
 
 public final class GlobalConfig

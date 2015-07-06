@@ -17,7 +17,7 @@ import ru.methuselah.launcher.Data.OfflineProject;
 import ru.methuselah.securitylibrary.Data.Launcher.LauncherAnswerDesign;
 import ru.methuselah.securitylibrary.Data.Mojang.MojangAssetIndex;
 import ru.methuselah.securitylibrary.Data.Mojang.MojangAssetIndex.AssetObject;
-import ru.simsonic.rscUtilityLibrary.HashAndCipherUtilities;
+import ru.simsonic.rscCommonsLibrary.HashAndCipherUtilities;
 
 public class ResourceManager
 {

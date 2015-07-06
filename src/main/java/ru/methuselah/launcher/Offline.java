@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import ru.methuselah.launcher.Data.OfflineProject;
-import ru.simsonic.rscUtilityLibrary.HashAndCipherUtilities;
+import ru.simsonic.rscCommonsLibrary.HashAndCipherUtilities;
 
 public class Offline
 {
