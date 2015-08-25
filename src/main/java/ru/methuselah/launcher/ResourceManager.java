@@ -145,20 +145,20 @@ public class ResourceManager
 		{
 			case LINUX:
 			case SOLARIS:
-				gameFiles.put("1710_linux_natives.zip", GlobalConfig.urlNatives);
+				gameFiles.put("1710_linux_natives.zip", GlobalConfig.urlBinaries + "libraries/");
 				break;
 			case WINDOWS:
-				gameFiles.put("1710_windows_natives.zip", GlobalConfig.urlNatives);
+				gameFiles.put("1710_windows_natives.zip", GlobalConfig.urlBinaries + "libraries/");
 				break;
 			case MACOSX:
-				gameFiles.put("1710_macosx_natives.zip", GlobalConfig.urlNatives);
+				gameFiles.put("1710_macosx_natives.zip", GlobalConfig.urlBinaries + "libraries/");
 				break;
 			default:
 				System.err.println("OS (" + System.getProperty("os.name") + ") is not supported.");
 				return;
 		}
-		gameFiles.put(client.jarFile, GlobalConfig.urlArchive);
-		gameFiles.put(client.contentsFile, GlobalConfig.urlArchive);
+		gameFiles.put(client.jarFile,      GlobalConfig.urlBinaries + "clients/");
+		gameFiles.put(client.contentsFile, GlobalConfig.urlBinaries + "clients/");
 		// Скачивание файлов
 		try
 		{

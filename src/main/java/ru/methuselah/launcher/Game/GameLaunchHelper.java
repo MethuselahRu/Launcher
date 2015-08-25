@@ -1,6 +1,5 @@
 package ru.methuselah.launcher.Game;
 
-import ru.methuselah.securitylibrary.Data.Launcher.ServerInfo;
 import com.evilco.mc.nbt.stream.NbtInputStream;
 import com.evilco.mc.nbt.stream.NbtOutputStream;
 import com.evilco.mc.nbt.tag.ITag;
@@ -18,6 +17,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import ru.methuselah.launcher.Data.OfflineClient;
+import ru.methuselah.securitylibrary.Data.Launcher.ServerInfo;
 
 public class GameLaunchHelper
 {

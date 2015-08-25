@@ -12,13 +12,13 @@ import javax.net.ssl.SSLSocket;
 import ru.methuselah.authlib.methods.ResponseException;
 import ru.methuselah.launcher.Data.OfflineClient;
 import ru.methuselah.launcher.Data.Platform;
-import ru.methuselah.securitylibrary.Data.Launcher.ServerInfo;
 import ru.methuselah.launcher.Game.GameLaunchHelper.TextProperty;
 import ru.methuselah.launcher.GlobalConfig;
 import ru.methuselah.launcher.Launcher;
 import ru.methuselah.launcher.Utilities;
 import ru.methuselah.securitylibrary.Data.Launcher.LauncherAnswerServers;
 import ru.methuselah.securitylibrary.Data.Launcher.LauncherMessageGetServers;
+import ru.methuselah.securitylibrary.Data.Launcher.ServerInfo;
 import ru.methuselah.securitylibrary.Data.MessagesWrapper.MessageWrappedGame;
 import ru.methuselah.securitylibrary.SecureConnection;
 import ru.methuselah.securitylibrary.SecureSocketWrapper;
@@ -228,6 +228,7 @@ public class GameLauncher extends WrappedGameStarter
 		result.arguments = (gameInfo.additionalGameArguments != null)
 			? gameInfo.additionalGameArguments.split("\\s")
 			: new String[] {};
+		result.replacements = launcher.authentication.getLinks().buildReplacements();
 		return result;
 	}
 	private int startLocalSecureServer(final OfflineClient gameInfo)

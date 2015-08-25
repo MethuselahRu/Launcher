@@ -30,6 +30,10 @@ public class Authentication
 	{
 		this.launcher = launcher;
 	}
+	public Links getLinks()
+	{
+		return links;
+	}
 	public MethuselahPrivate getCaller()
 	{
 		return caller;

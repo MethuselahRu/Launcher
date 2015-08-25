@@ -19,6 +19,7 @@ public class LauncherUpdater extends BaseUpdater
 			properties.data.lastOpenedProject = firstRunCode;
 			properties.saveToDisk();
 		}
+		System.out.println("Поиск доступных обновлений ...");
 		try
 		{
 			final String launcherHash = GlobalConfig.bUnderIDE
@@ -31,6 +32,7 @@ public class LauncherUpdater extends BaseUpdater
 				"launcherHash=" + launcherHash).trim();
 			if("OK".equalsIgnoreCase(launcherCheckResult) || "NO CONNECTION".equals(launcherCheckResult))
 			{
+				System.out.println("Обновлений не обнаружено.");
 				final File runFile = new File(GlobalConfig.runPath);
 				final File correctJar = new File(GlobalConfig.launcherHomeDir, GlobalConfig.executableName + ".jar");
 				final File correctExe = new File(GlobalConfig.launcherHomeDir, GlobalConfig.executableName + ".exe");
@@ -46,15 +48,16 @@ public class LauncherUpdater extends BaseUpdater
 	}
 	private static void updateLauncher()
 	{
+		System.out.println("Загрузка обновлений ...");
 		final File runFile = new File(GlobalConfig.runPath);
 		final String nameJar = GlobalConfig.executableName + ".jar";
 		final File correctJar = new File(GlobalConfig.launcherHomeDir, nameJar);
 		if(GlobalConfig.runType == RunType.JAR && correctJar.compareTo(runFile) != 0)
 		{
-			downloadFile(GlobalConfig.urlNatives + nameJar, runFile);
+			downloadFile(GlobalConfig.urlBinaries + "launcher/" + nameJar, runFile);
 			copyFile(runFile, correctJar);
 		} else
-			downloadFile(GlobalConfig.urlNatives + nameJar, correctJar);
+			downloadFile(GlobalConfig.urlBinaries + "launcher/" + nameJar, correctJar);
 		File restartFile = correctJar;
 		if(GlobalConfig.platform == Platform.WINDOWS)
 		{
@@ -62,10 +65,10 @@ public class LauncherUpdater extends BaseUpdater
 			final File correctExe = new File(GlobalConfig.launcherHomeDir, nameExe);
 			if(GlobalConfig.runType == RunType.EXE && correctExe.compareTo(runFile) != 0)
 			{
-				downloadFile(GlobalConfig.urlNatives + nameExe, runFile);
+				downloadFile(GlobalConfig.urlBinaries + "launcher/" + nameExe, runFile);
 				copyFile(runFile, correctExe);
 			} else
-				downloadFile(GlobalConfig.urlNatives + nameExe, correctExe);
+				downloadFile(GlobalConfig.urlBinaries + "launcher/" + nameExe, correctExe);
 			restartFile = correctExe;
 		}
 		System.out.println("Применение обновлений ...");

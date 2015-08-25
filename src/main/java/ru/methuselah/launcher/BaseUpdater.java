@@ -26,14 +26,15 @@ public class BaseUpdater
 	public static void downloadFile(String srcURL, File saveAs, String showAs)
 	{
 		saveAs.getParentFile().mkdirs();
-		try
+		try(final FileOutputStream fos = new FileOutputStream(saveAs))
 		{
-			Launcher.showGrant("↓ " + showAs);
+			if(showAs != null)
+				Launcher.showGrant("↓ " + showAs);
+			else
+				System.out.println("Загрузка файла " + saveAs.getName() + "...");
 			final ReadableByteChannel rbc = Channels.newChannel(new URL(srcURL).openStream());
-			final FileOutputStream fos = new FileOutputStream(saveAs);
 			fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 			fos.flush();
-			fos.close();
 		} catch(MalformedURLException ex) {
 			System.err.println(ex);
 		} catch(IOException ex) {
@@ -77,13 +78,11 @@ public class BaseUpdater
 			System.out.println("Распаковка: " + fileZip);
 			if(annotate)
 				Launcher.showGrant("Извлечение " + fileZip.getName() + "...");
-			try
+			try(final ZipFile zf = new ZipFile(fileZip))
 			{
-				final ZipFile zf = new ZipFile(fileZip);
 				final String szExtractPath = fileZip.getParent();
 				for(ZipEntry zipEntry : Collections.list(zf.entries()))
 					extractFromZip(szExtractPath, zipEntry.getName(), zf, zipEntry);
-				zf.close();
 				System.err.println("Удачно!");
 				if(annotate)
 					Launcher.showGrant("Извлечение " + fileZip.getName() + " завершено");

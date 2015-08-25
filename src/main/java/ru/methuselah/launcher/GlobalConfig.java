@@ -15,8 +15,11 @@ import sun.misc.BASE64Decoder;
 
 public final class GlobalConfig
 {
-	public static final String   versionStringPrefix = "v2.20.3b";
+	public static final String   versionStringPrefix = "v2.20.4b";
 	public static final String   launcherCaption     = "VOXILE";
+	public static final String   propertiesFilename  = "launcher-properties.bin";
+	public static final String   clientFolder        = ".voxile";
+	public static final String   executableName      = "Launcher";
 	public static final String   urlSiteHome1        = "https://vk.com/VoxileRu";
 	public static final String   urlSiteHome2        = "http://voxile.ru/forum/";
 	public static final String   urlSiteVote1        = "http://mctop.su/server/966";
@@ -25,20 +28,16 @@ public final class GlobalConfig
 	public static final String   urlSiteVote4        = "http://monitoringminecraft.ru/server/71036";
 	public static final String   urlSiteDonate       = "http://voxile.ru/yandex-money.php?uuid=";
 	public static final String   urlScripts          = "https://auth.methuselah.ru/";
-	public static final String   urlArchive          = "https://data.methuselah.ru/clients/";
-	public static final String   urlNatives          = "https://data.methuselah.ru/clients/";
-	public static final String   executableName      = "Launcher";
-	public static final String   propertiesFilename  = "launcher-properties.bin";
+	public static final String   urlBinaries         = "https://data.methuselah.ru/";
 	public static final boolean  separateGameProcess = true;
 	public static final File     launcherHomeDir = getWorkingDirectory();
 	public static final boolean  bUnderIDE;
 	public static final String   devHashIDE;
+	public static final Platform platform     = getPlatform();
+	public static final String   runPath      = getRunPath();
+	public static final RunType  runType      = getRunType();
+	public static final String   hardwareSN   = getHardwareSerialNumber();
 	public static final String[] actualJavaVersions = { "1.7.0", "1.8.0" };
-	public static final Platform platform = getPlatform();
-	public static final String   runPath = getRunPath();
-	public static final RunType  runType = getRunType();
-	public static final String   hardwareSN = getHardwareSerialNumber();
-	private static final String  clientFolder = ".voxile";
 	private static final boolean ALLOW_IDE_DETECTING = true;
 	static
 	{

@@ -9,6 +9,7 @@
 	<packaging>jar</packaging>
 
 	<properties>
+		<project.build.productName>Launcher</project.build.productName>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	
@@ -57,7 +58,7 @@
 	</dependencies>
 	
 	<build>
-		<finalName>${project.artifactId}</finalName>
+		<finalName>${project.build.productName}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -126,8 +127,8 @@
 						<option>-adaptresourcefilenames</option>
 						<option>-repackageclasses</option>
 						<option>-keepattributes Signature</option>
-						<option>-dontnote com.google.**</option>
 						<option>-keepclassmembers public class ru.methuselah.launcher.Data.** { *; }</option>
+						<option>-keepclassmembers public class ru.methuselah.securitylibrary.Data.** { *; }</option>
 						<option>-dontnote ru.methuselah.launcher.Data.**</option>
 						<option>-keep public class ${project.groupId}.${project.artifactId}.* { public static void main(java.lang.String[]); }</option>
 					</options>
@@ -160,18 +161,18 @@
 						</goals>
 						<configuration>
 							<createDependencyReducedPom>false</createDependencyReducedPom>
-							<minimizeJar>true</minimizeJar>
+							<minimizeJar>false</minimizeJar>
 							<artifactSet>
 								<includes>
 									<include>ru.methuselah:authlib</include>
 									<include>ru.methuselah:clientsidewrapper</include>
+									<include>ru.simsonic:rscCommonsLibrary</include>
 									<include>com.google.code.gson:gson</include>
 									<include>com.evilco.mc:nbt</include>
 									<include>com.google.guava:guava</include>
 									<include>com.google.code.findbugs:jsr305</include>
 									<include>org.mockito:mockito-all</include>
 									<include>commons-io:commons-io</include>
-									<include>ru.simsonic:rscCommonsLibrary</include>
 								</includes>
 							</artifactSet>
 							<relocations>

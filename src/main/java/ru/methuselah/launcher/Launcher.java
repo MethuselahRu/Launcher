@@ -22,13 +22,12 @@ import ru.methuselah.launcher.GUI.FrameLauncherMain;
 import ru.methuselah.launcher.GUI.FrameProjects;
 import ru.methuselah.launcher.GUI.SplashScreen;
 import ru.methuselah.launcher.Game.GameLauncher;
+import ru.methuselah.securitylibrary.Data.Launcher.ClientInfo;
 import ru.methuselah.securitylibrary.Data.Launcher.LauncherAnswerClients;
 import ru.methuselah.securitylibrary.Data.Launcher.LauncherAnswerDesign;
 import ru.methuselah.securitylibrary.Data.Launcher.LauncherAnswerProjects;
-import ru.methuselah.securitylibrary.Data.Launcher.ClientInfo;
-import ru.methuselah.securitylibrary.Data.Launcher.ProjectInfo;
 import ru.methuselah.securitylibrary.Data.Launcher.LauncherMessageGetClients;
-import ru.methuselah.securitylibrary.MethuselahPrivate;
+import ru.methuselah.securitylibrary.Data.Launcher.ProjectInfo;
 
 public class Launcher implements Runnable
 {
