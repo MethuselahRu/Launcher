@@ -5,23 +5,24 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.net.ssl.SSLServerSocketFactory;
 import javax.net.ssl.SSLSocket;
+import ru.methuselah.authlib.methods.ResponseException;
 import ru.methuselah.launcher.Data.OfflineClient;
 import ru.methuselah.launcher.Data.Platform;
-import ru.methuselah.launcher.Game.GameLaunchHelper.ServersDatEntry;
+import ru.methuselah.securitylibrary.Data.Launcher.ServerInfo;
 import ru.methuselah.launcher.Game.GameLaunchHelper.TextProperty;
 import ru.methuselah.launcher.GlobalConfig;
 import ru.methuselah.launcher.Launcher;
 import ru.methuselah.launcher.Utilities;
+import ru.methuselah.securitylibrary.Data.Launcher.LauncherAnswerServers;
+import ru.methuselah.securitylibrary.Data.Launcher.LauncherMessageGetServers;
 import ru.methuselah.securitylibrary.Data.MessagesWrapper.MessageWrappedGame;
 import ru.methuselah.securitylibrary.SecureConnection;
 import ru.methuselah.securitylibrary.SecureSocketWrapper;
 import ru.methuselah.securitylibrary.WrappedGameStarter;
-import ru.simsonic.rscCommonsLibrary.HashAndCipherUtilities;
 
 public class GameLauncher extends WrappedGameStarter
 {
@@ -46,6 +47,7 @@ public class GameLauncher extends WrappedGameStarter
 				launcher.resources.checkClientAssets(client);
 				// Проверка клиента
 				boolean forceUpdate = false;
+				/*
 				try
 				{
 					final File clientJarFile = client.getClientJar();
@@ -76,6 +78,7 @@ public class GameLauncher extends WrappedGameStarter
 					Launcher.showError(ex.toString());
 					return;
 				}
+				*/
 				Launcher.showGrant("Подготовка к запуску игры...");
 				client.clean();
 				try
@@ -100,12 +103,25 @@ public class GameLauncher extends WrappedGameStarter
 	public void preLaunchActions(OfflineClient client)
 	{
 		// Установка нужных адресов северов
-		GameLaunchHelper.setServersDatTopAddresses(client, new ServersDatEntry[]
+		ServerInfo[] servers = new ServerInfo[]
 		{
-			new ServersDatEntry("§dОсновной игровой сервер '§cPrimary§d'",   "s1.voxile.ru:25575",  true),
-			new ServersDatEntry("§dТворческий сервер '§cSimple Creative§d'", "methuselah.ru:25555", true),
-			new ServersDatEntry("§eЦентральное лобби §fvoxile.ru",           "methuselah.ru",       true),
-		});
+			new ServerInfo("§eЦентральное лобби §fvoxile.ru",           "methuselah.ru",       true),
+			new ServerInfo("§dИгровой сервер '§cPrimary§d'",            "methuselah.ru:25575", true),
+			new ServerInfo("§dТворческий сервер '§cSimple Creative§d'", "methuselah.ru:25555", true),
+		};
+		try
+		{
+			final LauncherMessageGetServers lmgs = new LauncherMessageGetServers();
+			lmgs.uuid          = launcher.authentication.getUUID();
+			lmgs.accessToken   = launcher.authentication.getAccessToken();
+			lmgs.project       = launcher.currentProject.code;
+			lmgs.clientCaption = client.caption;
+			final LauncherAnswerServers answer = launcher.authentication.getCaller().listClientServers(lmgs);
+			if(answer != null && answer.servers != null && answer.servers.length != 0)
+				servers = answer.servers;
+		} catch(ResponseException ex) {
+		}
+		GameLaunchHelper.setServersDatTopAddresses(client, servers);
 		// Фишки, которые пришли к нам извне! :D
 		final TextProperty[] propsOptifine = new TextProperty[]
 		{

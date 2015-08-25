@@ -15,20 +15,20 @@ import sun.misc.BASE64Decoder;
 
 public final class GlobalConfig
 {
-	public static final String versionStringPrefix = "v2.20.3b";
-	public static final String launcherCaption     = "VOXILE";
-	public static final String urlSiteHome1        = "https://vk.com/VoxileRu";
-	public static final String urlSiteHome2        = "http://voxile.ru/forum/";
-	public static final String urlSiteVote1        = "http://mctop.su/server/966";
-	public static final String urlSiteVote2        = "http://topcraft.ru/servers/4311";
-	public static final String urlSiteVote3        = "http://mc-servera.ru/37591";
-	public static final String urlSiteVote4        = "http://monitoringminecraft.ru/server/71036";
-	public static final String urlSiteDonate       = "http://voxile.ru/yandex-money.php?uuid=";
-	public static final String urlScripts          = "https://auth.methuselah.ru/";
-	public static final String urlArchive          = "https://data.methuselah.ru/clients/";
-	public static final String urlNatives          = "https://data.methuselah.ru/clients/";
-	public static final String executableName      = "Launcher";
-	public static final String propertiesFilename  = "launcher-properties.bin";
+	public static final String   versionStringPrefix = "v2.20.3b";
+	public static final String   launcherCaption     = "VOXILE";
+	public static final String   urlSiteHome1        = "https://vk.com/VoxileRu";
+	public static final String   urlSiteHome2        = "http://voxile.ru/forum/";
+	public static final String   urlSiteVote1        = "http://mctop.su/server/966";
+	public static final String   urlSiteVote2        = "http://topcraft.ru/servers/4311";
+	public static final String   urlSiteVote3        = "http://mc-servera.ru/37591";
+	public static final String   urlSiteVote4        = "http://monitoringminecraft.ru/server/71036";
+	public static final String   urlSiteDonate       = "http://voxile.ru/yandex-money.php?uuid=";
+	public static final String   urlScripts          = "https://auth.methuselah.ru/";
+	public static final String   urlArchive          = "https://data.methuselah.ru/clients/";
+	public static final String   urlNatives          = "https://data.methuselah.ru/clients/";
+	public static final String   executableName      = "Launcher";
+	public static final String   propertiesFilename  = "launcher-properties.bin";
 	public static final boolean  separateGameProcess = true;
 	public static final File     launcherHomeDir = getWorkingDirectory();
 	public static final boolean  bUnderIDE;

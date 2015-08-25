@@ -14,11 +14,6 @@
 	
 	<repositories>
 		<repository>
-			<id>dsol-xml</id>
-			<name>Simulation @ TU Delft</name>
-			<url>http://simulation.tudelft.nl/maven/</url>
-		</repository>
-		<repository>
 			<id>methuselah-repo</id>
 			<url>http://maven.methuselah.ru/</url>
 		</repository>
