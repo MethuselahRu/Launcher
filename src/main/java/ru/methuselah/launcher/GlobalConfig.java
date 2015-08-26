@@ -15,7 +15,7 @@ import sun.misc.BASE64Decoder;
 
 public final class GlobalConfig
 {
-	public static final String   versionStringPrefix = "v2.20.4b";
+	public static final String   versionStringPrefix = "v2.20.5b";
 	public static final String   launcherCaption     = "VOXILE";
 	public static final String   propertiesFilename  = "launcher-properties.bin";
 	public static final String   clientFolder        = ".voxile";

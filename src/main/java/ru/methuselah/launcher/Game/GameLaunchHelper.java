@@ -136,41 +136,42 @@ public class GameLaunchHelper
 	private static ArrayList<ServerInfo> readServersDat(File nbtFile)
 	{
 		final ArrayList<ServerInfo> result = new ArrayList<>();
-		try
+		if(nbtFile.isFile())
 		{
-			// Нужно открыть servers.dat и прочитать все сервера в нём
-			final NbtInputStream nbtIn = new NbtInputStream(new FileInputStream(nbtFile));
-			final ITag rootTag = nbtIn.readTag();
-			nbtIn.close();
-			if(rootTag != null)
+			try(NbtInputStream nbtIn = new NbtInputStream(new FileInputStream(nbtFile)))
 			{
-				final TagList list = (TagList)((TagCompound)rootTag).getTag("servers");
-				if(list != null)
+				// Нужно открыть servers.dat и прочитать все сервера в нём
+				final ITag rootTag = nbtIn.readTag();
+				if(rootTag != null)
 				{
-					for(ITag serverTag : list.getTags())
+					final TagList list = (TagList)((TagCompound)rootTag).getTag("servers");
+					if(list != null)
 					{
-						final TagCompound serverInfo = (TagCompound)serverTag;
-						final TagString tagCaption = (TagString)serverInfo.getTag("name");
-						final TagString tagAddress = (TagString)serverInfo.getTag("ip");
-						final TagByte   tagHideAddress = (TagByte)serverInfo.getTag("hideAddress");
-						if(tagCaption == null || tagAddress == null)
-							continue;
-						final ServerInfo server = new ServerInfo(
-							tagCaption.getValue(),
-							tagAddress.getValue());
-						// Корректность
-						if(server.caption == null || "".equals(server.caption))
-							continue;
-						if(server.address == null || "".equals(server.address))
-							continue;
-						if(tagHideAddress != null)
-							server.hideAddress = (tagHideAddress.getValue() != 0);
-						result.add(server);
+						for(ITag serverTag : list.getTags())
+						{
+							final TagCompound serverInfo = (TagCompound)serverTag;
+							final TagString tagCaption = (TagString)serverInfo.getTag("name");
+							final TagString tagAddress = (TagString)serverInfo.getTag("ip");
+							final TagByte   tagHideAddress = (TagByte)serverInfo.getTag("hideAddress");
+							if(tagCaption == null || tagAddress == null)
+								continue;
+							final ServerInfo server = new ServerInfo(
+								tagCaption.getValue(),
+								tagAddress.getValue());
+							// Корректность
+							if(server.caption == null || "".equals(server.caption))
+								continue;
+							if(server.address == null || "".equals(server.address))
+								continue;
+							if(tagHideAddress != null)
+								server.hideAddress = (tagHideAddress.getValue() != 0);
+							result.add(server);
+						}
 					}
 				}
+			} catch(IOException | RuntimeException ex) {
+				System.err.println(ex);
 			}
-		} catch(IOException | RuntimeException ex) {
-			System.err.println(ex);
 		}
 		return result;
 	}
@@ -184,9 +185,11 @@ public class GameLaunchHelper
 			newRoot.setTag(newList);
 			for(ServerInfo entry : serverList)
 				newList.addTag(toTag(entry));
-			final NbtOutputStream nbtOut = new NbtOutputStream(new FileOutputStream(nbtFile));
-			nbtOut.write(newRoot);
-			nbtOut.close();
+			nbtFile.createNewFile();
+			try(NbtOutputStream nbtOut = new NbtOutputStream(new FileOutputStream(nbtFile)))
+			{
+				nbtOut.write(newRoot);
+			}
 		} catch(IOException | RuntimeException ex) {
 			System.err.println(ex);
 		}

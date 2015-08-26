@@ -161,7 +161,7 @@
 						</goals>
 						<configuration>
 							<createDependencyReducedPom>false</createDependencyReducedPom>
-							<minimizeJar>false</minimizeJar>
+							<minimizeJar>true</minimizeJar>
 							<artifactSet>
 								<includes>
 									<include>ru.methuselah:authlib</include>

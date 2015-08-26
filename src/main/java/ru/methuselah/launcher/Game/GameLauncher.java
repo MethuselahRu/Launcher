@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.net.ssl.SSLServerSocketFactory;
@@ -23,6 +24,7 @@ import ru.methuselah.securitylibrary.Data.MessagesWrapper.MessageWrappedGame;
 import ru.methuselah.securitylibrary.SecureConnection;
 import ru.methuselah.securitylibrary.SecureSocketWrapper;
 import ru.methuselah.securitylibrary.WrappedGameStarter;
+import ru.simsonic.rscCommonsLibrary.HashAndCipherUtilities;
 
 public class GameLauncher extends WrappedGameStarter
 {
@@ -47,7 +49,6 @@ public class GameLauncher extends WrappedGameStarter
 				launcher.resources.checkClientAssets(client);
 				// Проверка клиента
 				boolean forceUpdate = false;
-				/*
 				try
 				{
 					final File clientJarFile = client.getClientJar();
@@ -78,7 +79,6 @@ public class GameLauncher extends WrappedGameStarter
 					Launcher.showError(ex.toString());
 					return;
 				}
-				*/
 				Launcher.showGrant("Подготовка к запуску игры...");
 				client.clean();
 				try

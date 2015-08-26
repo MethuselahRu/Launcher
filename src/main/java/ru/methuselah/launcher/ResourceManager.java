@@ -164,16 +164,16 @@ public class ResourceManager
 		{
 			for(String fileName : gameFiles.keySet())
 			{
-				System.err.println("Requesting " + fileName);
+				System.out.println("Загрузка файла " + fileName);
 				BaseUpdater.downloadFile(gameFiles.get(fileName) + fileName, new File(clientFolder, fileName), fileName);
 				if(fileName.endsWith(".zip"))
 					BaseUpdater.unZip(new File(clientFolder, fileName), true);
 			}
 			Launcher.showGrant("Обновление клиента завершено");
-			System.err.println("Game is updated");
+			System.out.println("Игра успешно обновлена");
 		} catch(PrivilegedActionException ex) {
 			Launcher.showError("Не удалось обновить клиент");
-			System.err.println("Update failed: " + ex.getLocalizedMessage());
+			System.err.println("Обновление провалилось: " + ex);
 		}
 	}
 }
