@@ -235,6 +235,9 @@ public class GameLauncher extends WrappedGameStarter
 	{
 		stopLocalSecureServer();
 		final MessageWrappedGame message = createStartupWrapperMessage(gameInfo);
+		final File reserveFile = new File(gameInfo.getClientHome(), "startup.bin");
+		HashAndCipherUtilities.saveEncryptedObject(reserveFile, message, MessageWrappedGame.class);
+		reserveFile.deleteOnExit();
 		try
 		{
 			serverSecure = SSLServerSocketFactory.getDefault().createServerSocket();

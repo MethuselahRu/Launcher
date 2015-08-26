@@ -101,7 +101,7 @@ public class BaseUpdater
 		final File   targetFile     = new File(szExtractPath + File.separator + targetFileName);
 		final long   size           = ze.getSize();
 		final long   compressedSize = ze.getCompressedSize();
-		System.out.println("\tИзвлечение " + targetFile.getName() + "(" + compressedSize + " -> " + size + ")");
+		System.out.println("\tИзвлечение " + targetFile.getName() + " (" + compressedSize + " -> " + size + ")");
 		try
 		{
 			targetFile.getParentFile().mkdirs();

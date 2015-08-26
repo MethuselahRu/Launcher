@@ -25,7 +25,8 @@ public final class LauncherProperties
 	}
 	public void reloadFromDisk()
 	{
-		data = HashAndCipherUtilities.loadEncryptedObject(propertiesFile, LauncherPropertiesFields.class);
+		if(propertiesFile.isFile())
+			data = HashAndCipherUtilities.loadEncryptedObject(propertiesFile, LauncherPropertiesFields.class);
 		if(data == null)
 			data = new LauncherPropertiesFields();
 	}

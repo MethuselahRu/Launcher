@@ -33,13 +33,23 @@ public class LauncherUpdater extends BaseUpdater
 			if("OK".equalsIgnoreCase(launcherCheckResult) || "NO CONNECTION".equals(launcherCheckResult))
 			{
 				System.out.println("Обновлений не обнаружено.");
-				final File runFile = new File(GlobalConfig.runPath);
-				final File correctJar = new File(GlobalConfig.launcherHomeDir, GlobalConfig.executableName + ".jar");
-				final File correctExe = new File(GlobalConfig.launcherHomeDir, GlobalConfig.executableName + ".exe");
+				final File runFile    = new File(GlobalConfig.runPath);
+				final String nameJar = GlobalConfig.executableName + ".jar";
+				final String nameExe = GlobalConfig.executableName + ".exe";
+				final File correctJar = new File(GlobalConfig.launcherHomeDir, nameJar);
+				final File correctExe = new File(GlobalConfig.launcherHomeDir, nameExe);
 				if(GlobalConfig.runType == RunType.JAR && !runFile.equals(correctJar))
+				{
 					copyFile(runFile, correctJar);
+					if(!correctExe.isFile())
+						downloadFile(GlobalConfig.urlBinaries + "launcher/" + nameExe, correctExe, correctExe.getAbsolutePath());
+				}
 				if(GlobalConfig.runType == RunType.EXE && !runFile.equals(correctExe))
+				{
 					copyFile(runFile, correctExe);
+					if(!correctJar.isFile())
+						downloadFile(GlobalConfig.urlBinaries + "launcher/" + nameJar, correctJar, correctJar.getAbsolutePath());
+				}
 			} else
 				updateLauncher();
 		} catch(IOException ex) {
