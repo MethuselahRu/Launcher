@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.nio.file.Files;
 import java.security.PrivilegedActionException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,15 +23,18 @@ import ru.simsonic.rscCommonsLibrary.HashAndCipherUtilities;
 public class ResourceManager
 {
 	private static final String catalogName = "launcher-resources";
-	private static final String catalogTemp = "temp";
-	private static final String downloadingExtension = ".download";
 	private final String resourcesHome;
 	public ResourceManager(File launcherHome)
 	{
 		// Create resources directory
-		final File resourcesHomeTry = new File(launcherHome, catalogName);
-		resourcesHome = resourcesHomeTry.getPath() + File.separator;
-		resourcesHomeTry.mkdirs();
+		final File resourcesHomeFile = new File(launcherHome, catalogName);
+		try
+		{
+			Files.setAttribute(resourcesHomeFile.toPath(), "dos:hidden", true);
+		} catch(IOException ex) {
+		}
+		resourcesHome = resourcesHomeFile.getPath() + File.separator;
+		resourcesHomeFile.mkdirs();
 	}
 	public String getGlobalAssetsDir()
 	{
@@ -119,13 +123,10 @@ public class ResourceManager
 		internal.virtual = index.virtual;
 		for(AssetObject object : index.objects)
 			internal.objects.put(object.originalName, object);
-		final Gson gson = new Gson();
-		final String contents = gson.toJson(internal);
-		try
+		final String contents = new Gson().toJson(internal);
+		try(FileWriter fw = new FileWriter(result))
 		{
-			final FileWriter fw = new FileWriter(result);
 			fw.write(contents);
-			fw.close();
 		} catch(IOException ex) {
 			return null;
 		}
