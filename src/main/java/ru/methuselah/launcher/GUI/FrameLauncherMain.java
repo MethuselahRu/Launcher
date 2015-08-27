@@ -121,7 +121,7 @@ public final class FrameLauncherMain extends Designer
 				launcher.properties.data.bAutoStartGame = false;
 			}
 			panelClients.lblName.setText(htmlText("Ваш игровой ник: <b>" + launcher.authentication.getPlayerName()+ "</b>"));
-			panelClients.lblUUID.setText(htmlText("Ваш uuid: <b>" + launcher.authentication.getUUID() + "</b>"));
+			panelClients.lblUUID.setText(htmlText("Ваш UUID: <b>" + launcher.authentication.getUUID() + "</b>"));
 			break;
 		case options:
 			superPanelLogin.setVisible(false);
@@ -265,7 +265,7 @@ public final class FrameLauncherMain extends Designer
 				StringSelection selection = new StringSelection(launcher.authentication.getPlayerName());
 				Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 				clipboard.setContents(selection, selection);
-				Launcher.showGrant("Ваш никнейн скопирован в буфер обмена");
+				Launcher.showGrant("Ваш никнейм скопирован в буфер обмена");
 			}
 		});
 		panelClients.lblUUID.addMouseListener(new MouseAdapter()
