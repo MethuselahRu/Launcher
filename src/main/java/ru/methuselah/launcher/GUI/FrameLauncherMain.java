@@ -19,7 +19,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import ru.methuselah.launcher.Data.OfflineProject;
 import ru.methuselah.launcher.GUI.Controls.TransparentLabel;
-import static ru.methuselah.launcher.GUI.Designer.openLink;
 import ru.methuselah.launcher.GlobalConfig;
 import ru.methuselah.launcher.Launcher;
 import ru.methuselah.launcher.Utilities;

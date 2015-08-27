@@ -16,6 +16,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import ru.methuselah.launcher.Data.OfflineClient;
 import ru.methuselah.securitylibrary.Data.Launcher.ServerInfo;
 
@@ -25,14 +26,18 @@ public class GameLaunchHelper
 	{
 		final File serversDat = new File(client.getClientHome(), "servers.dat");
 		final ArrayList<ServerInfo> serverListNew = new ArrayList<>();
+		final HashSet<String> addressesToRemove = new HashSet<>();
 		// Проверяем сервера в топе на корректность данных
 		if(entries != null)
 			for(ServerInfo entry : entries)
 			{
-				if(entry.caption == null || "".equals(entry.caption))
-					continue;
 				if(entry.address == null || "".equals(entry.address))
 					continue;
+				if(entry.caption == null || "".equals(entry.caption))
+				{
+					addressesToRemove.add(entry.address.toLowerCase());
+					continue;
+				}
 				serverListNew.add(entry);
 			}
 		// Парсинг имеющегося списка
@@ -40,10 +45,15 @@ public class GameLaunchHelper
 		// Вырезаем из нового списка адреса, которые должны быть в топе, и объединяем в один список
 		for(ServerInfo serverOld : serverListOld)
 		{
+			// Удалим полностью записи, которые имеют пустое имя
+			if(serverOld.address != null && addressesToRemove.contains(serverOld.address.toLowerCase()))
+				continue;
+			// Удалим дубликаты, имевшие другое название
 			boolean duplicate = false;
 			for(ServerInfo serverNew : serverListNew)
 				if(serverNew.address.equalsIgnoreCase(serverOld.address))
 					duplicate = true;
+			// Остальные записи будут располагаться ниже
 			if(duplicate == false)
 				serverListNew.add(serverOld);
 		}
@@ -98,13 +108,13 @@ public class GameLaunchHelper
 		final File file = new File(client.getClientHome(), filename);
 		if(file.isFile())
 		{
-			try
+			try(BufferedReader br = new BufferedReader(new FileReader(file)))
 			{
+				// Чтение текстового файла
 				final ArrayList<String> lines = new ArrayList<>();
-				final BufferedReader br = new BufferedReader(new FileReader(file));
 				for(String line = br.readLine(); line != null; line = br.readLine())
 					lines.add(line);
-				br.close();
+				// Изменение нужных ключей
 				for(String line : lines)
 					for(TextProperty prop : props)
 						if(line.contains(prop.getSeparator()))
@@ -113,10 +123,10 @@ public class GameLaunchHelper
 							if(parts.length != 2)
 								continue;
 							if(parts[0].equals(prop.key))
-							{
-								
-							}
+								parts[1] = prop.value;
 						}
+				// Запись изменений
+				// -- TO DO HERE --
 			} catch(FileNotFoundException ex) {
 			} catch(IOException ex) {
 			}
@@ -125,10 +135,11 @@ public class GameLaunchHelper
 			{
 				file.getParentFile().mkdirs();
 				file.createNewFile();
-				final FileWriter fw = new FileWriter(file);
-				for(TextProperty prop : props)
-					fw.write(prop.getKey() + prop.getSeparator() + prop.getValue() + System.getProperty("line.separator"));
-				fw.close();
+				try(FileWriter fw = new FileWriter(file))
+				{
+					for(TextProperty prop : props)
+						fw.write(prop.getKey() + prop.getSeparator() + prop.getValue() + System.getProperty("line.separator"));
+				}
 			} catch(IOException ex) {
 			}
 		}
@@ -149,10 +160,10 @@ public class GameLaunchHelper
 					{
 						for(ITag serverTag : list.getTags())
 						{
-							final TagCompound serverInfo = (TagCompound)serverTag;
-							final TagString tagCaption = (TagString)serverInfo.getTag("name");
-							final TagString tagAddress = (TagString)serverInfo.getTag("ip");
-							final TagByte   tagHideAddress = (TagByte)serverInfo.getTag("hideAddress");
+							final TagCompound serverInfo     = (TagCompound)serverTag;
+							final TagString   tagCaption     = (TagString)serverInfo.getTag("name");
+							final TagString   tagAddress     = (TagString)serverInfo.getTag("ip");
+							final TagByte     tagHideAddress = (TagByte)  serverInfo.getTag("hideAddress");
 							if(tagCaption == null || tagAddress == null)
 								continue;
 							final ServerInfo server = new ServerInfo(
