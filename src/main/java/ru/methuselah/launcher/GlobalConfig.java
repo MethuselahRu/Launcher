@@ -15,20 +15,25 @@ import sun.misc.BASE64Decoder;
 
 public final class GlobalConfig
 {
-	public static final String   versionStringPrefix = "v2.20.5b";
+	public static final String   versionStringPrefix = "v2.21b";
 	public static final String   launcherCaption     = "VOXILE";
 	public static final String   propertiesFilename  = "launcher-properties.bin";
 	public static final String   clientFolder        = ".voxile";
 	public static final String   executableName      = "Launcher";
-	public static final String   urlSiteHome1        = "https://vk.com/VoxileRu";
-	public static final String   urlSiteHome2        = "http://voxile.ru/forum/";
-	public static final String   urlSiteVote1        = "http://mctop.su/server/966";
-	public static final String   urlSiteVote2        = "http://topcraft.ru/servers/4311";
-	public static final String   urlSiteVote3        = "http://mc-servera.ru/37591";
-	public static final String   urlSiteVote4        = "http://monitoringminecraft.ru/server/71036";
-	public static final String   urlSiteDonate       = "http://voxile.ru/yandex-money.php?uuid=";
 	public static final String   urlScripts          = "https://auth.methuselah.ru/";
 	public static final String   urlBinaries         = "https://data.methuselah.ru/";
+	public static final String   LINKS_DONATIONS     = "http://voxile.ru/yandex-money.php?uuid={UUID}";
+	public static final String   LINKS_WEBSITE1      = "https://vk.com/VoxileRu";
+	public static final String   LINKS_WEBSITE2      = "http://voxile.ru/";
+	public static final String   LINKS_CHANNEL1      = "https://www.youtube.com/user/VoxileRu/videos";
+	public static final String   LINKS_CHANNEL2      = "https://www.twitch.tv/voxileru";
+	public static final String   LINKS_VOTE1         = "https://fairtop.in/project/546";
+	public static final String   LINKS_VOTE2A        = "http://mctop.su/server/966";
+	public static final String   LINKS_VOTE2B        = "http://mcrate.su/rate/6238";
+	public static final String   LINKS_VOTE3A        = "http://mc-servera.ru/37591";
+	public static final String   LINKS_VOTE3B        = "http://mc-servera.ru/41799";
+	public static final String   LINKS_VOTE4A        = "http://monitoringminecraft.ru/server/71036";
+	public static final String   LINKS_VOTE4B        = "http://monitoringminecraft.ru/server/84861";
 	public static final boolean  separateGameProcess = true;
 	public static final File     launcherHomeDir = getWorkingDirectory();
 	public static final boolean  bUnderIDE;

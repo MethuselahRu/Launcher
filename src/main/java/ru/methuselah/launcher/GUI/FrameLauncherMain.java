@@ -18,6 +18,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import ru.methuselah.launcher.Data.OfflineProject;
+import ru.methuselah.launcher.GUI.Controls.TransparentButton;
 import ru.methuselah.launcher.GUI.Controls.TransparentLabel;
 import ru.methuselah.launcher.GlobalConfig;
 import ru.methuselah.launcher.Launcher;
@@ -332,62 +333,20 @@ public final class FrameLauncherMain extends Designer
 				switchToPanel(PANELS.options);
 			}
 		});
-		panelLinks.btnDonate.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent ae)
-			{
-				openLink(GlobalConfig.urlSiteDonate + launcher.authentication.getUUID());
-			}
-		});
-		panelLinks.btnSite1.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent ae)
-			{
-				openLink(GlobalConfig.urlSiteHome1);
-			}
-		});
-		panelLinks.btnSite2.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent ae)
-			{
-				openLink(GlobalConfig.urlSiteHome2);
-			}
-		});
-		panelLinks.btnVote1.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent ae)
-			{
-				openLink(GlobalConfig.urlSiteVote1);
-			}
-		});
-		panelLinks.btnVote2.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent ae)
-			{
-				openLink(GlobalConfig.urlSiteVote2);
-			}
-		});
-		panelLinks.btnVote3.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent ae)
-			{
-				openLink(GlobalConfig.urlSiteVote3);
-			}
-		});
-		panelLinks.btnVote4.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent ae)
-			{
-				openLink(GlobalConfig.urlSiteVote4);
-			}
-		});
+		// LEFT
+		setupButtonOpenURL(panelLinks.btnVote1,  GlobalConfig.LINKS_VOTE1);
+		setupButtonOpenURL(panelLinks.btnVote2a, GlobalConfig.LINKS_VOTE2A);
+		setupButtonOpenURL(panelLinks.btnVote2b, GlobalConfig.LINKS_VOTE2B);
+		setupButtonOpenURL(panelLinks.btnVote3a, GlobalConfig.LINKS_VOTE3A);
+		setupButtonOpenURL(panelLinks.btnVote3b, GlobalConfig.LINKS_VOTE3B);
+		setupButtonOpenURL(panelLinks.btnVote4a, GlobalConfig.LINKS_VOTE4A);
+		setupButtonOpenURL(panelLinks.btnVote4b, GlobalConfig.LINKS_VOTE4B);
+		// RIGHT
+		setupButtonOpenURL(panelLinks.btnDonate, GlobalConfig.LINKS_DONATIONS);
+		setupButtonOpenURL(panelLinks.btnSite1,  GlobalConfig.LINKS_WEBSITE1);
+		setupButtonOpenURL(panelLinks.btnSite2,  GlobalConfig.LINKS_WEBSITE2);
+		setupButtonOpenURL(panelLinks.btnVideo1, GlobalConfig.LINKS_CHANNEL1);
+		setupButtonOpenURL(panelLinks.btnVideo2, GlobalConfig.LINKS_CHANNEL2);
 		linkUpdateJava.addMouseListener(new MouseAdapter()
 		{
 			@Override
@@ -396,6 +355,18 @@ public final class FrameLauncherMain extends Designer
 				openLink("http://www.oracle.com/technetwork/java/javase/downloads/index.html");
 				superPanelMain.remove(linkUpdateJava);
 				linkUpdateJava.setVisible(false);
+			}
+		});
+	}
+	private void setupButtonOpenURL(TransparentButton button, final String url)
+	{
+		button.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent ae)
+			{
+				final String targetURL = url.replace("{UUID}", launcher.authentication.getUUID());
+				openLink(targetURL);
 			}
 		});
 	}

@@ -9,6 +9,13 @@ import javax.swing.JPanel;
 public class TransparentPanel extends JPanel
 {
 	private Insets insets;
+	public TransparentPanel()
+	{
+		super();
+		setOpaque(false);
+		setDoubleBuffered(true);
+		setBackground(new Color(255, 255, 255, 0));
+	}
 	public TransparentPanel(LayoutManager layout)
 	{
 		super(layout);
@@ -21,7 +28,7 @@ public class TransparentPanel extends JPanel
 	{
 		return false;
 	}
-	public void setInsets(int top, int left, int bottom, int right)
+	public final void setInsets(int top, int left, int bottom, int right)
 	{
 		insets = new Insets(top, left, bottom, right);
 	}
