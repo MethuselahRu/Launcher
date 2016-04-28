@@ -1,20 +1,24 @@
 package ru.methuselah.launcher.GUI;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.GraphicsDevice.WindowTranslucency;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import ru.methuselah.launcher.Configuration.GlobalConfig;
+import ru.methuselah.launcher.Configuration.RuntimeConfig;
 import ru.methuselah.launcher.Launcher;
 
-public class SplashScreen extends JFrame
+public class SplashScreen extends JFrame implements Runnable
 {
-	private static final int splashTimeout = 4000;
-	private static final Image image = Toolkit.getDefaultToolkit().getImage(Launcher.class.getResource("splash.png"));
-	private static final ImageIcon imageIcon = new ImageIcon(image);
-	private final Thread splashThread;
+	private final Image     image     = Toolkit.getDefaultToolkit().getImage(Launcher.class.getResource("splash.png"));
+	private final ImageIcon imageIcon = new ImageIcon(image);
+	private final Thread    thread    = new Thread(this);
 	public SplashScreen()
 	{
 		try
@@ -27,41 +31,44 @@ public class SplashScreen extends JFrame
 			System.err.println(ex);
 		}
 		JFrame.setDefaultLookAndFeelDecorated(true);
-		splashThread = new Thread()
+		thread.start();
+	}
+	@Override
+	public void run()
+	{
+		if(RuntimeConfig.UNDER_IDE_DEBUGGING && GlobalConfig.HIDE_SPLASH_IN_DBG)
+			return;
+		// If translucent windows aren't supported, exit.
+		final boolean isTranslucencySupported = GraphicsEnvironment
+			.getLocalGraphicsEnvironment()
+			.getDefaultScreenDevice()
+			.isWindowTranslucencySupported(WindowTranslucency.PERPIXEL_TRANSLUCENT);
+		if(isTranslucencySupported == false)
+			return;
+		setUndecorated(true);
+		setSize(imageIcon.getIconWidth(), imageIcon.getIconHeight());
+		setLocationRelativeTo(null);
+		setBackground(new Color(0, 0, 0, 0));
+		setVisible(true);
+		try
 		{
-			@Override
-			public void run()
-			{
-				try
-				{
-					setUndecorated(true);
-					setSize(imageIcon.getIconWidth(), imageIcon.getIconHeight());
-					setLocationRelativeTo(null);
-					com.sun.awt.AWTUtilities.setWindowOpaque(SplashScreen.this, false);
-					setVisible(true);
-					Thread.sleep(splashTimeout);
-				} catch(InterruptedException ex) {
-				} finally {
-					setVisible(false);
-					dispose();
-				}
-			}
-		};
-		splashThread.start();
+			Thread.sleep(GlobalConfig.SPLASH_TIMEOUT_MS);
+		} catch(InterruptedException ex) {
+		}
+		setVisible(false);
+		dispose();
 	}
 	@Override
 	public void paint(Graphics g)
 	{
 		g.drawImage(image, 0, 0, this);
 	}
-	public void join(boolean bInterrupt)
+	public void join()
 	{
 		try
 		{
-			if(splashThread.isAlive())
-				if(bInterrupt)
-					splashThread.interrupt();
-			splashThread.join();
+			thread.interrupt();
+			thread.join();
 		} catch(InterruptedException ex) {
 		}
 	}

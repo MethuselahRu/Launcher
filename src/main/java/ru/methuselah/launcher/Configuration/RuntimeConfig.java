@@ -1,4 +1,4 @@
-package ru.methuselah.launcher;
+package ru.methuselah.launcher.Configuration;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,6 +9,7 @@ import java.net.URISyntaxException;
 import java.util.Scanner;
 import ru.methuselah.launcher.Data.Platform;
 import ru.methuselah.launcher.Data.RunType;
+import ru.methuselah.launcher.Launcher;
 import ru.simsonic.rscCommonsLibrary.HashAndCipherUtilities;
 import sun.misc.BASE64Decoder;
 

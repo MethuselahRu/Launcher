@@ -1,7 +1,5 @@
 package ru.methuselah.launcher;
 
-import ru.methuselah.launcher.Downloaders.ResourceManager;
-import ru.methuselah.launcher.Downloaders.LauncherUpdater;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.HeadlessException;
@@ -17,9 +15,13 @@ import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import ru.methuselah.authlib.methods.ResponseException;
+import ru.methuselah.launcher.Configuration.GlobalConfig;
+import ru.methuselah.launcher.Configuration.RuntimeConfig;
 import ru.methuselah.launcher.Data.OfflineClient;
 import ru.methuselah.launcher.Data.OfflineProject;
 import ru.methuselah.launcher.Data.Platform;
+import ru.methuselah.launcher.Downloaders.LauncherUpdater;
+import ru.methuselah.launcher.Downloaders.ResourceManager;
 import ru.methuselah.launcher.GUI.FrameLauncherMain;
 import ru.methuselah.launcher.GUI.FrameProjects;
 import ru.methuselah.launcher.GUI.SplashScreen;
@@ -81,7 +83,7 @@ public class Launcher implements Runnable
 			projectsFrame.selectProjectIfExist(properties.data.lastOpenedProject);
 			final OfflineProject startupProject = projectsFrame.getSelectedProject();
 			// Hide splash earlier and show main form
-			splash.join(true);
+			splash.join();
 			informAboutAncientJava();
 			// Let's do something
 			if(startupProject == null)

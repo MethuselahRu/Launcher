@@ -11,12 +11,12 @@ import java.util.Arrays;
 import javax.net.ssl.SSLServerSocketFactory;
 import javax.net.ssl.SSLSocket;
 import ru.methuselah.authlib.methods.ResponseException;
+import ru.methuselah.launcher.Configuration.GlobalConfig;
+import ru.methuselah.launcher.Configuration.RuntimeConfig;
 import ru.methuselah.launcher.Data.OfflineClient;
 import ru.methuselah.launcher.Data.Platform;
 import ru.methuselah.launcher.Game.GameLaunchHelper.TextProperty;
-import ru.methuselah.launcher.GlobalConfig;
 import ru.methuselah.launcher.Launcher;
-import ru.methuselah.launcher.RuntimeConfig;
 import ru.methuselah.launcher.Utilities;
 import ru.methuselah.securitylibrary.Data.Launcher.LauncherAnswerServers;
 import ru.methuselah.securitylibrary.Data.Launcher.LauncherMessageGetServers;
@@ -141,7 +141,7 @@ public class GameLauncher extends WrappedGameStarter
 			cmdline.add((RuntimeConfig.RUNTIME_PLATFORM.equals(Platform.WINDOWS)) ? "javaw" : "java");
 			cmdline.add("-Xdebug");
 			// cmdline.add("-Xrunjdwp:transport=dt_socket,address=25600,server=y");
-			cmdline.add("-Xmx" + Integer.toString(launcher.properties.data.nMemoryAllocationMB) + "m");
+			cmdline.add("-Xmx" + launcher.properties.data.nMemoryAllocationMB + "m");
 			cmdline.add("-Xmn128M");
 			cmdline.add("-XX:HeapDumpPath=MojangTricksIntelDriversForPerformance_javaw.exe_minecraft.exe.heapdump");
 			cmdline.add("-XX:+UseConcMarkSweepGC");
@@ -151,7 +151,7 @@ public class GameLauncher extends WrappedGameStarter
 			if(client.additionalJavaArguments != null)
 				cmdline.addAll(Arrays.asList(client.additionalJavaArguments.split("\\s")));
 			cmdline.add("-cp");
-			cmdline.add(clientFolder + client.jarFile);
+			cmdline.add(RuntimeConfig.RUNTIME_PATH + ";" + clientFolder + client.jarFile);
 			cmdline.add(ru.methuselah.clientsidewrapper.Wrapper.class.getCanonicalName());
 			cmdline.add("--port");
 			cmdline.add(Integer.toString(startLocalSecureServer(client)));
@@ -178,9 +178,8 @@ public class GameLauncher extends WrappedGameStarter
 				@Override
 				public void run()
 				{
-					try
+					try(final BufferedReader bri = new BufferedReader(new InputStreamReader(process.getInputStream())))
 					{
-						final BufferedReader bri = new BufferedReader(new InputStreamReader(process.getInputStream()));
 						for(String line = bri.readLine(); line != null; line = bri.readLine())
 							System.err.println(line);
 					} catch(IOException ex) {
@@ -192,9 +191,8 @@ public class GameLauncher extends WrappedGameStarter
 				@Override
 				public void run()
 				{
-					try
+					try(final BufferedReader bre = new BufferedReader(new InputStreamReader(process.getErrorStream())))
 					{
-						final BufferedReader bre = new BufferedReader(new InputStreamReader(process.getErrorStream()));
 						for(String line = bre.readLine(); line != null; line = bre.readLine())
 							System.err.println(line);
 					} catch(IOException ex) {

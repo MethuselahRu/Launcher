@@ -17,12 +17,12 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import ru.methuselah.launcher.Configuration.GlobalConfig;
+import ru.methuselah.launcher.Configuration.RuntimeConfig;
 import ru.methuselah.launcher.Data.OfflineProject;
 import ru.methuselah.launcher.GUI.Controls.TransparentButton;
 import ru.methuselah.launcher.GUI.Controls.TransparentLabel;
-import ru.methuselah.launcher.GlobalConfig;
 import ru.methuselah.launcher.Launcher;
-import ru.methuselah.launcher.RuntimeConfig;
 import ru.methuselah.launcher.Utilities;
 import ru.methuselah.securitylibrary.Data.Launcher.LauncherAnswerDesign;
 

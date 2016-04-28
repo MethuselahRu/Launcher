@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import ru.methuselah.launcher.Configuration.RuntimeConfig;
 import ru.methuselah.launcher.Data.OfflineProject;
 import ru.simsonic.rscCommonsLibrary.HashAndCipherUtilities;
 
@@ -14,8 +15,8 @@ public class Offline
 	{
 		this.launcher = launcher;
 	}
-	public final HashSet<String> offlineProjects = new HashSet<>();
-	public final HashMap<String, String> offlineClients = new HashMap<>();
+	public final HashSet<String>         offlineProjects = new HashSet<>();
+	public final HashMap<String, String> offlineClients  = new HashMap<>();
 	public static OfflineProject[] searchOfflineProjects()
 	{
 		final ArrayList<OfflineProject> result = new ArrayList<>();

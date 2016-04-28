@@ -3,6 +3,8 @@ package ru.methuselah.launcher;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import ru.methuselah.launcher.Configuration.GlobalConfig;
+import ru.methuselah.launcher.Configuration.RuntimeConfig;
 import ru.methuselah.launcher.Data.LauncherPropertiesFields;
 import ru.simsonic.rscCommonsLibrary.HashAndCipherUtilities;
 

@@ -4,12 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.GridLayout;
+import ru.methuselah.launcher.Configuration.RuntimeConfig;
 import ru.methuselah.launcher.GUI.Controls.OpaqueTextField;
 import ru.methuselah.launcher.GUI.Controls.TransparentButton;
 import ru.methuselah.launcher.GUI.Controls.TransparentLabel;
 import ru.methuselah.launcher.GUI.Controls.TransparentPanel;
 import ru.methuselah.launcher.Launcher;
-import ru.methuselah.launcher.RuntimeConfig;
 
 public class PanelOptions extends TransparentPanel
 {

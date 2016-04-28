@@ -2,12 +2,12 @@ package ru.methuselah.launcher.Downloaders;
 
 import java.io.File;
 import java.io.IOException;
+import ru.methuselah.launcher.Configuration.GlobalConfig;
+import ru.methuselah.launcher.Configuration.RuntimeConfig;
 import ru.methuselah.launcher.Data.Platform;
 import ru.methuselah.launcher.Data.RunType;
-import ru.methuselah.launcher.GlobalConfig;
 import ru.methuselah.launcher.Launcher;
 import ru.methuselah.launcher.LauncherProperties;
-import ru.methuselah.launcher.RuntimeConfig;
 import ru.methuselah.launcher.Utilities;
 import ru.simsonic.rscCommonsLibrary.HashAndCipherUtilities;
 

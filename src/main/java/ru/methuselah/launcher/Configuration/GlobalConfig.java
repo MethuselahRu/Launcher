@@ -1,4 +1,4 @@
-package ru.methuselah.launcher;
+package ru.methuselah.launcher.Configuration;
 
 public final class GlobalConfig
 {
@@ -23,4 +23,6 @@ public final class GlobalConfig
 	public static final boolean ALLOW_IDE_DETECTING = true;
 	public static final boolean RUN_GAME_SEPARATELY = true;
 	public static final int     MAX_DLOAD_THREADS   = 10;
+	public static final boolean HIDE_SPLASH_IN_DBG  = false;
+	public static final int     SPLASH_TIMEOUT_MS   = 4000;
 }

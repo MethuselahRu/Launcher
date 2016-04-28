@@ -5,7 +5,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.stream.JsonWriter;
 import java.io.File;
 import java.io.IOException;
-import ru.methuselah.launcher.RuntimeConfig;
+import ru.methuselah.launcher.Configuration.RuntimeConfig;
 import ru.methuselah.securitylibrary.Data.Launcher.ProjectInfo;
 import ru.simsonic.rscCommonsLibrary.HashAndCipherUtilities;
 
