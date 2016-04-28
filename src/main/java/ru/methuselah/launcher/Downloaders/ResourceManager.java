@@ -102,7 +102,7 @@ public class ResourceManager
 					BaseUpdater.downloadFile(source, target, new File(object.originalName).getName());
 				}
 			});
-			// Ожидаю, чтобы было не более 10 активных потоков и запускаю
+			// Ожидаю, чтобы было не более N активных потоков и запускаю
 			while(group.activeCount() > GlobalConfig.MAX_DLOAD_THREADS) {}
 			threads.add(backgroundThread);
 			backgroundThread.start();
