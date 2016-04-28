@@ -206,11 +206,11 @@ public class Launcher implements Runnable
 	}
 	private void informAboutAncientJava()
 	{
-		if(!Utilities.testJavaForUpdate())
+		if(Utilities.testJavaForUpdate() == false)
 		{
 			// Напоминать в будущем, когда текущая версия устареет
-			instance.properties.data.allowAncientJavaVersion = "";
-			instance.properties.saveToDisk();
+			properties.data.allowAncientJavaVersion = "";
+			properties.saveToDisk();
 			return;
 		}
 		switch(JOptionPane.showConfirmDialog(projectsFrame, new JLabel("<html>"
@@ -236,19 +236,19 @@ public class Launcher implements Runnable
 			} catch(IOException ex) {
 			}
 			// Напоминать в будущем
-			instance.properties.data.allowAncientJavaVersion = "";
-			instance.properties.saveToDisk();
+			properties.data.allowAncientJavaVersion = "";
+			properties.saveToDisk();
 			System.exit(0);
 			return;
 		case JOptionPane.NO_OPTION:
-			instance.properties.data.allowAncientJavaVersion = System.getProperty("java.version");
-			instance.properties.saveToDisk();
+			properties.data.allowAncientJavaVersion = System.getProperty("java.version");
+			properties.saveToDisk();
 			return;
 		case JOptionPane.CANCEL_OPTION:
 		default:
 			// Напоминать в будущем
-			instance.properties.data.allowAncientJavaVersion = "";
-			instance.properties.saveToDisk();
+			properties.data.allowAncientJavaVersion = "";
+			properties.saveToDisk();
 			break;
 		}
 	}
@@ -273,26 +273,12 @@ public class Launcher implements Runnable
 		{
 			new ProcessBuilder(params).directory(changeLauncherPath.getParentFile()).start();
 		} catch(IOException | HeadlessException ex) {
+			System.err.println(ex);
 		}
 		System.exit(0);
 	}
 	public static void main(String[] args)
 	{
 		instance.run();
-		/*
-		HashMap<String, String> listProjectClients = new HashMap<String, String>();
-		listProjectClients.put("abc", "def");
-		byte[] t = ClassFieldExchanger.processBytecodeConstants(Launcher.class.getCanonicalName(), listProjectClients);
-		try
-		{
-			final File classFile = new File("E:\\_YggdrasilGameProfileRepository.class");
-			final byte[] data = new byte[(int)classFile.length()];
-			new FileInputStream(classFile).read(data);
-			ClassFileParser cfp = new ClassFileParser(data);
-			Map<Integer, String> constantPoolStrings = cfp.getConstantPoolStrings();
-			System.out.println("END.");
-		} catch(IOException ex) {
-		}
-		*/
 	}
 }
