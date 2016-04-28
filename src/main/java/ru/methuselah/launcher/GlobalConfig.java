@@ -2,7 +2,7 @@ package ru.methuselah.launcher;
 
 public final class GlobalConfig
 {
-	public static final String  VERSION             = "v2.22b";
+	public static final String  VERSION             = "v2.23b";
 	public static final String  CONFIGURATION_FILE  = "launcher-properties.bin";
 	public static final String  HOME_SUBDIRECTORY   = ".voxile";
 	public static final String  EXECUTABLE_NAME     = "Launcher";
@@ -22,4 +22,5 @@ public final class GlobalConfig
 	public static final String  LINKS_VOTE4B        = "http://monitoringminecraft.ru/server/84861";
 	public static final boolean ALLOW_IDE_DETECTING = true;
 	public static final boolean RUN_GAME_SEPARATELY = true;
+	public static final int     MAX_DLOAD_THREADS   = 10;
 }

@@ -1,5 +1,7 @@
 package ru.methuselah.launcher;
 
+import ru.methuselah.launcher.Downloaders.ResourceManager;
+import ru.methuselah.launcher.Downloaders.LauncherUpdater;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.HeadlessException;

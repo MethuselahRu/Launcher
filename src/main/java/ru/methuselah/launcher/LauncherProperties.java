@@ -8,7 +8,7 @@ import ru.simsonic.rscCommonsLibrary.HashAndCipherUtilities;
 
 public final class LauncherProperties
 {
-	private static final File propertiesFile = new File(RuntimeConfig.LAUNCHER_HOME, GlobalConfig.CONFIGURATION_FILE);
+	private static final File PROPERTIES_FILE = new File(RuntimeConfig.LAUNCHER_HOME, GlobalConfig.CONFIGURATION_FILE);
 	public LauncherPropertiesFields data = new LauncherPropertiesFields();
 	protected LauncherProperties()
 	{
@@ -25,14 +25,14 @@ public final class LauncherProperties
 	}
 	public void reloadFromDisk()
 	{
-		if(propertiesFile.isFile())
-			data = HashAndCipherUtilities.loadEncryptedObject(propertiesFile, LauncherPropertiesFields.class);
+		if(PROPERTIES_FILE.isFile())
+			data = HashAndCipherUtilities.loadEncryptedObject(PROPERTIES_FILE, LauncherPropertiesFields.class);
 		if(data == null)
 			data = new LauncherPropertiesFields();
 	}
 	public void saveToDisk()
 	{
-		HashAndCipherUtilities.saveEncryptedObject(propertiesFile, data, LauncherPropertiesFields.class);
+		HashAndCipherUtilities.saveEncryptedObject(PROPERTIES_FILE, data, LauncherPropertiesFields.class);
 	}
 	public static String getFirstRunProjectCode()
 	{

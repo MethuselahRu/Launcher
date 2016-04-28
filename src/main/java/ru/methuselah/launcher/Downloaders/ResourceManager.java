@@ -1,4 +1,4 @@
-package ru.methuselah.launcher;
+package ru.methuselah.launcher.Downloaders;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -11,10 +11,15 @@ import java.nio.file.Files;
 import java.security.PrivilegedActionException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import ru.methuselah.launcher.Data.MojangInternalIndex;
 import ru.methuselah.launcher.Data.OfflineClient;
 import ru.methuselah.launcher.Data.OfflineProject;
+import ru.methuselah.launcher.GlobalConfig;
+import ru.methuselah.launcher.Launcher;
+import ru.methuselah.launcher.RuntimeConfig;
+import ru.methuselah.launcher.Utilities;
 import ru.methuselah.securitylibrary.Data.Launcher.LauncherAnswerDesign;
 import ru.methuselah.securitylibrary.Data.Mojang.MojangAssetIndex;
 import ru.methuselah.securitylibrary.Data.Mojang.MojangAssetIndex.AssetObject;
@@ -74,7 +79,9 @@ public class ResourceManager
 			mojangIndex.objects = finalIndex.values().toArray(new AssetObject[finalIndex.size()]);
 		}
 		// Скачать все необходимые файлы
-		for(AssetObject object : mojangIndex.objects)
+		final ThreadGroup group = new ThreadGroup("assets");
+		final HashSet<Thread> threads = new HashSet<>();
+		for(final AssetObject object : mojangIndex.objects)
 		{
 			final String objectHashPath = object.hash.substring(0, 2) + "/" + object.hash;
 			final File target = new File(resourcesHome + File.separator + (mojangIndex.virtual
@@ -86,8 +93,29 @@ public class ResourceManager
 			final String source = (object.sourceUrl == null || "".equals(object.sourceUrl)
 				? "http://resources.download.minecraft.net/" + objectHashPath
 				: object.sourceUrl);
-			BaseUpdater.downloadFile(source, target, new File(object.originalName).getName());
+			// Создаю новый параллельный поток для загрузки
+			final Thread backgroundThread = new Thread(group, new Runnable()
+			{
+				@Override
+				public void run()
+				{
+					BaseUpdater.downloadFile(source, target, new File(object.originalName).getName());
+				}
+			});
+			// Ожидаю, чтобы было не более 10 активных потоков и запускаю
+			while(group.activeCount() > GlobalConfig.MAX_DLOAD_THREADS) {}
+			threads.add(backgroundThread);
+			backgroundThread.start();
 		}
+		for(Thread backgroundThread : threads)
+			try
+			{
+				backgroundThread.join();
+			} catch(InterruptedException ex) {
+			}
+		threads.clear();
+		group.destroy();
+		Launcher.showGrant("Загрузка Assets завершена");
 		// Сохранить новый временный индексный файл
 		client.assetIndexFile = saveClientIndex(client, mojangIndex);
 	}

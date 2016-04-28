@@ -1,4 +1,4 @@
-package ru.methuselah.launcher;
+package ru.methuselah.launcher.Downloaders;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -15,6 +15,7 @@ import java.security.PrivilegedActionException;
 import java.util.Collections;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+import ru.methuselah.launcher.Launcher;
 
 public class BaseUpdater
 {
@@ -40,33 +41,16 @@ public class BaseUpdater
 			System.err.println(ex);
 		}
 	}
-	public static void downloadFileOLD(String srcURL, File saveAs, String showAs)
+	public static void copyFile(File from, File to)
 	{
-		try
+		try(FileOutputStream fos = new FileOutputStream(to);
+			BufferedInputStream bis = new BufferedInputStream(new FileInputStream(from)))
 		{
-			saveAs.getParentFile().mkdirs();
-			HttpURLConnection connection = (HttpURLConnection)new URL(srcURL).openConnection();
-			connection.setUseCaches(false);
-			connection.setDefaultUseCaches(false);
-			connection.setRequestProperty("Cache-Control", "no-store,no-cache,max-age=0");
-			connection.setRequestProperty("Expires", "0");
-			connection.setRequestProperty("Pragma", "no-cache");
-			connection.connect();
-			final InputStream cis = connection.getInputStream();
-			final FileOutputStream fos = new FileOutputStream(saveAs);
-			final int currentFileSize = connection.getContentLength();
-			final byte[] buffer = new byte[65536];
-			for(int totalDataRead, cnt = 0; cnt >= 0; cnt = cis.read(buffer))
-			{
-				fos.write(buffer, 0, cnt);
-				totalDataRead =+ cnt;
-				if(showAs != null)
-					Launcher.showGrant(String.format("%s, %3.1f%%...", showAs, (totalDataRead * 100.0f / currentFileSize)));
-			}
-			cis.close();
-			fos.close();
-			System.out.println("File download complete: " + saveAs);
-		} catch(IOException ex) {
+			System.out.println("Копирование " + from + " -> " + to);
+			final ReadableByteChannel rbc = Channels.newChannel(bis);
+			fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+			fos.flush();
+		} catch(IOException | NullPointerException ex) {
 			System.err.println(ex);
 		}
 	}
@@ -86,14 +70,14 @@ public class BaseUpdater
 				if(annotate)
 					Launcher.showGrant("Распаковка " + fileZip.getName() + " завершена");
 			} catch(IOException ex) {
-				System.err.println(ex.toString());
+				System.err.println(ex);
 			} finally {
 				fileZip.delete();
 			}
 		} else
 			System.err.println((new StringBuilder()).append("\nNot found: ").append(fileZip).toString());
 	}
-	public static void extractFromZip(String szExtractPath, String szName, ZipFile zf, ZipEntry ze)
+	private static void extractFromZip(String szExtractPath, String szName, ZipFile zf, ZipEntry ze)
 	{
 		if(ze.isDirectory())
 			return;
@@ -113,20 +97,6 @@ public class BaseUpdater
 				fos.flush();
 			}
 		} catch(IOException ex) {
-			System.err.println(ex);
-		}
-	}
-	protected static void copyFile(File from, File to)
-	{
-		try(FileOutputStream fos = new FileOutputStream(to);
-			BufferedInputStream bis = new BufferedInputStream(new FileInputStream(from)))
-		{
-			System.out.println("Копирование " + from + " -> " + to);
-			final ReadableByteChannel rbc = Channels.newChannel(bis);
-			fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-			fos.flush();
-		} catch(IOException ex) {
-		} catch(NullPointerException ex) {
 			System.err.println(ex);
 		}
 	}
