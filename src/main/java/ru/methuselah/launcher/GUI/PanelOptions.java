@@ -8,8 +8,8 @@ import ru.methuselah.launcher.GUI.Controls.OpaqueTextField;
 import ru.methuselah.launcher.GUI.Controls.TransparentButton;
 import ru.methuselah.launcher.GUI.Controls.TransparentLabel;
 import ru.methuselah.launcher.GUI.Controls.TransparentPanel;
-import ru.methuselah.launcher.GlobalConfig;
 import ru.methuselah.launcher.Launcher;
+import ru.methuselah.launcher.RuntimeConfig;
 
 public class PanelOptions extends TransparentPanel
 {
@@ -38,7 +38,7 @@ public class PanelOptions extends TransparentPanel
 		add(paneloptions_left);
 		add(paneloptions_right, "East");
 		add(btnDone, "South");
-		lnkDirectory.setText(GlobalConfig.launcherHomeDir.toString());
+		lnkDirectory.setText(RuntimeConfig.LAUNCHER_HOME.toString());
 		lnkDirectory.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lnkDirectory.setForeground(Color.blue);
 		txtMemory.setText(Integer.toString(Launcher.getInstance().properties.data.nMemoryAllocationMB));

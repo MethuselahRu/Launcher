@@ -6,10 +6,32 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Random;
 import ru.methuselah.securitylibrary.MethuselahPrivate;
 
 public class Utilities
 {
+	private static final String[] ACTUAL_JAVA_VERSION  = { "1.7.0", "1.8.0" };
+	private static final String[] FUN_CAPTION_SPLASHES = new String[]
+	{
+		"а давай снимем видео и выложим на Ютуб?!",
+		"we are the best of the best of the best!",
+		"простите, я опять это сломал. Зато печеньки есть.",
+		"позадирали свои Приоры, под ними ходить можно!",
+		"модер, модер, парень работящий...",
+		"пвп или убежал?",
+		"сколько стоит админка?",
+		"да, именно, это случайные сплеши.",
+		"почему в этом компьютере так пыльно?",
+		"нет, я не стал работать быстрее.",
+		"не читай меня, слышь!",
+		"админ, запривать мне остров!",
+		"почему не работает /dupe ???",
+	};
+	public static String createMainFrameCaption(boolean includeSplash)
+	{
+		return "VOXILE" + (includeSplash ? " — " + FUN_CAPTION_SPLASHES[new Random().nextInt(FUN_CAPTION_SPLASHES.length)] : "");
+	}
  	public static void sleep(int seconds)
 	{
 		try
@@ -21,7 +43,7 @@ public class Utilities
 	public static boolean testJavaForUpdate()
 	{
 		final String version = System.getProperty("java.version");
-		for(String actual : GlobalConfig.actualJavaVersions)
+		for(String actual : ACTUAL_JAVA_VERSION)
 			if(version.contains(actual))
 				return false;
 		return !version.equals(Launcher.getInstance().properties.data.allowAncientJavaVersion);

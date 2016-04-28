@@ -22,12 +22,12 @@ import ru.simsonic.rscCommonsLibrary.HashAndCipherUtilities;
 
 public class ResourceManager
 {
-	private static final String catalogName = "launcher-resources";
+	private static final String RESOURCES_FOLDER = "launcher-resources";
 	private final String resourcesHome;
 	public ResourceManager(File launcherHome)
 	{
 		// Create resources directory
-		final File resourcesHomeFile = new File(launcherHome, catalogName);
+		final File resourcesHomeFile = new File(launcherHome, RESOURCES_FOLDER);
 		try
 		{
 			Files.setAttribute(resourcesHomeFile.toPath(), "dos:hidden", true);
@@ -142,24 +142,23 @@ public class ResourceManager
 		// Построить списки для скачивания
 		final HashMap<String, String> gameFiles = new HashMap<>();
 		// Добавить скачивание native файлов
-		switch(GlobalConfig.platform)
+		switch(RuntimeConfig.RUNTIME_PLATFORM)
 		{
 			case LINUX:
-			case SOLARIS:
-				gameFiles.put("1710_linux_natives.zip", GlobalConfig.urlBinaries + "libraries/");
+				gameFiles.put("1710_linux_natives.zip", GlobalConfig.URL_LAUNCHER_BINS + "libraries/");
 				break;
 			case WINDOWS:
-				gameFiles.put("1710_windows_natives.zip", GlobalConfig.urlBinaries + "libraries/");
+				gameFiles.put("1710_windows_natives.zip", GlobalConfig.URL_LAUNCHER_BINS + "libraries/");
 				break;
 			case MACOSX:
-				gameFiles.put("1710_macosx_natives.zip", GlobalConfig.urlBinaries + "libraries/");
+				gameFiles.put("1710_macosx_natives.zip", GlobalConfig.URL_LAUNCHER_BINS + "libraries/");
 				break;
 			default:
 				System.err.println("OS (" + System.getProperty("os.name") + ") is not supported.");
 				return;
 		}
-		gameFiles.put(client.jarFile,      GlobalConfig.urlBinaries + "clients/");
-		gameFiles.put(client.contentsFile, GlobalConfig.urlBinaries + "clients/");
+		gameFiles.put(client.jarFile,      GlobalConfig.URL_LAUNCHER_BINS + "clients/");
+		gameFiles.put(client.contentsFile, GlobalConfig.URL_LAUNCHER_BINS + "clients/");
 		// Скачивание файлов
 		try
 		{

@@ -44,7 +44,7 @@ public class Launcher implements Runnable
 	// Описание
 	public final LauncherProperties properties = new LauncherProperties();
 	public final Offline offline = new Offline(this);
-	public final ResourceManager resources = new ResourceManager(GlobalConfig.launcherHomeDir);
+	public final ResourceManager resources = new ResourceManager(RuntimeConfig.LAUNCHER_HOME);
 	public final Authentication authentication = new Authentication(this);
 	public final GameLauncher gameLauncher = new GameLauncher(this);
 	public final FrameProjects projectsFrame = new FrameProjects(this);
@@ -100,7 +100,7 @@ public class Launcher implements Runnable
 		resources.saveDesignFile(currentProject, msgDesign);
 		launcherFrame = new FrameLauncherMain(this, currentProject, msgDesign);
 		authentication.restoreSavedUsername(project, launcherFrame.panelLogin);
-		showGrant(GlobalConfig.versionString);
+		showGrant(GlobalConfig.VERSION + (RuntimeConfig.UNDER_IDE_DEBUGGING ? " (IDE)" : ""));
 		launcherFrame.setVisible(true);
 	}
 	public boolean getProjectClients()
@@ -252,14 +252,14 @@ public class Launcher implements Runnable
 	{
 		final int nMemoryAllocation = instance.properties.data.nMemoryAllocationMB;
 		final ArrayList<String> params = new ArrayList<>(32);
-		params.add((GlobalConfig.platform == Platform.WINDOWS) ? "javaw" : "java");
+		params.add((RuntimeConfig.RUNTIME_PLATFORM == Platform.WINDOWS) ? "javaw" : "java");
 		params.add(new StringBuilder().append("-Xmx").append(nMemoryAllocation).append("m").toString());
 		params.add("-Dsun.java2d.noddraw=true");
 		params.add("-Dsun.java2d.d3d=false");
 		params.add("-Dsun.java2d.opengl=false");
 		params.add("-Dsun.java2d.pmoffscreen=false");
 		if(changeLauncherPath == null || "".equals(changeLauncherPath.getAbsolutePath()))
-			changeLauncherPath = new File(GlobalConfig.runPath);
+			changeLauncherPath = new File(RuntimeConfig.RUNTIME_PATH);
 		params.add("-classpath");
 		params.add(changeLauncherPath.getAbsolutePath());
 		params.add(Launcher.class.getCanonicalName());

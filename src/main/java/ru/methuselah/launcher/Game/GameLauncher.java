@@ -16,6 +16,7 @@ import ru.methuselah.launcher.Data.Platform;
 import ru.methuselah.launcher.Game.GameLaunchHelper.TextProperty;
 import ru.methuselah.launcher.GlobalConfig;
 import ru.methuselah.launcher.Launcher;
+import ru.methuselah.launcher.RuntimeConfig;
 import ru.methuselah.launcher.Utilities;
 import ru.methuselah.securitylibrary.Data.Launcher.LauncherAnswerServers;
 import ru.methuselah.securitylibrary.Data.Launcher.LauncherMessageGetServers;
@@ -58,7 +59,7 @@ public class GameLauncher extends WrappedGameStarter
 						Utilities.sleep(2);
 						forceUpdate = true;
 					} else {
-						final String script = GlobalConfig.urlScripts
+						final String script = GlobalConfig.URL_LAUNCHER_PHPS
 							+ "legacy/client_md5.php?user=" + launcher.authentication.getPlayerName()
 							+ "&client=" + client.caption
 							+ "&hash=" + HashAndCipherUtilities.fileToMD5(clientJarFile);
@@ -93,7 +94,7 @@ public class GameLauncher extends WrappedGameStarter
 				}
 				// Запуск игры
 				Launcher.showGrant("Запуск игры...");
-				launcher.launcherFrame.setTitle(GlobalConfig.createMainFrameCaption(false) + " :: " + client.captionLocalized);
+				launcher.launcherFrame.setTitle(Utilities.createMainFrameCaption(false) + " :: " + client.captionLocalized);
 				launcher.launcherFrame.setVisible(false);
 				launcher.gameLauncher.launchClient(client);
 				launcher.launcherFrame.gameFinished();
@@ -132,12 +133,12 @@ public class GameLauncher extends WrappedGameStarter
 	public void launchClient(OfflineClient client)
 	{
  		preLaunchActions(client);
-		if(GlobalConfig.separateGameProcess)
+		if(GlobalConfig.RUN_GAME_SEPARATELY)
 		{
 			final String clientFolder = client.getClientHome().getAbsolutePath() + File.separator;
 			// Параметры JVM
 			final ArrayList<String> cmdline = new ArrayList<>();
-			cmdline.add((GlobalConfig.platform.equals(Platform.WINDOWS)) ? "javaw" : "java");
+			cmdline.add((RuntimeConfig.RUNTIME_PLATFORM.equals(Platform.WINDOWS)) ? "javaw" : "java");
 			cmdline.add("-Xdebug");
 			// cmdline.add("-Xrunjdwp:transport=dt_socket,address=25600,server=y");
 			cmdline.add("-Xmx" + Integer.toString(launcher.properties.data.nMemoryAllocationMB) + "m");

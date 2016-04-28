@@ -10,8 +10,8 @@ import javax.swing.JFrame;
 import ru.methuselah.launcher.Data.OfflineProject;
 import ru.methuselah.launcher.GUI.Controls.TransparentLabel;
 import ru.methuselah.launcher.GUI.Controls.TransparentPanel;
-import ru.methuselah.launcher.GlobalConfig;
 import ru.methuselah.launcher.Launcher;
+import ru.methuselah.launcher.Utilities;
 import ru.methuselah.securitylibrary.Data.Launcher.LauncherAnswerDesign;
 
 /*
@@ -89,7 +89,7 @@ public class Designer extends JFrame
 	protected final TransparentLabel linkUpdateJava    = new TransparentLabel(" Вы используете устаревшую версию Java. Щелкните здесь, чтобы обновить. ");
 	protected Designer(Launcher launcher, OfflineProject project, LauncherAnswerDesign designDesc)
 	{
-		super(GlobalConfig.createMainFrameCaption(true));
+		super(Utilities.createMainFrameCaption(true));
 		this.launcher = launcher;
 		this.currentProject = project;
 	}

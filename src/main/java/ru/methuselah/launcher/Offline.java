@@ -19,7 +19,7 @@ public class Offline
 	public static OfflineProject[] searchOfflineProjects()
 	{
 		final ArrayList<OfflineProject> result = new ArrayList<>();
-		for(File dir : GlobalConfig.launcherHomeDir.listFiles())
+		for(File dir : RuntimeConfig.LAUNCHER_HOME.listFiles())
 			if(dir.isDirectory())
 			{
 				final File projectFile = new File(dir, "project.bin");

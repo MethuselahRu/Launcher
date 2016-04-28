@@ -8,16 +8,16 @@ import ru.simsonic.rscCommonsLibrary.HashAndCipherUtilities;
 
 public final class LauncherProperties
 {
-	private static final File propertiesFile = new File(GlobalConfig.launcherHomeDir, GlobalConfig.propertiesFilename);
+	private static final File propertiesFile = new File(RuntimeConfig.LAUNCHER_HOME, GlobalConfig.CONFIGURATION_FILE);
 	public LauncherPropertiesFields data = new LauncherPropertiesFields();
 	protected LauncherProperties()
 	{
 		try
 		{
-			new File(GlobalConfig.launcherHomeDir, "cl.xml").delete();
-			new File(GlobalConfig.launcherHomeDir, "clientlist.xml").delete();
-			new File(GlobalConfig.launcherHomeDir, "lastlogin").delete();
-			new File(GlobalConfig.launcherHomeDir, "launcher.properties").delete();
+			new File(RuntimeConfig.LAUNCHER_HOME, "cl.xml").delete();
+			new File(RuntimeConfig.LAUNCHER_HOME, "clientlist.xml").delete();
+			new File(RuntimeConfig.LAUNCHER_HOME, "lastlogin").delete();
+			new File(RuntimeConfig.LAUNCHER_HOME, "launcher.properties").delete();
 		} catch(RuntimeException ex) {
 		}
 		reloadFromDisk();

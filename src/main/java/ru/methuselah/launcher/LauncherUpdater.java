@@ -22,33 +22,33 @@ public class LauncherUpdater extends BaseUpdater
 		System.out.println("Поиск доступных обновлений ...");
 		try
 		{
-			final String launcherHash = GlobalConfig.bUnderIDE
-				? GlobalConfig.devHashIDE
-				: (GlobalConfig.runPath.endsWith(".jar") || GlobalConfig.runPath.endsWith(".exe"))
-					? HashAndCipherUtilities.fileToMD5(GlobalConfig.runPath)
+			final String launcherHash = RuntimeConfig.UNDER_IDE_DEBUGGING
+				? RuntimeConfig.DEVELOPER_IDE_HASH
+				: (RuntimeConfig.RUNTIME_PATH.endsWith(".jar") || RuntimeConfig.RUNTIME_PATH.endsWith(".exe"))
+					? HashAndCipherUtilities.fileToMD5(RuntimeConfig.RUNTIME_PATH)
 					: "";
 			final String launcherCheckResult = Utilities.executePost(
-				GlobalConfig.urlScripts + "legacy/launcher.php",
+				GlobalConfig.URL_LAUNCHER_PHPS + "legacy/launcher.php",
 				"launcherHash=" + launcherHash).trim();
 			if("OK".equalsIgnoreCase(launcherCheckResult) || "NO CONNECTION".equals(launcherCheckResult))
 			{
 				System.out.println("Обновлений не обнаружено.");
-				final File runFile    = new File(GlobalConfig.runPath);
-				final String nameJar = GlobalConfig.executableName + ".jar";
-				final String nameExe = GlobalConfig.executableName + ".exe";
-				final File correctJar = new File(GlobalConfig.launcherHomeDir, nameJar);
-				final File correctExe = new File(GlobalConfig.launcherHomeDir, nameExe);
-				if(GlobalConfig.runType == RunType.JAR && !runFile.equals(correctJar))
+				final File runFile    = new File(RuntimeConfig.RUNTIME_PATH);
+				final String nameJar = GlobalConfig.EXECUTABLE_NAME + ".jar";
+				final String nameExe = GlobalConfig.EXECUTABLE_NAME + ".exe";
+				final File correctJar = new File(RuntimeConfig.LAUNCHER_HOME, nameJar);
+				final File correctExe = new File(RuntimeConfig.LAUNCHER_HOME, nameExe);
+				if(RuntimeConfig.RUNTIME_PACKAGE == RunType.JAR && !runFile.equals(correctJar))
 				{
 					copyFile(runFile, correctJar);
 					if(!correctExe.isFile())
-						downloadFile(GlobalConfig.urlBinaries + "launcher/" + nameExe, correctExe, correctExe.getAbsolutePath());
+						downloadFile(GlobalConfig.URL_LAUNCHER_BINS + "launcher/" + nameExe, correctExe, correctExe.getAbsolutePath());
 				}
-				if(GlobalConfig.runType == RunType.EXE && !runFile.equals(correctExe))
+				if(RuntimeConfig.RUNTIME_PACKAGE == RunType.EXE && !runFile.equals(correctExe))
 				{
 					copyFile(runFile, correctExe);
 					if(!correctJar.isFile())
-						downloadFile(GlobalConfig.urlBinaries + "launcher/" + nameJar, correctJar, correctJar.getAbsolutePath());
+						downloadFile(GlobalConfig.URL_LAUNCHER_BINS + "launcher/" + nameJar, correctJar, correctJar.getAbsolutePath());
 				}
 			} else
 				updateLauncher();
@@ -59,26 +59,26 @@ public class LauncherUpdater extends BaseUpdater
 	private static void updateLauncher()
 	{
 		System.out.println("Загрузка обновлений ...");
-		final File runFile = new File(GlobalConfig.runPath);
-		final String nameJar = GlobalConfig.executableName + ".jar";
-		final File correctJar = new File(GlobalConfig.launcherHomeDir, nameJar);
-		if(GlobalConfig.runType == RunType.JAR && correctJar.compareTo(runFile) != 0)
+		final File runFile = new File(RuntimeConfig.RUNTIME_PATH);
+		final String nameJar = GlobalConfig.EXECUTABLE_NAME + ".jar";
+		final File correctJar = new File(RuntimeConfig.LAUNCHER_HOME, nameJar);
+		if(RuntimeConfig.RUNTIME_PACKAGE == RunType.JAR && correctJar.compareTo(runFile) != 0)
 		{
-			downloadFile(GlobalConfig.urlBinaries + "launcher/" + nameJar, runFile);
+			downloadFile(GlobalConfig.URL_LAUNCHER_BINS + "launcher/" + nameJar, runFile);
 			copyFile(runFile, correctJar);
 		} else
-			downloadFile(GlobalConfig.urlBinaries + "launcher/" + nameJar, correctJar);
+			downloadFile(GlobalConfig.URL_LAUNCHER_BINS + "launcher/" + nameJar, correctJar);
 		File restartFile = correctJar;
-		if(GlobalConfig.platform == Platform.WINDOWS)
+		if(RuntimeConfig.RUNTIME_PLATFORM == Platform.WINDOWS)
 		{
-			final String nameExe = GlobalConfig.executableName + ".exe";
-			final File correctExe = new File(GlobalConfig.launcherHomeDir, nameExe);
-			if(GlobalConfig.runType == RunType.EXE && correctExe.compareTo(runFile) != 0)
+			final String nameExe = GlobalConfig.EXECUTABLE_NAME + ".exe";
+			final File correctExe = new File(RuntimeConfig.LAUNCHER_HOME, nameExe);
+			if(RuntimeConfig.RUNTIME_PACKAGE == RunType.EXE && correctExe.compareTo(runFile) != 0)
 			{
-				downloadFile(GlobalConfig.urlBinaries + "launcher/" + nameExe, runFile);
+				downloadFile(GlobalConfig.URL_LAUNCHER_BINS + "launcher/" + nameExe, runFile);
 				copyFile(runFile, correctExe);
 			} else
-				downloadFile(GlobalConfig.urlBinaries + "launcher/" + nameExe, correctExe);
+				downloadFile(GlobalConfig.URL_LAUNCHER_BINS + "launcher/" + nameExe, correctExe);
 			restartFile = correctExe;
 		}
 		System.out.println("Применение обновлений ...");

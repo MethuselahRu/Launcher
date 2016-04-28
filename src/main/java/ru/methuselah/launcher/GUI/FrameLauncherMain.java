@@ -22,6 +22,7 @@ import ru.methuselah.launcher.GUI.Controls.TransparentButton;
 import ru.methuselah.launcher.GUI.Controls.TransparentLabel;
 import ru.methuselah.launcher.GlobalConfig;
 import ru.methuselah.launcher.Launcher;
+import ru.methuselah.launcher.RuntimeConfig;
 import ru.methuselah.launcher.Utilities;
 import ru.methuselah.securitylibrary.Data.Launcher.LauncherAnswerDesign;
 
@@ -307,7 +308,7 @@ public final class FrameLauncherMain extends Designer
 			@Override
 			public void mousePressed(MouseEvent arg0)
 			{
-				openLink("file://" + GlobalConfig.launcherHomeDir.getAbsolutePath());
+				openLink("file://" + RuntimeConfig.LAUNCHER_HOME.getAbsolutePath());
 			}
 		});
 		panelOptions.btnDone.addActionListener(new ActionListener()
@@ -415,7 +416,7 @@ public final class FrameLauncherMain extends Designer
 		panelClients.btnPlay.setEnabled(true);
 		panelClients.btnLogout.setEnabled(true);
 		panelLinks.btnSetup.setEnabled(true);
-		setTitle(GlobalConfig.createMainFrameCaption(true));
+		setTitle(Utilities.createMainFrameCaption(true));
 		setVisible(true);
 		switchToPanel(PANELS.clients);
 	}

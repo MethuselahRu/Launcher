@@ -5,7 +5,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.stream.JsonWriter;
 import java.io.File;
 import java.io.IOException;
-import ru.methuselah.launcher.GlobalConfig;
+import ru.methuselah.launcher.RuntimeConfig;
 import ru.methuselah.securitylibrary.Data.Launcher.ProjectInfo;
 import ru.simsonic.rscCommonsLibrary.HashAndCipherUtilities;
 
@@ -27,13 +27,13 @@ public class OfflineProject extends ProjectInfo implements Comparable<OfflinePro
 	public OfflineClient[] clients;
 	public File getProjectHome()
 	{
-		return new File(GlobalConfig.launcherHomeDir, code);
+		return new File(RuntimeConfig.LAUNCHER_HOME, code);
 	}
 	public static OfflineProject loadFromDisk(String code)
 	{
 		if(code != null && !"".equals(code))
 		{
-			final File projectFolder = new File(GlobalConfig.launcherHomeDir, code.toUpperCase());
+			final File projectFolder = new File(RuntimeConfig.LAUNCHER_HOME, code.toUpperCase());
 			if(projectFolder.isDirectory())
 			{
 				final File projectFile = new File(projectFolder, "project.bin");
@@ -44,7 +44,7 @@ public class OfflineProject extends ProjectInfo implements Comparable<OfflinePro
 	}
 	public void saveToDisk()
 	{
-		final File projectFolder = new File(GlobalConfig.launcherHomeDir, code);
+		final File projectFolder = new File(RuntimeConfig.LAUNCHER_HOME, code);
 		if(!projectFolder.isDirectory())
 			projectFolder.mkdir();
 		final File projectFile = new File(projectFolder, "project.bin");
