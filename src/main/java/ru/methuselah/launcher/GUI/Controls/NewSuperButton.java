@@ -1,4 +1,4 @@
-package ru.methuselah.launcher.GUI;
+package ru.methuselah.launcher.GUI.Controls;
 
 import java.awt.Color;
 import javax.swing.ImageIcon;

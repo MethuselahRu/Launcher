@@ -22,9 +22,9 @@ import ru.methuselah.launcher.Data.OfflineProject;
 import ru.methuselah.launcher.Data.Platform;
 import ru.methuselah.launcher.Downloaders.LauncherUpdater;
 import ru.methuselah.launcher.Downloaders.ResourceManager;
-import ru.methuselah.launcher.GUI.FrameLauncherMain;
-import ru.methuselah.launcher.GUI.FrameProjects;
-import ru.methuselah.launcher.GUI.SplashScreen;
+import ru.methuselah.launcher.GUI.Common.SplashScreen;
+import ru.methuselah.launcher.GUI.FormProject.ProjectFrame;
+import ru.methuselah.launcher.GUI.FormProjectList.ProjectListFrame;
 import ru.methuselah.launcher.Game.GameLauncher;
 import ru.methuselah.securitylibrary.Data.Launcher.ClientInfo;
 import ru.methuselah.securitylibrary.Data.Launcher.LauncherAnswerClients;
@@ -51,9 +51,9 @@ public class Launcher implements Runnable
 	public final ResourceManager resources = new ResourceManager(RuntimeConfig.LAUNCHER_HOME);
 	public final Authentication authentication = new Authentication(this);
 	public final GameLauncher gameLauncher = new GameLauncher(this);
-	public final FrameProjects projectsFrame = new FrameProjects(this);
+	public final ProjectListFrame projectsFrame = new ProjectListFrame(this);
 	public boolean checkboxDrivenStart = true;
-	public FrameLauncherMain launcherFrame;
+	public ProjectFrame launcherFrame;
 	@Override
 	public void run()
 	{
@@ -102,7 +102,7 @@ public class Launcher implements Runnable
 		currentProject.getProjectHome().mkdir();
 		final LauncherAnswerDesign msgDesign = new LauncherAnswerDesign(); // connection.onLauncherLoadDesign(currentProject.code);
 		resources.saveDesignFile(currentProject, msgDesign);
-		launcherFrame = new FrameLauncherMain(this, currentProject, msgDesign);
+		launcherFrame = new ProjectFrame(this, currentProject, msgDesign);
 		authentication.restoreSavedUsername(project, launcherFrame.panelLogin);
 		showGrant(GlobalConfig.VERSION + (RuntimeConfig.UNDER_IDE_DEBUGGING ? " (IDE)" : ""));
 		launcherFrame.setVisible(true);

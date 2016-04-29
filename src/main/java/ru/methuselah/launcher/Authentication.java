@@ -8,7 +8,7 @@ import ru.methuselah.authlib.links.Links;
 import ru.methuselah.authlib.links.LinksMethuselah;
 import ru.methuselah.authlib.methods.ResponseException;
 import ru.methuselah.launcher.Data.OfflineProject;
-import ru.methuselah.launcher.GUI.PanelLogin;
+import ru.methuselah.launcher.GUI.FormProject.PanelLogin;
 import ru.methuselah.securitylibrary.Data.MessagesWrapper.MessageWrappedGame;
 import ru.methuselah.securitylibrary.MethuselahPrivate;
 

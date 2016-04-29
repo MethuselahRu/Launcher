@@ -1,4 +1,4 @@
-package ru.methuselah.launcher.GUI;
+package ru.methuselah.launcher.GUI.FormProjectList;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -34,7 +34,7 @@ import ru.methuselah.launcher.GUI.Controls.TransparentPanel;
 import ru.methuselah.launcher.Launcher;
 import ru.methuselah.securitylibrary.Data.Launcher.LauncherAnswerProjects;
 
-public final class FrameProjects extends JFrame
+public final class ProjectListFrame extends JFrame
 {
 	private static final Color background = Color.DARK_GRAY;
 	private final JList projectsList = new JList();
@@ -138,7 +138,7 @@ public final class FrameProjects extends JFrame
 			return this;
 		}
 	}
-	public FrameProjects(final Launcher launcher)
+	public ProjectListFrame(final Launcher launcher)
 	{
 		super("Выбор проекта");
 		try
@@ -214,7 +214,7 @@ public final class FrameProjects extends JFrame
 				launcher.properties.data.lastOpenedProject = (checkSwitchToProject.isSelected() ? project.code : "");
 				launcher.properties.saveToDisk();
 				launcher.onSwitchToProject(project);
-				FrameProjects.this.setVisible(false);
+				ProjectListFrame.this.setVisible(false);
 			}
 		});
 	}

@@ -1,4 +1,4 @@
-package ru.methuselah.launcher.GUI;
+package ru.methuselah.launcher.GUI.FormProject;
 
 import java.awt.Color;
 import java.awt.Dimension;

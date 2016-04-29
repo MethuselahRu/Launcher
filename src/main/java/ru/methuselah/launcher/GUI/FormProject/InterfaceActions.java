@@ -1,4 +1,4 @@
-package ru.methuselah.launcher.GUI;
+package ru.methuselah.launcher.GUI.FormProject;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,8 +30,8 @@ import ru.methuselah.launcher.Launcher;
 
 public class InterfaceActions
 {
-	private final FrameLauncherMain frame;
-	public InterfaceActions(FrameLauncherMain frame)
+	private final ProjectFrame frame;
+	public InterfaceActions(ProjectFrame frame)
 	{
 		this.frame = frame;
 	}
