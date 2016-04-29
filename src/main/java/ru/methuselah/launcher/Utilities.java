@@ -14,6 +14,8 @@ public class Utilities
 	private static final String[] ACTUAL_JAVA_VERSION  = { "1.7.0", "1.8.0" };
 	private static final String[] FUN_CAPTION_SPLASHES = new String[]
 	{
+		"можно мне залить лавой креатив?",
+		"The floor is a lava!",
 		"а давай снимем видео и выложим на Ютуб?!",
 		"we are the best of the best of the best!",
 		"простите, я опять это сломал. Зато печеньки есть.",
@@ -25,8 +27,12 @@ public class Utilities
 		"почему в этом компьютере так пыльно?",
 		"нет, я не стал работать быстрее.",
 		"не читай меня, слышь!",
+		"а как купить админку?!?",
 		"админ, запривать мне остров!",
 		"почему не работает /dupe ???",
+		"семь раз отмерь, запривать криво.",
+		"ололо, ололо",
+		"shut up and take my money!",
 	};
 	public static String createMainFrameCaption(boolean includeSplash)
 	{
