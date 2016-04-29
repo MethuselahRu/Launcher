@@ -13,13 +13,13 @@ import ru.methuselah.launcher.Launcher;
 
 public class PanelOptions extends TransparentPanel
 {
-	public final TransparentLabel lblMemory = new TransparentLabel("Выделяемая память: ");
-	public final TransparentLabel lblUpdate = new TransparentLabel("Обновление клиента: ");
-	public final TransparentLabel lblPath = new TransparentLabel("Путь к папке с игрой: ");
-	public final TransparentLabel lnkDirectory = new TransparentLabel("");
-	public final OpaqueTextField txtMemory = new OpaqueTextField(20, "");
+	public final TransparentLabel  lblMemory      = new TransparentLabel("Выделяемая память: ");
+	public final TransparentLabel  lblUpdate      = new TransparentLabel("Обновление клиента: ");
+	public final TransparentLabel  lblPath        = new TransparentLabel("Путь к папке с игрой: ");
+	public final TransparentLabel  lnkDirectory   = new TransparentLabel("");
+	public final OpaqueTextField   txtMemory      = new OpaqueTextField(20, "");
 	public final TransparentButton btnForceUpdate = new TransparentButton("Обновить клиент");
-	public final TransparentButton btnDone = new TransparentButton("Готово");
+	public final TransparentButton btnDone        = new TransparentButton("Готово");
 	public PanelOptions()
 	{
 		super(new BorderLayout(0, 0));

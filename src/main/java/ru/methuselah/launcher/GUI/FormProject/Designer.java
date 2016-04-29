@@ -108,7 +108,7 @@ public class Designer extends JFrame
 			.replace("%project%", currentProject.caption)
 			+ "</html>";
 	}
-	protected void setTooltips()
+	protected final void setTooltips()
 	{
 		panelLogin.chkSavePassword.setToolTipText(htmlText(
 			"Если отметить эту галочку, то при следующем запуске поле <b>Пароль</b><br />"

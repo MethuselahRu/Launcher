@@ -34,7 +34,7 @@ public final class ProjectFrame extends Designer
 	public ProjectFrame(Launcher launcher, OfflineProject project, LauncherAnswerDesign designDesc)
 	{
 		super(launcher, project, designDesc);
-		setFavicon("favicon.png");
+		super.setFavicon("favicon.png");
 		setBackground();
 		setLayout(new BorderLayout(0, 0));
 		setResizable(false);
@@ -323,7 +323,10 @@ public final class ProjectFrame extends Designer
 					launcher.properties.saveToDisk();
 					Launcher.restart(null);
 				}
-				deauthenticated();
+				if(launcher.authentication.isAuthenticated())
+					switchToPanel(PANELS.clients);
+				else
+					switchToPanel(PANELS.login);
 			}
 		});
 		panelLinks.btnSetup.addActionListener(new ActionListener()
