@@ -167,22 +167,22 @@
 									<include>ru.methuselah:authlib</include>
 									<include>ru.methuselah:clientsidewrapper</include>
 									<include>ru.simsonic:rscCommonsLibrary</include>
-									<include>com.google.code.gson:gson</include>
 									<include>com.evilco.mc:nbt</include>
-									<include>com.google.guava:guava</include>
+									<include>com.google.code.gson:gson</include>
 									<include>com.google.code.findbugs:jsr305</include>
+									<include>com.google.guava:guava</include>
 									<include>org.mockito:mockito-all</include>
 									<include>commons-io:commons-io</include>
 								</includes>
 							</artifactSet>
 							<relocations>
 								<relocation>
-									<pattern>com.google.gson</pattern>
-									<shadedPattern>${project.groupId}.com-google-gson-shaded</shadedPattern>
+									<pattern>com.google</pattern>
+									<shadedPattern>${project.groupId}.${project.artifactId}.com-google-shaded</shadedPattern>
 								</relocation>
 								<relocation>
 									<pattern>com.evilco.mc.nbt</pattern>
-									<shadedPattern>${project.groupId}.com-evilco-mc-nbt-shaded</shadedPattern>
+									<shadedPattern>${project.groupId}.${project.artifactId}.com-evilco-mc-nbt-shaded</shadedPattern>
 								</relocation>
 							</relocations>
 						</configuration>
