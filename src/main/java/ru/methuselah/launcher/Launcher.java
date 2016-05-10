@@ -136,6 +136,8 @@ public class Launcher implements Runnable
 					gameInfo.libraries.add("minecraft_v1.7.10_libraries.jar");
 				if(gameInfo.jarFile.contains("v1.8"))
 					gameInfo.libraries.add("minecraft_v1.8_libraries.jar");
+				if(gameInfo.jarFile.contains("v1.9"))
+					gameInfo.libraries.add("minecraft_v1.9_libraries.jar");
 				clientList.add(gameInfo);
 			}
 			currentProject.clients = clientList.toArray(new OfflineClient[clientList.size()]);
