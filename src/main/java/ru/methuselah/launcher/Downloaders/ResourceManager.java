@@ -167,6 +167,10 @@ public class ResourceManager
 		}
 		return result;
 	}
+	public boolean areClientNativesExist(OfflineClient client)
+	{
+		return new File(getNativesDirForClient(client)).isDirectory();
+	}
 	public void updateClientFiles(OfflineClient client) throws IOException
 	{
 		// Создать каталог клиента

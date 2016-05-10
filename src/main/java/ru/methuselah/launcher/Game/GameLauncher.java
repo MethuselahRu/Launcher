@@ -46,10 +46,12 @@ public class GameLauncher extends WrappedGameStarter
 			@Override
 			public void run()
 			{
-				// Обновление ресурсных файлов игры
-				launcher.resources.checkClientAssets(client);
 				// Проверка клиента
 				boolean forceUpdate = false;
+				// Обновление ресурсных файлов игры
+				launcher.resources.checkClientAssets(client);
+				if(launcher.resources.areClientNativesExist(client) == false)
+					forceUpdate = true;
 				try
 				{
 					final File clientJarFile = client.getClientJar();
