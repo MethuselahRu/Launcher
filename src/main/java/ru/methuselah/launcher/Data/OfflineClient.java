@@ -25,7 +25,7 @@ public class OfflineClient extends ClientInfo
 		super.additionalJavaArguments = client.additionalJavaArguments;
 		super.additionalGameArguments = client.additionalGameArguments;
 		super.contentsFile            = client.contentsFile;
-		super.nativesSubdir             = client.nativesSubdir;
+		super.nativesSubdir           = client.nativesSubdir;
 	}
 	public File getClientHome()
 	{

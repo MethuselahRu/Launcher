@@ -217,7 +217,7 @@ public class GameLauncher extends WrappedGameStarter
 		result.assetsDir = launcher.resources.getGlobalAssetsDir();
 		if(gameInfo.assetIndexFile != null)
 			result.assetIndex = gameInfo.assetIndexFile.getName().replace(".json", "");
-		result.nativesDir = gameInfo.getClientHome() + File.separator + "natives";
+		result.nativesDir = launcher.resources.getNativesDirForClient(gameInfo);
 		final ArrayList<String> fullLibPaths = new ArrayList<>();
 		fullLibPaths.add(RuntimeConfig.RUNTIME_PATH);
 		fullLibPaths.add(result.gameDir + File.separator + gameInfo.jarFile);
