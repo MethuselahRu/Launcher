@@ -16,15 +16,16 @@ public class OfflineClient extends ClientInfo
 	public OfflineClient(OfflineProject project, ClientInfo client)
 	{
 		this.project = project;
-		this.caption = client.caption;
-		this.captionLocalized = client.captionLocalized;
-		this.folder = client.folder;
-		this.baseVersion = client.baseVersion;
-		this.jarFile = client.jarFile;
-		this.mainClass = client.mainClass;
-		this.additionalJavaArguments = client.additionalJavaArguments;
-		this.additionalGameArguments = client.additionalGameArguments;
-		this.contentsFile = client.contentsFile;
+		super.caption                 = client.caption;
+		super.captionLocalized        = client.captionLocalized;
+		super.folder                  = client.folder;
+		super.baseVersion             = client.baseVersion;
+		super.jarFile                 = client.jarFile;
+		super.mainClass               = client.mainClass;
+		super.additionalJavaArguments = client.additionalJavaArguments;
+		super.additionalGameArguments = client.additionalGameArguments;
+		super.contentsFile            = client.contentsFile;
+		super.nativesSubdir             = client.nativesSubdir;
 	}
 	public File getClientHome()
 	{

@@ -18,6 +18,23 @@ import ru.methuselah.launcher.Launcher;
 
 public class BaseUpdater
 {
+	public static void downloadTask(DownloadTask task)
+	{
+		downloadFile(task.downloadFrom, task.saveAs, task.showAs);
+		if(task.saveAs.isFile())
+		{
+			if(task.unzipInto != null)
+			{
+				try
+				{
+					unZip(task.saveAs, task.unzipInto, task.showAs != null);
+				} catch(PrivilegedActionException ex) {
+					System.err.println(ex);
+				}
+				task.saveAs.delete();
+			}
+		}
+	}
 	public static void downloadFile(String srcURL, File saveAs)
 	{
 		downloadFile(srcURL, saveAs, null);
@@ -53,7 +70,7 @@ public class BaseUpdater
 			System.err.println(ex);
 		}
 	}
-	public static void unZip(File fileZip, boolean annotate) throws PrivilegedActionException
+	public static void unZip(File fileZip, File destDir, boolean annotate) throws PrivilegedActionException
 	{
 		if(fileZip.isFile())
 		{
@@ -62,7 +79,12 @@ public class BaseUpdater
 				Launcher.showGrant("Распаковка " + fileZip.getName() + "...");
 			try(ZipFile zf = new ZipFile(fileZip))
 			{
-				final String szExtractPath = fileZip.getParent();
+				String szExtractPath = fileZip.getParent();
+				if(destDir != null)
+				{
+					destDir.mkdirs();
+					szExtractPath = destDir.getAbsolutePath();
+				}
 				for(ZipEntry zipEntry : Collections.list(zf.entries()))
 					extractFromZip(szExtractPath, zipEntry.getName(), zf, zipEntry);
 				System.err.println("Удачно!");

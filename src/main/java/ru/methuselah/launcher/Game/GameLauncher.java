@@ -147,7 +147,7 @@ public class GameLauncher extends WrappedGameStarter
 			cmdline.add("-XX:+UseConcMarkSweepGC");
 			cmdline.add("-XX:+CMSIncrementalMode");
 			cmdline.add("-XX:-UseAdaptiveSizePolicy");
-			cmdline.add("-Djava.library.path=" + clientFolder + "natives");
+			cmdline.add("-Djava.library.path=" + launcher.resources.getNativesDirForClient(client));
 			if(client.additionalJavaArguments != null)
 				cmdline.addAll(Arrays.asList(client.additionalJavaArguments.split("\\s")));
 			cmdline.add("-cp");

@@ -18,6 +18,7 @@ import ru.methuselah.launcher.Configuration.RuntimeConfig;
 import ru.methuselah.launcher.Data.MojangInternalIndex;
 import ru.methuselah.launcher.Data.OfflineClient;
 import ru.methuselah.launcher.Data.OfflineProject;
+import ru.methuselah.launcher.Data.Platform;
 import ru.methuselah.launcher.Launcher;
 import ru.methuselah.launcher.Utilities;
 import ru.methuselah.securitylibrary.Data.Launcher.LauncherAnswerDesign;
@@ -44,6 +45,12 @@ public class ResourceManager
 	public String getGlobalAssetsDir()
 	{
 		return resourcesHome;
+	}
+	public String getNativesDirForClient(OfflineClient client)
+	{
+		return resourcesHome
+			+ "natives" + File.separator
+			+ client.project.code + "_" + client.caption + File.separator;
 	}
 	public void saveDesignFile(OfflineProject project, LauncherAnswerDesign design)
 	{
@@ -164,44 +171,47 @@ public class ResourceManager
 	{
 		// Создать каталог клиента
 		final String clientFolder = client.getClientHome() + File.separator;
-		File createFolder = new File(clientFolder);
+		final File createFolder = new File(clientFolder);
 		if(!createFolder.exists())
-			createFolder.mkdir();
-		// Построить списки для скачивания
-		final HashMap<String, String> gameFiles = new HashMap<>();
-		// Добавить скачивание native файлов
-		switch(RuntimeConfig.RUNTIME_PLATFORM)
+			createFolder.mkdirs();
+		// Формирование списка файлов для скачивания
+		final HashSet<DownloadTask> downloads = new HashSet<>();
+		// Платформенно-зависимые бинарные файлы
+		final String nativesURL = GlobalConfig.URL_LAUNCHER_BINS
+			+ "natives/" + (client.nativesSubdir != null ? client.nativesSubdir : "1710")
+			+ "/" + RuntimeConfig.RUNTIME_PLATFORM.name().toLowerCase()
+			+ ".zip";
+		final String nativesDIR = getNativesDirForClient(client);
+		if(RuntimeConfig.RUNTIME_PLATFORM != Platform.UNKNOWN)
 		{
-			case LINUX:
-				gameFiles.put("1710_linux_natives.zip", GlobalConfig.URL_LAUNCHER_BINS + "libraries/");
-				break;
-			case WINDOWS:
-				gameFiles.put("1710_windows_natives.zip", GlobalConfig.URL_LAUNCHER_BINS + "libraries/");
-				break;
-			case MACOSX:
-				gameFiles.put("1710_macosx_natives.zip", GlobalConfig.URL_LAUNCHER_BINS + "libraries/");
-				break;
-			default:
-				System.err.println("OS (" + System.getProperty("os.name") + ") is not supported.");
-				return;
+			downloads.add(new DownloadTask(
+				nativesURL,
+				"Файлы платформы",
+				new File(nativesDIR + "download.zip"),
+				new File(nativesDIR)));
+		} else {
+			final String error = "OS (" + System.getProperty("os.name") + ") is not supported.";
+			Launcher.showError(error);
+			System.err.println(error);
+			return;
 		}
-		gameFiles.put(client.jarFile,      GlobalConfig.URL_LAUNCHER_BINS + "clients/");
-		gameFiles.put(client.contentsFile, GlobalConfig.URL_LAUNCHER_BINS + "clients/");
-		// Скачивание файлов
-		try
+		// Файлы клиента
+		downloads.add(new DownloadTask(
+			GlobalConfig.URL_LAUNCHER_BINS + "clients/" + client.jarFile,
+			client.jarFile,
+			new File(clientFolder, client.jarFile)));
+		downloads.add(new DownloadTask(
+			GlobalConfig.URL_LAUNCHER_BINS + "clients/" + client.contentsFile,
+			client.contentsFile,
+			new File(clientFolder, client.contentsFile),
+			new File(clientFolder)));
+		// Начало всех загрузок
+		for(DownloadTask task : downloads)
 		{
-			for(String fileName : gameFiles.keySet())
-			{
-				System.out.println("Загрузка файла " + fileName);
-				BaseUpdater.downloadFile(gameFiles.get(fileName) + fileName, new File(clientFolder, fileName), fileName);
-				if(fileName.endsWith(".zip"))
-					BaseUpdater.unZip(new File(clientFolder, fileName), true);
-			}
-			Launcher.showGrant("Обновление клиента завершено");
-			System.out.println("Игра успешно обновлена");
-		} catch(PrivilegedActionException ex) {
-			Launcher.showError("Не удалось обновить клиент");
-			System.err.println("Обновление провалилось: " + ex);
+			System.out.println("Загрузка файла " + task.downloadFrom);
+			BaseUpdater.downloadTask(task);
 		}
+		Launcher.showGrant("Обновление клиента завершено");
+		System.out.println("Игра успешно обновлена");
 	}
 }
