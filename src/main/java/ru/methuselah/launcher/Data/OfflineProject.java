@@ -6,6 +6,7 @@ import com.google.gson.stream.JsonWriter;
 import java.io.File;
 import java.io.IOException;
 import ru.methuselah.launcher.Configuration.RuntimeConfig;
+import ru.methuselah.launcher.Utilities;
 import ru.methuselah.securitylibrary.Data.Launcher.ProjectInfo;
 import ru.simsonic.rscCommonsLibrary.HashAndCipherUtilities;
 
@@ -31,7 +32,7 @@ public class OfflineProject extends ProjectInfo implements Comparable<OfflinePro
 	}
 	public static OfflineProject loadFromDisk(String code)
 	{
-		if(code != null && !"".equals(code))
+		if(Utilities.nonEmptyString(code))
 		{
 			final File projectFolder = new File(RuntimeConfig.LAUNCHER_HOME, code.toUpperCase());
 			if(projectFolder.isDirectory())

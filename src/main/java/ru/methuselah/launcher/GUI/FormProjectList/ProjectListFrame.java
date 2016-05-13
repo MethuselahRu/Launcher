@@ -32,6 +32,7 @@ import javax.swing.event.ListSelectionListener;
 import ru.methuselah.launcher.Data.OfflineProject;
 import ru.methuselah.launcher.GUI.Controls.TransparentPanel;
 import ru.methuselah.launcher.Launcher;
+import ru.methuselah.launcher.Utilities;
 import ru.methuselah.securitylibrary.Data.Launcher.LauncherAnswerProjects;
 
 public final class ProjectListFrame extends JFrame
@@ -230,7 +231,7 @@ public final class ProjectListFrame extends JFrame
 		projectsList.clearSelection();
 		checkSwitchToProject.setEnabled(false);
 		btnSwitchToProject.setEnabled(false);
-		if(code != null && !"".equals(code))
+		if(Utilities.nonEmptyString(code))
 		{
 			final ListModel model = projectsList.getModel();
 			int count = model.getSize();

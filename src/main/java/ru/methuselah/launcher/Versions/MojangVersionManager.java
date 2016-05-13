@@ -9,9 +9,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import ru.methuselah.launcher.Data.Mojang.MojangManifestVersion;
-import ru.methuselah.launcher.Data.Mojang.MojangVersionDetails;
-import ru.methuselah.launcher.Data.Mojang.ReleaseType;
 import ru.methuselah.launcher.Utilities;
 
 public class MojangVersionManager

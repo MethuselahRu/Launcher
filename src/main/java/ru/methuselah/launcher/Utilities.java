@@ -73,11 +73,19 @@ public class Utilities
 	{
 		return pingURL(url, 1000);
 	}
+	public static boolean emptyString(String str)
+	{
+		return str == null || "".equals(str);
+	}
+	public static boolean nonEmptyString(String str)
+	{
+		return str != null && !"".equals(str);
+	}
 	public static String executePost(String targetURL, String urlParameters)
 	{
 		if(targetURL.startsWith("https"))
 			MethuselahPrivate.hackSSL();
-		final boolean doOutput = !(urlParameters == null || "".equals(urlParameters));
+		final boolean doOutput = nonEmptyString(urlParameters);
 		HttpURLConnection connection = null;
 		try
 		{

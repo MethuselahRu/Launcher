@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import ru.methuselah.launcher.Data.OfflineClient;
+import ru.methuselah.launcher.Utilities;
 import ru.methuselah.securitylibrary.Data.Launcher.ServerInfo;
 
 public class GameLaunchHelper
@@ -31,9 +32,9 @@ public class GameLaunchHelper
 		if(entries != null)
 			for(ServerInfo entry : entries)
 			{
-				if(entry.address == null || "".equals(entry.address))
+				if(Utilities.emptyString(entry.address))
 					continue;
-				if(entry.caption == null || "".equals(entry.caption))
+				if(Utilities.emptyString(entry.caption))
 				{
 					addressesToRemove.add(entry.address.toLowerCase());
 					continue;
@@ -170,9 +171,7 @@ public class GameLaunchHelper
 								tagCaption.getValue(),
 								tagAddress.getValue());
 							// Корректность
-							if(server.caption == null || "".equals(server.caption))
-								continue;
-							if(server.address == null || "".equals(server.address))
+							if(Utilities.emptyString(server.caption) || Utilities.emptyString(server.address))
 								continue;
 							if(tagHideAddress != null)
 								server.hideAddress = (tagHideAddress.getValue() != 0);

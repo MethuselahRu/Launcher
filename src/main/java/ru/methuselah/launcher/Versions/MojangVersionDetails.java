@@ -1,4 +1,4 @@
-package ru.methuselah.launcher.Data.Mojang;
+package ru.methuselah.launcher.Versions;
 
 public class MojangVersionDetails extends MojangManifestVersion
 {

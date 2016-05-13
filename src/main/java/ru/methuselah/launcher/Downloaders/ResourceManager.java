@@ -27,7 +27,8 @@ import ru.simsonic.rscCommonsLibrary.HashAndCipherUtilities;
 
 public class ResourceManager
 {
-	private final static String RESOURCES_FOLDER = "launcher-resources";
+	private final static String RESOURCES_FOLDER  = "launcher-resources";
+	private final static String MOJANG_ASSETS_URL = "https://s3.amazonaws.com/Minecraft.Download/indexes/{VERSION}.json";
 	private final File   resourcesHomeFile = new File(RuntimeConfig.LAUNCHER_HOME, RESOURCES_FOLDER);
 	private final String resourcesHomePath;
 	public ResourceManager()
@@ -54,10 +55,10 @@ public class ResourceManager
 		Launcher.showGrant("Проверка необходимых ресурсов...");
 		// Получить официальный индекс для базовой версии
 		String version = client.baseVersion;
-		if(version == null || "".equals(version))
+		if(Utilities.emptyString(version))
 			version = "legacy";
-		String json = Utilities.executePost("https://s3.amazonaws.com/Minecraft.Download/indexes/" + version + ".json", null);
-		if(json == null || "".equals(json))
+		String json = Utilities.executePost(MOJANG_ASSETS_URL.replace("{VERSION}", version), null);
+		if(Utilities.emptyString(json))
 			json = Utilities.executePost("https://s3.amazonaws.com/Minecraft.Download/indexes/legacy.json", null);
 		final MojangAssetIndex mojangIndex = parseMojangIndex(json);
 		// Скачать дополнительный индекс для указанной сборки
@@ -84,7 +85,8 @@ public class ResourceManager
 			// Пропуск имеющихся файлов нужного размера
 			if(target.isFile() && target.length() == object.size)
 				continue;
-			final String source = (object.sourceUrl == null || "".equals(object.sourceUrl)
+			
+			final String source = (Utilities.emptyString(object.sourceUrl)
 				? "http://resources.download.minecraft.net/" + objectHashPath
 				: object.sourceUrl);
 			// Создаю новый параллельный поток для загрузки
@@ -115,7 +117,7 @@ public class ResourceManager
 	}
 	public static MojangAssetIndex parseMojangIndex(String json)
 	{
-		if(json == null || "".equals(json))
+		if(Utilities.emptyString(json))
 			return new MojangAssetIndex();
 		final Gson gson = new Gson();
 		try

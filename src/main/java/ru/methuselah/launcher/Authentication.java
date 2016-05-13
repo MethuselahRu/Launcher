@@ -143,7 +143,7 @@ public class Authentication
 	{
 		Launcher.showGrant("Авторизация ...");
 		cancelAuthenticationProcedure();
-		if((authUsername == null || "".equals(authUsername) || authPassword == null || "".equals(authPassword)) && !asGuest)
+		if((Utilities.emptyString(authUsername) || Utilities.emptyString(authPassword)) && !asGuest)
 		{
 			Launcher.showError("Введите имя пользователя и пароль");
 			return;

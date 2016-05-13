@@ -1,4 +1,4 @@
-package ru.methuselah.launcher.Data.Mojang;
+package ru.methuselah.launcher.Versions;
 
 import java.net.URL;
 import java.util.HashMap;

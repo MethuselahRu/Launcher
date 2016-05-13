@@ -15,7 +15,6 @@ import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import ru.methuselah.authlib.methods.ResponseException;
-import ru.methuselah.launcher.Configuration.GlobalConfig;
 import ru.methuselah.launcher.Configuration.RuntimeConfig;
 import ru.methuselah.launcher.Data.OfflineClient;
 import ru.methuselah.launcher.Data.OfflineProject;
@@ -27,7 +26,6 @@ import ru.methuselah.launcher.GUI.Common.SplashScreen;
 import ru.methuselah.launcher.GUI.FormProject.ProjectFrame;
 import ru.methuselah.launcher.GUI.FormProjectList.ProjectListFrame;
 import ru.methuselah.launcher.Game.GameLauncher;
-import ru.methuselah.launcher.Versions.MojangVersionManager;
 import ru.methuselah.securitylibrary.Data.Launcher.ClientInfo;
 import ru.methuselah.securitylibrary.Data.Launcher.LauncherAnswerClients;
 import ru.methuselah.securitylibrary.Data.Launcher.LauncherAnswerDesign;
@@ -267,7 +265,7 @@ public class Launcher implements Runnable
 		params.add("-Dsun.java2d.d3d=false");
 		params.add("-Dsun.java2d.opengl=false");
 		params.add("-Dsun.java2d.pmoffscreen=false");
-		if(changeLauncherPath == null || "".equals(changeLauncherPath.getAbsolutePath()))
+		if(changeLauncherPath == null)
 			changeLauncherPath = new File(RuntimeConfig.RUNTIME_PATH);
 		params.add("-classpath");
 		params.add(changeLauncherPath.getAbsolutePath());
