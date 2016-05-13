@@ -11,13 +11,42 @@ import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.security.PrivilegedActionException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import ru.methuselah.launcher.Launcher;
 
-public class BaseUpdater
+public abstract class BaseUpdater
 {
+	public static void executeParallelDownloads(Collection<DownloadTask> tasks)
+	{
+		final List<Thread> threads = new ArrayList<>();
+		// Start threads
+		for(final DownloadTask task : tasks)
+		{
+			final Thread thread = new Thread()
+			{
+				@Override
+				public void run()
+				{
+					System.out.println("Загрузка файла " + task.downloadFrom);
+					downloadTask(task);
+				}
+			};
+			threads.add(thread);
+			thread.start();
+		}
+		// Wait for threads
+		for(Thread thread : threads)
+			try
+			{
+				thread.join();
+			} catch(InterruptedException ex) {
+			}
+	}
 	public static void downloadTask(DownloadTask task)
 	{
 		downloadFile(task.downloadFrom, task.saveAs, task.showAs);

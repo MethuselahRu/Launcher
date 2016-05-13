@@ -2,7 +2,6 @@ package ru.methuselah.launcher.Configuration;
 
 public final class GlobalConfig
 {
-	public static final String  VERSION             = "v2.23b";
 	public static final String  CONFIGURATION_FILE  = "launcher-properties.bin";
 	public static final String  HOME_SUBDIRECTORY   = ".voxile";
 	public static final String  EXECUTABLE_NAME     = "Launcher";

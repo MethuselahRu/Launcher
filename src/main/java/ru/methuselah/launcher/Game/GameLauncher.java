@@ -49,8 +49,8 @@ public class GameLauncher extends WrappedGameStarter
 				// Проверка клиента
 				boolean forceUpdate = false;
 				// Обновление ресурсных файлов игры
-				launcher.resources.checkClientAssets(client);
-				if(launcher.resources.areClientNativesExist(client) == false)
+				launcher.resourceMan.checkClientAssets(client);
+				if(launcher.nativesMan.isClientNativesDirExist(client) == false)
 					forceUpdate = true;
 				try
 				{
@@ -88,7 +88,7 @@ public class GameLauncher extends WrappedGameStarter
 				{
 					// Докачка старых файлов игры
 					if(forceUpdate)
-						launcher.resources.updateClientFiles(client);
+						launcher.resourceMan.updateClientFiles(client);
 				} catch(IOException ex) {
 					Launcher.showError("Не удалось обновить клиент!");
 					Utilities.sleep(2);
@@ -149,7 +149,7 @@ public class GameLauncher extends WrappedGameStarter
 			cmdline.add("-XX:+UseConcMarkSweepGC");
 			cmdline.add("-XX:+CMSIncrementalMode");
 			cmdline.add("-XX:-UseAdaptiveSizePolicy");
-			cmdline.add("-Djava.library.path=" + launcher.resources.getNativesDirForClient(client));
+			cmdline.add("-Djava.library.path=" + launcher.nativesMan.getClientNativesDir(client));
 			if(client.additionalJavaArguments != null)
 				cmdline.addAll(Arrays.asList(client.additionalJavaArguments.split("\\s")));
 			cmdline.add("-cp");
@@ -216,10 +216,10 @@ public class GameLauncher extends WrappedGameStarter
 		final MessageWrappedGame result = launcher.authentication.createWrapperMessage();
 		result.gameDir = gameInfo.getClientHome().getAbsolutePath();
 		result.version = gameInfo.caption;
-		result.assetsDir = launcher.resources.getGlobalAssetsDir();
+		result.assetsDir = launcher.resourceMan.getAssetsDir();
 		if(gameInfo.assetIndexFile != null)
 			result.assetIndex = gameInfo.assetIndexFile.getName().replace(".json", "");
-		result.nativesDir = launcher.resources.getNativesDirForClient(gameInfo);
+		result.nativesDir = launcher.nativesMan.getClientNativesDir(gameInfo);
 		final ArrayList<String> fullLibPaths = new ArrayList<>();
 		fullLibPaths.add(RuntimeConfig.RUNTIME_PATH);
 		fullLibPaths.add(result.gameDir + File.separator + gameInfo.jarFile);

@@ -8,17 +8,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
-import java.security.PrivilegedActionException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import ru.methuselah.launcher.Configuration.GlobalConfig;
 import ru.methuselah.launcher.Configuration.RuntimeConfig;
 import ru.methuselah.launcher.Data.MojangInternalIndex;
 import ru.methuselah.launcher.Data.OfflineClient;
 import ru.methuselah.launcher.Data.OfflineProject;
-import ru.methuselah.launcher.Data.Platform;
 import ru.methuselah.launcher.Launcher;
 import ru.methuselah.launcher.Utilities;
 import ru.methuselah.securitylibrary.Data.Launcher.LauncherAnswerDesign;
@@ -28,39 +27,27 @@ import ru.simsonic.rscCommonsLibrary.HashAndCipherUtilities;
 
 public class ResourceManager
 {
-	private static final String RESOURCES_FOLDER = "launcher-resources";
-	private final String resourcesHome;
-	public ResourceManager(File launcherHome)
+	private final static String RESOURCES_FOLDER = "launcher-resources";
+	private final File   resourcesHomeFile = new File(RuntimeConfig.LAUNCHER_HOME, RESOURCES_FOLDER);
+	private final String resourcesHomePath;
+	public ResourceManager()
 	{
 		// Create resources directory
-		final File resourcesHomeFile = new File(launcherHome, RESOURCES_FOLDER);
 		try
 		{
 			Files.setAttribute(resourcesHomeFile.toPath(), "dos:hidden", true);
 		} catch(IOException ex) {
 		}
-		resourcesHome = resourcesHomeFile.getPath() + File.separator;
+		resourcesHomePath = resourcesHomeFile.getPath() + File.separator;
 		resourcesHomeFile.mkdirs();
 	}
-	public String getGlobalAssetsDir()
+	public File getResourcesHome()
 	{
-		return resourcesHome;
+		return resourcesHomeFile;
 	}
-	public String getNativesDirForClient(OfflineClient client)
+	public String getAssetsDir()
 	{
-		return resourcesHome
-			+ "natives" + File.separator
-			+ client.project.code + "_" + client.caption + File.separator;
-	}
-	public void saveDesignFile(OfflineProject project, LauncherAnswerDesign design)
-	{
-		final File designFile = new File(project.getProjectHome(), "design.bin");
-		HashAndCipherUtilities.saveEncryptedObject(designFile, design, LauncherAnswerDesign.class);
-	}
-	public LauncherAnswerDesign loadDesignFile(OfflineProject project)
-	{
-		final File designFile = new File(project.getProjectHome(), "design.bin");
-		return HashAndCipherUtilities.loadEncryptedObject(designFile, LauncherAnswerDesign.class);
+		return resourcesHomePath;
 	}
 	public void checkClientAssets(OfflineClient client)
 	{
@@ -91,7 +78,7 @@ public class ResourceManager
 		for(final AssetObject object : mojangIndex.objects)
 		{
 			final String objectHashPath = object.hash.substring(0, 2) + "/" + object.hash;
-			final File target = new File(resourcesHome + File.separator + (mojangIndex.virtual
+			final File target = new File(resourcesHomePath + File.separator + (mojangIndex.virtual
 				? "virtual" + File.separator + object.originalName
 				: "objects" + File.separator + objectHashPath));
 			// Пропуск имеющихся файлов нужного размера
@@ -152,7 +139,7 @@ public class ResourceManager
 	}
 	public File saveClientIndex(OfflineClient client, MojangAssetIndex index)
 	{
-		final File result = new File(resourcesHome + "indexes", client.project.code + "." + client.caption + ".json");
+		final File result = new File(resourcesHomePath + "indexes", client.project.code + "." + client.caption + ".json");
 		result.getParentFile().mkdirs();
 		final MojangInternalIndex internal = new MojangInternalIndex();
 		internal.virtual = index.virtual;
@@ -167,10 +154,6 @@ public class ResourceManager
 		}
 		return result;
 	}
-	public boolean areClientNativesExist(OfflineClient client)
-	{
-		return new File(getNativesDirForClient(client)).isDirectory();
-	}
 	public void updateClientFiles(OfflineClient client) throws IOException
 	{
 		// Создать каталог клиента
@@ -181,24 +164,9 @@ public class ResourceManager
 		// Формирование списка файлов для скачивания
 		final HashSet<DownloadTask> downloads = new HashSet<>();
 		// Платформенно-зависимые бинарные файлы
-		final String nativesURL = GlobalConfig.URL_LAUNCHER_BINS
-			+ "natives/" + (client.nativesSubdir != null ? client.nativesSubdir : "1710")
-			+ "/" + RuntimeConfig.RUNTIME_PLATFORM.name().toLowerCase()
-			+ ".zip";
-		final String nativesDIR = getNativesDirForClient(client);
-		if(RuntimeConfig.RUNTIME_PLATFORM != Platform.UNKNOWN)
-		{
-			downloads.add(new DownloadTask(
-				nativesURL,
-				"Файлы платформы",
-				new File(nativesDIR + "download.zip"),
-				new File(nativesDIR)));
-		} else {
-			final String error = "OS (" + System.getProperty("os.name") + ") is not supported.";
-			Launcher.showError(error);
-			System.err.println(error);
-			return;
-		}
+		final List<DownloadTask> downloadNatives = Launcher.getInstance().nativesMan.prepareClientNatives(client);
+		if(downloadNatives != null)
+			downloads.addAll(downloadNatives);
 		// Файлы клиента
 		downloads.add(new DownloadTask(
 			GlobalConfig.URL_LAUNCHER_BINS + "clients/" + client.jarFile,
@@ -210,12 +178,18 @@ public class ResourceManager
 			new File(clientFolder, client.contentsFile),
 			new File(clientFolder)));
 		// Начало всех загрузок
-		for(DownloadTask task : downloads)
-		{
-			System.out.println("Загрузка файла " + task.downloadFrom);
-			BaseUpdater.downloadTask(task);
-		}
+		BaseUpdater.executeParallelDownloads(downloads);
 		Launcher.showGrant("Обновление клиента завершено");
 		System.out.println("Игра успешно обновлена");
+	}
+	public static void saveDesignFile(OfflineProject project, LauncherAnswerDesign design)
+	{
+		final File designFile = new File(project.getProjectHome(), "design.bin");
+		HashAndCipherUtilities.saveEncryptedObject(designFile, design, LauncherAnswerDesign.class);
+	}
+	public static LauncherAnswerDesign loadDesignFile(OfflineProject project)
+	{
+		final File designFile = new File(project.getProjectHome(), "design.bin");
+		return HashAndCipherUtilities.loadEncryptedObject(designFile, LauncherAnswerDesign.class);
 	}
 }

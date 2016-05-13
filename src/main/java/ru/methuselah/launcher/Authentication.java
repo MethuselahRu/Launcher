@@ -44,7 +44,7 @@ public class Authentication
 	public void restoreSavedUsername(OfflineProject project, PanelLogin panelLogin)
 	{
 		launcher.properties.reloadFromDisk();
-		playername = launcher.properties.data.lastUsedPlayerName;
+		playername  = launcher.properties.data.lastUsedPlayerName;
 		clientToken = launcher.properties.data.lastAuthClientToken;
 		final String password = launcher.properties.data.lastEnteredPassword;
 		panelLogin.txtUsername.setText(playername);

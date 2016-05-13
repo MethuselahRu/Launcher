@@ -81,6 +81,7 @@
 						<addMavenDescriptor>false</addMavenDescriptor>
 						<manifest>
 							<mainClass>${project.groupId}.${project.artifactId}.Launcher</mainClass>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
 						</manifest>
 					</archive>
 					<excludes>

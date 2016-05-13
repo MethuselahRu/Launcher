@@ -15,6 +15,7 @@ import sun.misc.BASE64Decoder;
 
 public final class RuntimeConfig
 {
+	public static final String   VERSION             = "0.16a"; // RuntimeConfig.class.getPackage().getImplementationVersion();
 	public static final Platform RUNTIME_PLATFORM    = getPlatform();
 	public static final String   RUNTIME_PATH        = getRuntimePath();
 	public static final RunType  RUNTIME_PACKAGE     = getRuntimePackage();

@@ -21,11 +21,13 @@ import ru.methuselah.launcher.Data.OfflineClient;
 import ru.methuselah.launcher.Data.OfflineProject;
 import ru.methuselah.launcher.Data.Platform;
 import ru.methuselah.launcher.Downloaders.LauncherUpdater;
+import ru.methuselah.launcher.Downloaders.NativesManager;
 import ru.methuselah.launcher.Downloaders.ResourceManager;
 import ru.methuselah.launcher.GUI.Common.SplashScreen;
 import ru.methuselah.launcher.GUI.FormProject.ProjectFrame;
 import ru.methuselah.launcher.GUI.FormProjectList.ProjectListFrame;
 import ru.methuselah.launcher.Game.GameLauncher;
+import ru.methuselah.launcher.Versions.MojangVersionManager;
 import ru.methuselah.securitylibrary.Data.Launcher.ClientInfo;
 import ru.methuselah.securitylibrary.Data.Launcher.LauncherAnswerClients;
 import ru.methuselah.securitylibrary.Data.Launcher.LauncherAnswerDesign;
@@ -36,9 +38,9 @@ import ru.methuselah.securitylibrary.Data.Launcher.ProjectInfo;
 public class Launcher implements Runnable
 {
 	// Синглтон
-	private static final Launcher instance = new Launcher();
+	private final static Launcher instance = new Launcher();
 	private final SplashScreen splash = new SplashScreen();
-	public static Launcher getInstance()
+	public  final static Launcher getInstance()
 	{
 		return Launcher.instance;
 	}
@@ -46,12 +48,13 @@ public class Launcher implements Runnable
 	public OfflineProject currentProject;
 	public OfflineClient currentClient;
 	// Описание
-	public final LauncherProperties properties = new LauncherProperties();
-	public final Offline offline = new Offline(this);
-	public final ResourceManager resources = new ResourceManager(RuntimeConfig.LAUNCHER_HOME);
-	public final Authentication authentication = new Authentication(this);
-	public final GameLauncher gameLauncher = new GameLauncher(this);
-	public final ProjectListFrame projectsFrame = new ProjectListFrame(this);
+	public final LauncherProperties properties     = new LauncherProperties();
+	public final Offline            offline        = new Offline(this);
+	public final ResourceManager    resourceMan    = new ResourceManager();
+	public final NativesManager     nativesMan     = new NativesManager(resourceMan);
+	public final Authentication     authentication = new Authentication(this);
+	public final GameLauncher       gameLauncher   = new GameLauncher(this);
+	public final ProjectListFrame   projectsFrame  = new ProjectListFrame(this);
 	public boolean checkboxDrivenStart = true;
 	public ProjectFrame launcherFrame;
 	@Override
@@ -101,10 +104,10 @@ public class Launcher implements Runnable
 		currentProject = project;
 		currentProject.getProjectHome().mkdir();
 		final LauncherAnswerDesign msgDesign = new LauncherAnswerDesign(); // connection.onLauncherLoadDesign(currentProject.code);
-		resources.saveDesignFile(currentProject, msgDesign);
+		ResourceManager.saveDesignFile(currentProject, msgDesign);
 		launcherFrame = new ProjectFrame(this, currentProject, msgDesign);
 		authentication.restoreSavedUsername(project, launcherFrame.panelLogin);
-		showGrant(GlobalConfig.VERSION + (RuntimeConfig.UNDER_IDE_DEBUGGING ? " (IDE)" : ""));
+		showGrant(RuntimeConfig.VERSION + (RuntimeConfig.UNDER_IDE_DEBUGGING ? " (IDE)" : ""));
 		launcherFrame.setVisible(true);
 	}
 	public boolean getProjectClients()
@@ -281,6 +284,7 @@ public class Launcher implements Runnable
 	}
 	public static void main(String[] args)
 	{
+		// new MojangVersionManager().test();
 		instance.run();
 	}
 }

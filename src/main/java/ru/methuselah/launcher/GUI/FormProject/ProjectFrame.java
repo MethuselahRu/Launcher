@@ -294,7 +294,7 @@ public final class ProjectFrame extends Designer
 					{
 						try
 						{
-							launcher.resources.updateClientFiles(launcher.currentClient);
+							launcher.resourceMan.updateClientFiles(launcher.currentClient);
 						} catch(IOException ex) {
 						}
 						panelOptions.btnForceUpdate.setText("Обновить клиент");
