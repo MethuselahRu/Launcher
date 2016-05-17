@@ -41,6 +41,6 @@ public class PanelOptions extends TransparentPanel
 		lnkDirectory.setText(RuntimeConfig.LAUNCHER_HOME.toString());
 		lnkDirectory.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lnkDirectory.setForeground(Color.blue);
-		txtMemory.setText(Integer.toString(Launcher.getInstance().properties.data.nMemoryAllocationMB));
+		txtMemory.setText(Integer.toString(Launcher.getInstance().properties.getData().nMemoryAllocationMB));
 	}
 }

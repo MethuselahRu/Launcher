@@ -40,10 +40,10 @@ public class GameLauncher extends WrappedGameStarter
 	}
 	public void checkAndRunClient(final OfflineClient client)
 	{
-		launcher.properties.data.lastStartedClient = client.caption;
+		launcher.properties.getData().lastStartedClient = client.caption;
 		launcher.properties.saveToDisk();
 		// Проверка файлов самого клиента
-		Launcher.showGrant("Проверка целостности клиента...");
+		Launcher.showGrant("Проверка целостности клиента ...");
 		new Thread()
 		{
 			@Override
@@ -85,7 +85,7 @@ public class GameLauncher extends WrappedGameStarter
 					Launcher.showError(ex.toString());
 					return;
 				}
-				Launcher.showGrant("Подготовка к запуску игры...");
+				Launcher.showGrant("Подготовка к запуску игры ...");
 				client.clean();
 				try
 				{
@@ -98,11 +98,11 @@ public class GameLauncher extends WrappedGameStarter
 					return;
 				}
 				// Запуск игры
-				Launcher.showGrant("Запуск игры...");
-				launcher.launcherFrame.setTitle(Utilities.createMainFrameCaption(false) + " :: " + client.captionLocalized);
-				launcher.launcherFrame.setVisible(false);
+				Launcher.showGrant("Запуск игры ...");
+				launcher.projectFrame.setTitle(Utilities.createMainFrameCaption(false) + " :: " + client.captionLocalized);
+				launcher.projectFrame.setVisible(false);
 				launcher.gameLauncher.launchClient(client);
-				launcher.launcherFrame.gameFinished();
+				launcher.projectFrame.gameFinished();
 			}
 		}.start();
 	}
@@ -146,7 +146,7 @@ public class GameLauncher extends WrappedGameStarter
 			cmdline.add((RuntimeConfig.RUNTIME_PLATFORM.equals(Platform.WINDOWS)) ? "javaw" : "java");
 			cmdline.add("-Xdebug");
 			// cmdline.add("-Xrunjdwp:transport=dt_socket,address=25600,server=y");
-			cmdline.add("-Xmx" + launcher.properties.data.nMemoryAllocationMB + "m");
+			cmdline.add("-Xmx" + launcher.properties.getData().nMemoryAllocationMB + "m");
 			cmdline.add("-Xmn128M");
 			cmdline.add("-XX:HeapDumpPath=MojangTricksIntelDriversForPerformance_javaw.exe_minecraft.exe.heapdump");
 			cmdline.add("-XX:+UseConcMarkSweepGC");

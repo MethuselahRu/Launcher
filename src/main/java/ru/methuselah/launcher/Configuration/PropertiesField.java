@@ -1,6 +1,6 @@
-package ru.methuselah.launcher.Data;
+package ru.methuselah.launcher.Configuration;
 
-public class LauncherPropertiesFields
+public class PropertiesField
 {
 	public String   lastOpenedProject       = "";
 	public String   lastUsedPlayerName      = "Player";

@@ -52,7 +52,7 @@ public class ResourceManager
 	}
 	public void checkClientAssets(OfflineClient client)
 	{
-		Launcher.showGrant("Проверка необходимых ресурсов...");
+		Launcher.showGrant("Проверка необходимых ресурсов ...");
 		// Получить официальный индекс для базовой версии
 		String version = client.baseVersion;
 		if(Utilities.emptyString(version))

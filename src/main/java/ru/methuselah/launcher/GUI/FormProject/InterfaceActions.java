@@ -134,7 +134,7 @@ public class InterfaceActions
 			public void mousePressed(MouseEvent arg0)
 			{
 				frame.setVisible(false);
-				Launcher.getInstance().launcherFrame = null;
+				Launcher.getInstance().projectFrame = null;
 				Launcher.getInstance().projectsFrame.setVisible(true);
 				frame.dispose();
 			}

@@ -190,7 +190,7 @@ public final class ProjectListFrame extends JFrame
 			@Override
 			public void windowClosing(WindowEvent we)
 			{
-				launcher.properties.data.lastOpenedProject = null;
+				launcher.properties.getData().lastOpenedProject = null;
 				launcher.properties.saveToDisk();
 				System.exit(0);
 			}
@@ -212,7 +212,7 @@ public final class ProjectListFrame extends JFrame
 			{
 				final ListModel model = projectsList.getModel();
 				final OfflineProject project = (OfflineProject)model.getElementAt(projectsList.getSelectedIndex());
-				launcher.properties.data.lastOpenedProject = (checkSwitchToProject.isSelected() ? project.code : "");
+				launcher.properties.getData().lastOpenedProject = (checkSwitchToProject.isSelected() ? project.code : "");
 				launcher.properties.saveToDisk();
 				launcher.onSwitchToProject(project);
 				ProjectListFrame.this.setVisible(false);

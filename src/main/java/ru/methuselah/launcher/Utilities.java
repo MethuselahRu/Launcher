@@ -7,11 +7,13 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Random;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.methuselah.securitylibrary.MethuselahPrivate;
 
 public class Utilities
 {
+	private static final Logger logger = LoggerFactory.getLogger(Utilities.class);
 	private static final String[] ACTUAL_JAVA_VERSION  = { "1.7.0", "1.8.0" };
 	private static final String[] FUN_CAPTION_SPLASHES = new String[]
 	{
@@ -21,7 +23,7 @@ public class Utilities
 		"we are the best of the best of the best!",
 		"простите, я опять это сломал. Зато печеньки есть.",
 		"позадирали свои Приоры, под ними ходить можно!",
-		"модер, модер, парень работящий...",
+		"модер, модер, парень работящий ...",
 		"пвп или убежал?",
 		"сколько стоит админка?",
 		"да, именно, это случайные сплеши.",
@@ -53,7 +55,7 @@ public class Utilities
 		for(String actual : ACTUAL_JAVA_VERSION)
 			if(version.contains(actual))
 				return false;
-		return !version.equals(Launcher.getInstance().properties.data.allowAncientJavaVersion);
+		return !version.equals(Launcher.getInstance().properties.getData().allowAncientJavaVersion);
 	}
 	public static boolean pingURL(String url, int timeout)
 	{
@@ -116,7 +118,7 @@ public class Utilities
 				return response.toString();
 			}
 		} catch(IOException ex) {
-			LoggerFactory.getLogger(Utilities.class).error("{}", ex);
+			logger.error("{}", ex);
 			return "NO CONNECTION";
 		} finally {
 			if(connection != null)

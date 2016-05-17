@@ -45,11 +45,12 @@ public class SplashScreen extends JFrame implements Runnable
 			.isWindowTranslucencySupported(WindowTranslucency.PERPIXEL_TRANSLUCENT);
 		if(isTranslucencySupported == false)
 			return;
-		setUndecorated(true);
-		setSize(imageIcon.getIconWidth(), imageIcon.getIconHeight());
-		setLocationRelativeTo(null);
-		setBackground(new Color(0, 0, 0, 0));
-		setVisible(true);
+		super.setAlwaysOnTop(true);
+		super.setUndecorated(true);
+		super.setSize(imageIcon.getIconWidth(), imageIcon.getIconHeight());
+		super.setLocationRelativeTo(null);
+		super.setBackground(new Color(0, 0, 0, 0));
+		super.setVisible(true);
 		try
 		{
 			Thread.sleep(GlobalConfig.SPLASH_TIMEOUT_MS);

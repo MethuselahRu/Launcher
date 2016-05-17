@@ -1,4 +1,4 @@
-package ru.methuselah.launcher;
+package ru.methuselah.launcher.Authentication;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +11,8 @@ import ru.methuselah.authlib.links.LinksMethuselah;
 import ru.methuselah.authlib.methods.ResponseException;
 import ru.methuselah.launcher.Data.OfflineProject;
 import ru.methuselah.launcher.GUI.FormProject.PanelLogin;
+import ru.methuselah.launcher.Launcher;
+import ru.methuselah.launcher.Utilities;
 import ru.methuselah.securitylibrary.Data.MessagesWrapper.MessageWrappedGame;
 import ru.methuselah.securitylibrary.MethuselahPrivate;
 
@@ -47,13 +49,13 @@ public class Authentication
 	public void restoreSavedUsername(OfflineProject project, PanelLogin panelLogin)
 	{
 		launcher.properties.reloadFromDisk();
-		playername  = launcher.properties.data.lastUsedPlayerName;
-		clientToken = launcher.properties.data.lastAuthClientToken;
-		final String password = launcher.properties.data.lastEnteredPassword;
+		playername  = launcher.properties.getData().lastUsedPlayerName;
+		clientToken = launcher.properties.getData().lastAuthClientToken;
+		final String password = launcher.properties.getData().lastEnteredPassword;
 		panelLogin.txtUsername.setText(playername);
 		panelLogin.txtPassword.setText(password);
 		panelLogin.chkSavePassword.setSelected(password.length() > 0);
-		if(launcher.properties.data.bAutoAuthenticate)
+		if(launcher.properties.getData().bAutoAuthenticate)
 		{
 			panelLogin.chkAutoLogin.setSelected(true);
 			if(launcher.checkboxDrivenStart)
@@ -156,7 +158,7 @@ public class Authentication
 			@Override
 			public void run()
 			{
-				launcher.launcherFrame.updateOnlineMode();
+				launcher.projectFrame.updateOnlineMode();
 				uuid = null;
 				accessToken = null;
 				clientToken = null;
@@ -170,7 +172,7 @@ public class Authentication
 				} else
 					loginFailed();
 				authenticationThread = null;
-				launcher.launcherFrame.updateOnlineMode();
+				launcher.projectFrame.updateOnlineMode();
 			}
 		};
 		authenticationThread.start();
@@ -187,7 +189,7 @@ public class Authentication
 			}
 			authenticationThread = null;
 		}
-		launcher.launcherFrame.updateOnlineMode();
+		launcher.projectFrame.updateOnlineMode();
 	}
 	private boolean doAuthYggdrasil(String tryUsername, String tryPassword, boolean guest)
 	{
@@ -224,24 +226,24 @@ public class Authentication
 	}
 	public void loginSucceeded()
 	{
-		launcher.launcherFrame.authenticated();
+		launcher.projectFrame.authenticated();
 		// Сохранение конфигурации
 		if(role != UserRole.guest && role != UserRole.nonauth)
 		{
-			launcher.launcherFrame.panelLogin.txtUsername.setText(login);
-			launcher.properties.data.lastUsedPlayerName = login;
-			launcher.properties.data.lastEnteredPassword =
-				launcher.launcherFrame.panelLogin.chkSavePassword.isSelected() ?
-				String.copyValueOf(launcher.launcherFrame.panelLogin.txtPassword.getPassword()) : null;
-			launcher.properties.data.lastAuthClientToken = clientToken;
-			if(launcher.launcherFrame.panelLogin.chkSavePassword.isSelected())
-				launcher.properties.data.bAutoAuthenticate = launcher.launcherFrame.panelLogin.chkAutoLogin.isSelected();
+			launcher.projectFrame.panelLogin.txtUsername.setText(login);
+			launcher.properties.getData().lastUsedPlayerName = login;
+			launcher.properties.getData().lastEnteredPassword =
+				launcher.projectFrame.panelLogin.chkSavePassword.isSelected() ?
+				String.copyValueOf(launcher.projectFrame.panelLogin.txtPassword.getPassword()) : null;
+			launcher.properties.getData().lastAuthClientToken = clientToken;
+			if(launcher.projectFrame.panelLogin.chkSavePassword.isSelected())
+				launcher.properties.getData().bAutoAuthenticate = launcher.projectFrame.panelLogin.chkAutoLogin.isSelected();
 			launcher.properties.saveToDisk();
 		}
 	}
 	public void loginFailed()
 	{
-		launcher.launcherFrame.deauthenticated();
+		launcher.projectFrame.deauthenticated();
 		Launcher.showError("Не удалось авторизоваться");
 	}
 	public MessageWrappedGame createWrapperMessage()

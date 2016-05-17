@@ -20,6 +20,7 @@ import javax.swing.JLabel;
 import ru.methuselah.launcher.Configuration.GlobalConfig;
 import ru.methuselah.launcher.Configuration.RuntimeConfig;
 import ru.methuselah.launcher.Data.OfflineProject;
+import ru.methuselah.launcher.Downloaders.BootUpdater;
 import ru.methuselah.launcher.GUI.Controls.TransparentButton;
 import ru.methuselah.launcher.GUI.Controls.TransparentLabel;
 import ru.methuselah.launcher.Launcher;
@@ -115,11 +116,11 @@ public final class ProjectFrame extends Designer
 			if(allowGameAutoStart)
 			{
 				panelClients.chkAutoStartGame.setEnabled(true);
-				panelClients.chkAutoStartGame.setSelected(launcher.properties.data.bAutoStartGame);
+				panelClients.chkAutoStartGame.setSelected(launcher.properties.getData().bAutoStartGame);
 			} else {
 				panelClients.chkAutoStartGame.setEnabled(false);
 				panelClients.chkAutoStartGame.setSelected(false);
-				launcher.properties.data.bAutoStartGame = false;
+				launcher.properties.getData().bAutoStartGame = false;
 			}
 			panelClients.lblName.setText(htmlText("Ваш игровой ник: <b>" + launcher.authentication.getPlayerName()+ "</b>"));
 			panelClients.lblUUID.setText(htmlText("Ваш UUID: <b>" + launcher.authentication.getUUID() + "</b>"));
@@ -173,7 +174,7 @@ public final class ProjectFrame extends Designer
 			@Override
 			public void run()
 			{
-				launcher.properties.data.bAutoAuthenticate = false;
+				launcher.properties.getData().bAutoAuthenticate = false;
 				panelLogin.chkAutoLogin.setSelected(false);
 				launcher.authentication.authenticateGuest(launcher.currentProject);
 			}
@@ -184,7 +185,7 @@ public final class ProjectFrame extends Designer
 			public void run()
 			{
 				final String username = panelLogin.txtUsername.getText();
-				launcher.properties.data.bAutoAuthenticate = false;
+				launcher.properties.getData().bAutoAuthenticate = false;
 				panelLogin.chkAutoLogin.setSelected(false);
 				launcher.authentication.authenticateOffline(username);
 			}
@@ -203,11 +204,11 @@ public final class ProjectFrame extends Designer
 			public void run()
 			{
 				final boolean value = panelLogin.chkAutoLogin.isSelected();
-				launcher.properties.data.bAutoAuthenticate = value;
+				launcher.properties.getData().bAutoAuthenticate = value;
 				if(!value)
 				{
 					panelClients.chkAutoStartGame.setSelected(false);
-					launcher.properties.data.bAutoStartGame = false;
+					launcher.properties.getData().bAutoStartGame = false;
 				}
 				panelClients.chkAutoStartGame.setEnabled(value);
 			}
@@ -245,7 +246,7 @@ public final class ProjectFrame extends Designer
 			public void run()
 			{
 				setVisible(false);
-				launcher.launcherFrame = null;
+				launcher.projectFrame = null;
 				launcher.projectsFrame.setVisible(true);
 				ProjectFrame.this.dispose();
 			}
@@ -255,7 +256,7 @@ public final class ProjectFrame extends Designer
 			@Override
 			public void run()
 			{
-				launcher.properties.data.bAutoStartGame = panelClients.chkAutoStartGame.isSelected();
+				launcher.properties.getData().bAutoStartGame = panelClients.chkAutoStartGame.isSelected();
 			}
 		});
 		panelClients.lblName.addMouseListener(new MouseAdapter()
@@ -317,11 +318,11 @@ public final class ProjectFrame extends Designer
 			public void actionPerformed(ActionEvent ae)
 			{
 				int memory = Integer.parseInt(panelOptions.txtMemory.getText());
-				if(memory != launcher.properties.data.nMemoryAllocationMB)
+				if(memory != launcher.properties.getData().nMemoryAllocationMB)
 				{
-					launcher.properties.data.nMemoryAllocationMB = memory;
+					launcher.properties.getData().nMemoryAllocationMB = memory;
 					launcher.properties.saveToDisk();
-					Launcher.restart(null);
+					BootUpdater.restart();
 				}
 				if(launcher.authentication.isAuthenticated())
 					switchToPanel(PANELS.clients);
@@ -386,7 +387,7 @@ public final class ProjectFrame extends Designer
 		// Автоматический запуск клиента
 		if(launcher.checkboxDrivenStart)
 		{
-			if(launcher.currentClient.caption.equals(launcher.properties.data.lastStartedClient))
+			if(launcher.currentClient.caption.equals(launcher.properties.getData().lastStartedClient))
 			{
 				switch(launcher.authentication.getUserRole())
 				{

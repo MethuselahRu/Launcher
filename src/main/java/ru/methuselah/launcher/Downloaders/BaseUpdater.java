@@ -17,10 +17,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.methuselah.launcher.Launcher;
 
 public abstract class BaseUpdater
 {
+	private final static Logger logger = LoggerFactory.getLogger(BaseUpdater.class);
 	public static void executeParallelDownloads(Collection<DownloadTask> tasks)
 	{
 		final List<Thread> threads = new ArrayList<>();
@@ -32,7 +35,7 @@ public abstract class BaseUpdater
 				@Override
 				public void run()
 				{
-					Launcher.getInstance().logger.info("Загрузка файла " + task.downloadFrom);
+					logger.info("Загрузка файла " + task.downloadFrom);
 					downloadTask(task);
 				}
 			};
@@ -58,7 +61,7 @@ public abstract class BaseUpdater
 				{
 					unZip(task.saveAs, task.unzipInto, task.showAs != null);
 				} catch(PrivilegedActionException ex) {
-					Launcher.getInstance().logger.error("{}", ex);
+					logger.error("{}", ex);
 				}
 				task.saveAs.delete();
 			}
@@ -76,36 +79,36 @@ public abstract class BaseUpdater
 			if(showAs != null)
 				Launcher.showGrant("↓ " + showAs);
 			else
-				Launcher.getInstance().logger.info("Загрузка файла " + saveAs.getName() + "...");
+				logger.info("Загрузка файла " + saveAs.getName() + " ...");
 			final ReadableByteChannel rbc = Channels.newChannel(new URL(srcURL).openStream());
 			fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 			fos.flush();
 		} catch(MalformedURLException ex) {
-			Launcher.getInstance().logger.error("{}", ex);
+			logger.error("{}", ex);
 		} catch(IOException ex) {
-			Launcher.getInstance().logger.error("{}", ex);
+			logger.error("{}", ex);
 		}
 	}
-	public static void copyFile(File from, File to)
+	public static void copyFile(File from, File into)
 	{
-		try(FileOutputStream fos = new FileOutputStream(to);
+		try(FileOutputStream fos = new FileOutputStream(into);
 			BufferedInputStream bis = new BufferedInputStream(new FileInputStream(from)))
 		{
-			Launcher.getInstance().logger.info("Копирование " + from + " -> " + to);
+			logger.info("Копирование " + from + " -> " + into);
 			final ReadableByteChannel rbc = Channels.newChannel(bis);
 			fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 			fos.flush();
 		} catch(IOException | NullPointerException ex) {
-			Launcher.getInstance().logger.error("{}", ex);
+			logger.error("{}", ex);
 		}
 	}
 	public static void unZip(File fileZip, File destDir, boolean annotate) throws PrivilegedActionException
 	{
 		if(fileZip.isFile())
 		{
-			Launcher.getInstance().logger.info("Распаковка: " + fileZip);
+			logger.info("Распаковка: " + fileZip);
 			if(annotate)
-				Launcher.showGrant("Распаковка " + fileZip.getName() + "...");
+				Launcher.showGrant("Распаковка " + fileZip.getName() + " ...");
 			try(ZipFile zf = new ZipFile(fileZip))
 			{
 				String szExtractPath = fileZip.getParent();
@@ -116,16 +119,16 @@ public abstract class BaseUpdater
 				}
 				for(ZipEntry zipEntry : Collections.list(zf.entries()))
 					extractFromZip(szExtractPath, zipEntry.getName(), zf, zipEntry);
-				Launcher.getInstance().logger.error("Удачно!");
+				logger.error("Удачно!");
 				if(annotate)
 					Launcher.showGrant("Распаковка " + fileZip.getName() + " завершена");
 			} catch(IOException ex) {
-				Launcher.getInstance().logger.error("{}", ex);
+				logger.error("{}", ex);
 			} finally {
 				fileZip.delete();
 			}
 		} else
-			Launcher.getInstance().logger.error((new StringBuilder()).append("\nNot found: ").append(fileZip).toString());
+			logger.error((new StringBuilder()).append("\nNot found: ").append(fileZip).toString());
 	}
 	private static void extractFromZip(String szExtractPath, String szName, ZipFile zf, ZipEntry ze)
 	{
@@ -135,7 +138,7 @@ public abstract class BaseUpdater
 		final File   targetFile     = new File(szExtractPath + File.separator + targetFileName);
 		final long   size           = ze.getSize();
 		final long   compressedSize = ze.getCompressedSize();
-		Launcher.getInstance().logger.info("\tИзвлечение " + targetFile.getName() + " (" + compressedSize + " -> " + size + ")");
+		logger.info("\tИзвлечение " + targetFile.getName() + " (" + compressedSize + " -> " + size + ")");
 		try
 		{
 			targetFile.getParentFile().mkdirs();
@@ -147,7 +150,7 @@ public abstract class BaseUpdater
 				fos.flush();
 			}
 		} catch(IOException ex) {
-			Launcher.getInstance().logger.error("{}", ex);
+			logger.error("{}", ex);
 		}
 	}
 }

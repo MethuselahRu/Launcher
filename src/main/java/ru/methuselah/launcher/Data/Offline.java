@@ -1,4 +1,4 @@
-package ru.methuselah.launcher;
+package ru.methuselah.launcher.Data;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import ru.methuselah.launcher.Configuration.RuntimeConfig;
 import ru.methuselah.launcher.Data.OfflineProject;
+import ru.methuselah.launcher.Launcher;
 import ru.simsonic.rscCommonsLibrary.HashAndCipherUtilities;
 
 public class Offline
