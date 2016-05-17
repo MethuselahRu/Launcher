@@ -32,7 +32,7 @@ public abstract class BaseUpdater
 				@Override
 				public void run()
 				{
-					System.out.println("Загрузка файла " + task.downloadFrom);
+					Launcher.getInstance().logger.info("Загрузка файла " + task.downloadFrom);
 					downloadTask(task);
 				}
 			};
@@ -58,7 +58,7 @@ public abstract class BaseUpdater
 				{
 					unZip(task.saveAs, task.unzipInto, task.showAs != null);
 				} catch(PrivilegedActionException ex) {
-					System.err.println(ex);
+					Launcher.getInstance().logger.error("{}", ex);
 				}
 				task.saveAs.delete();
 			}
@@ -76,14 +76,14 @@ public abstract class BaseUpdater
 			if(showAs != null)
 				Launcher.showGrant("↓ " + showAs);
 			else
-				System.out.println("Загрузка файла " + saveAs.getName() + "...");
+				Launcher.getInstance().logger.info("Загрузка файла " + saveAs.getName() + "...");
 			final ReadableByteChannel rbc = Channels.newChannel(new URL(srcURL).openStream());
 			fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 			fos.flush();
 		} catch(MalformedURLException ex) {
-			System.err.println(ex);
+			Launcher.getInstance().logger.error("{}", ex);
 		} catch(IOException ex) {
-			System.err.println(ex);
+			Launcher.getInstance().logger.error("{}", ex);
 		}
 	}
 	public static void copyFile(File from, File to)
@@ -91,19 +91,19 @@ public abstract class BaseUpdater
 		try(FileOutputStream fos = new FileOutputStream(to);
 			BufferedInputStream bis = new BufferedInputStream(new FileInputStream(from)))
 		{
-			System.out.println("Копирование " + from + " -> " + to);
+			Launcher.getInstance().logger.info("Копирование " + from + " -> " + to);
 			final ReadableByteChannel rbc = Channels.newChannel(bis);
 			fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 			fos.flush();
 		} catch(IOException | NullPointerException ex) {
-			System.err.println(ex);
+			Launcher.getInstance().logger.error("{}", ex);
 		}
 	}
 	public static void unZip(File fileZip, File destDir, boolean annotate) throws PrivilegedActionException
 	{
 		if(fileZip.isFile())
 		{
-			System.out.println("Распаковка: " + fileZip);
+			Launcher.getInstance().logger.info("Распаковка: " + fileZip);
 			if(annotate)
 				Launcher.showGrant("Распаковка " + fileZip.getName() + "...");
 			try(ZipFile zf = new ZipFile(fileZip))
@@ -116,16 +116,16 @@ public abstract class BaseUpdater
 				}
 				for(ZipEntry zipEntry : Collections.list(zf.entries()))
 					extractFromZip(szExtractPath, zipEntry.getName(), zf, zipEntry);
-				System.err.println("Удачно!");
+				Launcher.getInstance().logger.error("Удачно!");
 				if(annotate)
 					Launcher.showGrant("Распаковка " + fileZip.getName() + " завершена");
 			} catch(IOException ex) {
-				System.err.println(ex);
+				Launcher.getInstance().logger.error("{}", ex);
 			} finally {
 				fileZip.delete();
 			}
 		} else
-			System.err.println((new StringBuilder()).append("\nNot found: ").append(fileZip).toString());
+			Launcher.getInstance().logger.error((new StringBuilder()).append("\nNot found: ").append(fileZip).toString());
 	}
 	private static void extractFromZip(String szExtractPath, String szName, ZipFile zf, ZipEntry ze)
 	{
@@ -135,7 +135,7 @@ public abstract class BaseUpdater
 		final File   targetFile     = new File(szExtractPath + File.separator + targetFileName);
 		final long   size           = ze.getSize();
 		final long   compressedSize = ze.getCompressedSize();
-		System.out.println("\tИзвлечение " + targetFile.getName() + " (" + compressedSize + " -> " + size + ")");
+		Launcher.getInstance().logger.info("\tИзвлечение " + targetFile.getName() + " (" + compressedSize + " -> " + size + ")");
 		try
 		{
 			targetFile.getParentFile().mkdirs();
@@ -147,7 +147,7 @@ public abstract class BaseUpdater
 				fos.flush();
 			}
 		} catch(IOException ex) {
-			System.err.println(ex);
+			Launcher.getInstance().logger.error("{}", ex);
 		}
 	}
 }

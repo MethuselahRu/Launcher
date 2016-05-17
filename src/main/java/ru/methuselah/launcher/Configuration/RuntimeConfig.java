@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.util.Scanner;
+import org.slf4j.LoggerFactory;
 import ru.methuselah.launcher.Data.Platform;
 import ru.methuselah.launcher.Data.RunType;
 import ru.methuselah.launcher.Launcher;
@@ -46,7 +47,7 @@ public final class RuntimeConfig
 		{
 			return Launcher.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
 		} catch(URISyntaxException ex) {
-			System.err.println(ex);
+			LoggerFactory.getLogger(RuntimeConfig.class).error("{}", ex);
 		}
 		return "";
 	}
@@ -92,7 +93,7 @@ public final class RuntimeConfig
 		if(!workingDirectory.isDirectory() && !workingDirectory.mkdirs())
 		{
 			final String error = "The working directory could not be created: " + workingDirectory;
-			System.err.println(error);
+			LoggerFactory.getLogger(RuntimeConfig.class).error(error);
 			throw new RuntimeException(error);
 		}
 		return workingDirectory;
@@ -164,7 +165,7 @@ public final class RuntimeConfig
 					break;
 			}
 		} catch(IOException ex) {
-			System.err.println(ex);
+			LoggerFactory.getLogger(RuntimeConfig.class).error("{}", ex);
 		}
 		return "unknown";
 	}

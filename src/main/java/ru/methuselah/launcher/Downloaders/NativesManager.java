@@ -32,7 +32,7 @@ public class NativesManager
 		{
 			final String error = "OS (" + System.getProperty("os.name") + ") is not supported.";
 			Launcher.showError(error);
-			System.err.println(error);
+			Launcher.getInstance().logger.error(error);
 			return null;
 		}
 		// Платформенно-зависимые бинарные файлы

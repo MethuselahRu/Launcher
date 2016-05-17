@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.methuselah.authlib.methods.ResponseException;
 import ru.methuselah.launcher.Configuration.RuntimeConfig;
 import ru.methuselah.launcher.Data.OfflineClient;
@@ -46,6 +46,7 @@ public class Launcher implements Runnable
 	public OfflineProject currentProject;
 	public OfflineClient currentClient;
 	// Описание
+	public final Logger             logger         = LoggerFactory.getLogger(Launcher.class);
 	public final LauncherProperties properties     = new LauncherProperties();
 	public final Offline            offline        = new Offline(this);
 	public final ResourceManager    resourceMan    = new ResourceManager();
@@ -58,6 +59,7 @@ public class Launcher implements Runnable
 	@Override
 	public void run()
 	{
+		logger.info ("Hello, logging world!");
 		// Проверка наличия обновлений
 		LauncherUpdater.checkLauncherUpdate(properties);
 		final HashMap<String, OfflineProject> projectMap = new HashMap<>();
@@ -94,7 +96,7 @@ public class Launcher implements Runnable
 			} else
 				onSwitchToProject(startupProject);
 		} catch(ResponseException ex) {
-			Logger.getLogger(Launcher.class.getName()).log(Level.SEVERE, null, ex);
+			logger.info("{0}", ex);
 		}
 	}
 	public void onSwitchToProject(OfflineProject project)
@@ -154,7 +156,7 @@ public class Launcher implements Runnable
 				launcherFrame.panelClients.cbSelectClient.setSelectedIndex(lastUsedIndex - 1);
 			return true;
 		} catch(ResponseException ex) {
-			Logger.getLogger(Launcher.class.getName()).log(Level.SEVERE, null, ex);
+			logger.info("{0}", ex);
 		}
 		return false;
 	}
@@ -168,6 +170,7 @@ public class Launcher implements Runnable
 	}
 	public static synchronized void showGrant(String grant)
 	{
+		instance.logger.info(grant);
 		if(instance.launcherFrame != null)
 		{
 			instance.launcherFrame.panelLinks.infoLabel.setFont(new Font("Segoe UI", 2, 16));
@@ -175,11 +178,11 @@ public class Launcher implements Runnable
 			instance.launcherFrame.panelLinks.infoLabel.setText(grant);
 			instance.launcherFrame.invalidate();
 			instance.launcherFrame.validate();
-		} else
-			System.out.println(grant);
+		}
 	}
 	public static synchronized void showError(String error)
 	{
+		instance.logger.error(error);
 		if(instance.launcherFrame != null)
 		{
 			instance.launcherFrame.panelLinks.infoLabel.setFont(new Font("Segoe UI", 2, 16));
@@ -187,8 +190,7 @@ public class Launcher implements Runnable
 			instance.launcherFrame.panelLinks.infoLabel.setText(error);
 			instance.launcherFrame.invalidate();
 			instance.launcherFrame.validate();
-		} else
-			System.err.println(error);
+		}
 	}
 	private boolean informAboutBlockedHardware()
 	{
@@ -276,7 +278,7 @@ public class Launcher implements Runnable
 		{
 			new ProcessBuilder(params).directory(changeLauncherPath.getParentFile()).start();
 		} catch(IOException | HeadlessException ex) {
-			System.err.println(ex);
+			instance.logger.error("{}", ex);
 		}
 		System.exit(0);
 	}

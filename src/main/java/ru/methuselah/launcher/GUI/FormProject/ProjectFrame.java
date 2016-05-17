@@ -143,7 +143,7 @@ public final class ProjectFrame extends Designer
 			final Image backgroundScaled = background.getScaledInstance(854, 480, 1);
 			setContentPane(new JLabel(new ImageIcon(backgroundScaled)));
 		} catch(IOException ex) {
-			System.err.println(ex);
+			Launcher.getInstance().logger.error("{}", ex);
 		}
 	}
 	private void setupListeners()
@@ -154,7 +154,7 @@ public final class ProjectFrame extends Designer
 			public void run()
 			{
 				launcher.properties.saveToDisk();
-				System.err.println("Кто-то пытается меня закрыть!");
+				Launcher.getInstance().logger.error("Кто-то пытается меня закрыть!");
 				System.exit(0);
 			}
 		});

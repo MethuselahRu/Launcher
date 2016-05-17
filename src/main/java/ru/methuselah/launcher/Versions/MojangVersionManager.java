@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import ru.methuselah.launcher.Launcher;
 import ru.methuselah.launcher.Utilities;
 
 public class MojangVersionManager
@@ -41,7 +42,6 @@ public class MojangVersionManager
 			this.latestRelease  = versions.get(latest.release);
 		} catch(JsonParseException ex) {
 		}
-		System.out.println();
 	}
 	public Collection<String> loadVersionDetails(MojangManifestVersion version)
 	{
@@ -58,9 +58,8 @@ public class MojangVersionManager
 				for(Map.Entry<String, JsonElement> entry : lib.getAsJsonObject().entrySet())
 				{
 					fields.add(entry.getKey());
-					System.out.println(entry.getKey() + " = " + entry.getValue());
+					Launcher.getInstance().logger.info(entry.getKey() + " = " + entry.getValue());
 				}
-			System.out.println();
 		} catch(JsonParseException ex) {
 		}
 		return fields;
@@ -77,7 +76,7 @@ public class MojangVersionManager
 				librariesFields.addAll(loadVersionDetails(v));
 		
 		for(String lf : librariesFields)
-			System.out.println(lf);
+			Launcher.getInstance().logger.info(lf);
 		
 		System.exit(0);
 	}

@@ -99,7 +99,7 @@ public class Designer extends JFrame
 		{
 			java.awt.Desktop.getDesktop().browse(new URL(url).toURI());
 		} catch(IOException | URISyntaxException ex) {
-			System.err.println("Failed to open link: " + url);
+			Launcher.getInstance().logger.error("Failed to open link: " + url);
 		}
 	}
 	public String htmlText(String source)

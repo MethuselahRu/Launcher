@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Random;
+import org.slf4j.LoggerFactory;
 import ru.methuselah.securitylibrary.MethuselahPrivate;
 
 public class Utilities
@@ -115,7 +116,7 @@ public class Utilities
 				return response.toString();
 			}
 		} catch(IOException ex) {
-			System.err.println(ex);
+			LoggerFactory.getLogger(Utilities.class).error("{}", ex);
 			return "NO CONNECTION";
 		} finally {
 			if(connection != null)

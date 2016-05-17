@@ -1,0 +1,36 @@
+<!--configuration debug = "true"-->
+<configuration>
+	
+	<appender name = "LATESTFILE" class = "ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${user.dir}/logs/latest.log</file>
+		<rollingPolicy class = "ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${user.dir}/logs/%d{yyyy-MM}/%d{yyyy-MM-dd_HH-mm-ss}.log.gz</fileNamePattern>
+			<cleanHistoryOnStart>false</cleanHistoryOnStart>
+			<maxHistory>90</maxHistory>
+			 <TimeBasedFileNamingAndTriggeringPolicy class = "ru.simsonic.rscCommonsLibrary.Logging.RollOncePerSessionTriggeringPolicy" />
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d [%22.22thread] [%-5level] [%logger{0}] %msg%n%ex</pattern>
+		</encoder>
+	</appender>
+	
+	<appender name = "SYSTEMOUT" class = "ch.qos.logback.core.ConsoleAppender">
+		<!-- encoders are assigned the type
+		ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+		<encoder>
+			<pattern>%d{HH:mm:ss} [%-5level/%thread]: %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<logger name = "ru.methuselah" level = "DEBUG" />
+	<logger name = "ru.simsonic"   level = "WARN"  />
+	
+	<root level = "OFF">
+		<appender-ref ref = "SYSTEMOUT" />
+		<appender-ref ref = "LATESTFILE" />
+	</root>
+	
+	<!-- in the absence of the class attribute, assume 
+	ch.qos.logback.core.hook.DelayingShutdownHook -->
+	<shutdownHook class = "ch.qos.logback.core.hook.DelayingShutdownHook" />
+</configuration>

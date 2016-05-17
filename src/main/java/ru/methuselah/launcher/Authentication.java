@@ -1,5 +1,7 @@
 package ru.methuselah.launcher;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.methuselah.authlib.UserProvider;
 import ru.methuselah.authlib.UserRole;
 import ru.methuselah.authlib.data.AuthenticatePayload;
@@ -26,6 +28,7 @@ public class Authentication
 	private volatile Thread authenticationThread;
 	private final Links links = new LinksMethuselah();
 	private final MethuselahPrivate caller = new MethuselahPrivate(links);
+	private final Logger            logger = LoggerFactory.getLogger(Launcher.class);
 	public Authentication(Launcher launcher)
 	{
 		this.launcher = launcher;

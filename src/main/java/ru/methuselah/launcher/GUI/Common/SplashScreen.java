@@ -28,7 +28,7 @@ public class SplashScreen extends JFrame implements Runnable
 				if("Windows".equalsIgnoreCase(info.getName()))
 					UIManager.setLookAndFeel(info.getClassName());
 		} catch(ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-			System.err.println(ex);
+			Launcher.getInstance().logger.error("{}", ex);
 		}
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		thread.start();

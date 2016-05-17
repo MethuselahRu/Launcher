@@ -18,13 +18,13 @@ public class LauncherUpdater extends BaseUpdater
 		final String firstRunCode = LauncherProperties.getFirstRunProjectCode();
 		if(!"".equals(firstRunCode))
 		{
-			System.out.println("Установка начального проекта: " + firstRunCode);
+			Launcher.getInstance().logger.info("Установка начального проекта: " + firstRunCode);
 			properties.reloadFromDisk();
 			properties.saveToDisk();
 			properties.data.lastOpenedProject = firstRunCode;
 			properties.saveToDisk();
 		}
-		System.out.println("Поиск доступных обновлений ...");
+		Launcher.getInstance().logger.info("Поиск доступных обновлений ...");
 		try
 		{
 			final String launcherHash = RuntimeConfig.UNDER_IDE_DEBUGGING
@@ -37,7 +37,7 @@ public class LauncherUpdater extends BaseUpdater
 				"launcherHash=" + launcherHash).trim();
 			if("OK".equalsIgnoreCase(launcherCheckResult) || "NO CONNECTION".equals(launcherCheckResult))
 			{
-				System.out.println("Обновлений не обнаружено.");
+				Launcher.getInstance().logger.info("Обновлений не обнаружено.");
 				final File runFile    = new File(RuntimeConfig.RUNTIME_PATH);
 				final String nameJar = GlobalConfig.EXECUTABLE_NAME + ".jar";
 				final String nameExe = GlobalConfig.EXECUTABLE_NAME + ".exe";
@@ -63,7 +63,7 @@ public class LauncherUpdater extends BaseUpdater
 	}
 	private static void updateLauncher()
 	{
-		System.out.println("Загрузка обновлений ...");
+		Launcher.getInstance().logger.info("Загрузка обновлений ...");
 		final File runFile = new File(RuntimeConfig.RUNTIME_PATH);
 		final String nameJar = GlobalConfig.EXECUTABLE_NAME + ".jar";
 		final File correctJar = new File(RuntimeConfig.LAUNCHER_HOME, nameJar);
@@ -86,7 +86,7 @@ public class LauncherUpdater extends BaseUpdater
 				downloadFile(GlobalConfig.URL_LAUNCHER_BINS + "launcher/" + nameExe, correctExe);
 			restartFile = correctExe;
 		}
-		System.out.println("Применение обновлений ...");
+		Launcher.getInstance().logger.info("Применение обновлений ...");
 		Launcher.restart(restartFile);
 	}
 }

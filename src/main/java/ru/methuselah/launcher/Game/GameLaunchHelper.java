@@ -180,7 +180,7 @@ public class GameLaunchHelper
 					}
 				}
 			} catch(IOException | RuntimeException ex) {
-				System.err.println(ex);
+				GameLauncher.logger.error("{}", ex);
 			}
 		}
 		return result;
@@ -201,7 +201,7 @@ public class GameLaunchHelper
 				nbtOut.write(newRoot);
 			}
 		} catch(IOException | RuntimeException ex) {
-			System.err.println(ex);
+			GameLauncher.logger.error("{}", ex);
 		}
 	}
 	private static TagCompound toTag(ServerInfo entry)

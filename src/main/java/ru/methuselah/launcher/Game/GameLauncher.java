@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import javax.net.ssl.SSLServerSocketFactory;
 import javax.net.ssl.SSLSocket;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.methuselah.authlib.methods.ResponseException;
 import ru.methuselah.launcher.Configuration.GlobalConfig;
 import ru.methuselah.launcher.Configuration.RuntimeConfig;
@@ -31,6 +33,7 @@ public class GameLauncher extends WrappedGameStarter
 {
 	private final Launcher launcher;
 	private ServerSocket serverSecure;
+	static  final Logger logger = LoggerFactory.getLogger(Launcher.class);
 	public GameLauncher(Launcher launcher)
 	{
 		this.launcher = launcher;
@@ -172,8 +175,10 @@ public class GameLauncher extends WrappedGameStarter
 		{
 			final ProcessBuilder pb = new ProcessBuilder(params);
 			pb.directory(client.getClientHome());
-			pb.redirectErrorStream(true);
+			// pb.redirectErrorStream(true);
+			pb.inheritIO();
 			final Process process = pb.start();
+			/*
 			process.getOutputStream().close();
 			new Thread()
 			{
@@ -183,7 +188,7 @@ public class GameLauncher extends WrappedGameStarter
 					try(final BufferedReader bri = new BufferedReader(new InputStreamReader(process.getInputStream())))
 					{
 						for(String line = bri.readLine(); line != null; line = bri.readLine())
-							System.err.println(line);
+							logger.info(line);
 					} catch(IOException ex) {
 					}
 				}
@@ -196,14 +201,15 @@ public class GameLauncher extends WrappedGameStarter
 					try(final BufferedReader bre = new BufferedReader(new InputStreamReader(process.getErrorStream())))
 					{
 						for(String line = bre.readLine(); line != null; line = bre.readLine())
-							System.err.println(line);
+							logger.info(line);
 					} catch(IOException ex) {
 					}
 				}
 			}.start();
+			*/
 			process.waitFor();
-			process.getInputStream().close();
-			process.getErrorStream().close();
+			// process.getInputStream().close();
+			// process.getErrorStream().close();
 			if(process.exitValue() != 0)
 				Launcher.showError("Игра аварийно закрылась (код " + process.exitValue() + ")");
 			else

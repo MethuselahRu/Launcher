@@ -53,7 +53,22 @@
 		<dependency>
 			<groupId>ru.simsonic</groupId>
 			<artifactId>rscCommonsLibrary</artifactId>
-			<version>2.1.2</version>
+			<version>2.2.0</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<version>1.1.7</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.1.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.13</version>
 		</dependency>
 	</dependencies>
 	
@@ -162,18 +177,21 @@
 						</goals>
 						<configuration>
 							<createDependencyReducedPom>false</createDependencyReducedPom>
-							<minimizeJar>true</minimizeJar>
+							<minimizeJar>false</minimizeJar>
 							<artifactSet>
 								<includes>
-									<include>ru.methuselah:authlib</include>
-									<include>ru.methuselah:clientsidewrapper</include>
-									<include>ru.simsonic:rscCommonsLibrary</include>
+									<include>ru.simsonic:*</include>
+									<include>ru.methuselah:*</include>
+									<!--include>ru.methuselah:authlib</include-->
+									<!--include>ru.methuselah:clientsidewrapper</include-->
+									<!--include>ru.simsonic:rscCommonsLibrary</include-->
 									<include>com.evilco.mc:nbt</include>
 									<include>com.google.code.gson:gson</include>
-									<include>com.google.code.findbugs:jsr305</include>
-									<include>com.google.guava:guava</include>
-									<include>org.mockito:mockito-all</include>
+									<include>com.google.*:*</include>
+									<!--include>org.mockito:mockito-all</include-->
 									<include>commons-io:commons-io</include>
+									<include>ch.qos.logback:*</include>
+									<include>org.slf4j:*</include>
 								</includes>
 							</artifactSet>
 							<relocations>

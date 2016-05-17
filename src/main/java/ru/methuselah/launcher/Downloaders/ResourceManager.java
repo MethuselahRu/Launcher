@@ -182,7 +182,7 @@ public class ResourceManager
 		// Начало всех загрузок
 		BaseUpdater.executeParallelDownloads(downloads);
 		Launcher.showGrant("Обновление клиента завершено");
-		System.out.println("Игра успешно обновлена");
+		Launcher.getInstance().logger.info("Игра успешно обновлена");
 	}
 	public static void saveDesignFile(OfflineProject project, LauncherAnswerDesign design)
 	{
