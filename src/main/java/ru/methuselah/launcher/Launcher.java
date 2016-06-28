@@ -4,14 +4,11 @@ import ru.methuselah.launcher.Data.Offline;
 import ru.methuselah.launcher.Authentication.Authentication;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.HeadlessException;
-import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Random;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import org.slf4j.Logger;
@@ -21,7 +18,6 @@ import ru.methuselah.launcher.Configuration.PropertiesManager;
 import ru.methuselah.launcher.Configuration.RuntimeConfig;
 import ru.methuselah.launcher.Data.OfflineClient;
 import ru.methuselah.launcher.Data.OfflineProject;
-import ru.methuselah.launcher.Data.Platform;
 import ru.methuselah.launcher.Downloaders.BootUpdater;
 import ru.methuselah.launcher.Downloaders.NativesManager;
 import ru.methuselah.launcher.Downloaders.ResourceManager;
@@ -144,7 +140,14 @@ public class Launcher implements Runnable
 				if(gameInfo.jarFile.contains("v1.8"))
 					gameInfo.libraries.add("minecraft_v1.8_libraries.jar");
 				if(gameInfo.jarFile.contains("v1.9"))
-					gameInfo.libraries.add("minecraft_v1.9_libraries.jar");
+				{
+					if(gameInfo.jarFile.contains("v1.9.4"))
+						gameInfo.libraries.add("minecraft_v1.9.4_libraries.jar");
+					else
+						gameInfo.libraries.add("minecraft_v1.9_libraries.jar");
+				}
+				if(gameInfo.jarFile.contains("v1.10"))
+					gameInfo.libraries.add("minecraft_v1.10_libraries.jar");
 				clientList.add(gameInfo);
 			}
 			currentProject.clients = clientList.toArray(new OfflineClient[clientList.size()]);
