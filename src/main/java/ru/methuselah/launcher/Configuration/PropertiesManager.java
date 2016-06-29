@@ -9,14 +9,16 @@ public final class PropertiesManager
 	private PropertiesField data = new PropertiesField();
 	public PropertiesManager()
 	{
-		try
+		final String[] filesToBeDeleted = new String[]
 		{
-			new File(RuntimeConfig.LAUNCHER_HOME, "cl.xml").delete();
-			new File(RuntimeConfig.LAUNCHER_HOME, "clientlist.xml").delete();
-			new File(RuntimeConfig.LAUNCHER_HOME, "lastlogin").delete();
-			new File(RuntimeConfig.LAUNCHER_HOME, "launcher.properties").delete();
-		} catch(RuntimeException ex) {
-		}
+			"cl.xml", "clientlist.xml", "lastlogin", "launcher.properties",
+		};
+		for(String file : filesToBeDeleted)
+			try
+			{
+				new File(RuntimeConfig.LAUNCHER_HOME, file).delete();
+			} catch(RuntimeException ex) {
+			}
 		reloadFromDisk();
 		saveToDisk();
 	}
@@ -24,14 +26,14 @@ public final class PropertiesManager
 	{
 		return data;
 	}
-	public void reloadFromDisk()
+	public synchronized void reloadFromDisk()
 	{
 		if(PROPERTIES_FILE.isFile())
 			data = HashAndCipherUtilities.loadEncryptedObject(PROPERTIES_FILE, PropertiesField.class);
 		if(data == null)
 			data = new PropertiesField();
 	}
-	public void saveToDisk()
+	public synchronized void saveToDisk()
 	{
 		HashAndCipherUtilities.saveEncryptedObject(PROPERTIES_FILE, data, PropertiesField.class);
 	}

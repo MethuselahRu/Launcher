@@ -9,6 +9,8 @@ import java.net.URL;
 import java.util.Random;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.methuselah.securitylibrary.Hacks.HackStreamHandler;
+import ru.methuselah.securitylibrary.Hacks.HacksApplicator;
 import ru.methuselah.securitylibrary.MethuselahPrivate;
 
 public class Utilities
@@ -91,6 +93,9 @@ public class Utilities
 	public static final String EXECUTE_POST_NO_CONNECTION = "NO CONNECTION";
 	public static String executePost(String targetURL, String urlParameters)
 	{
+		// Потому что грёбанный CA сертификат StartSSL не установлен в JRE!
+		if(targetURL.toLowerCase().startsWith("https"))
+			MethuselahPrivate.hackSSL();
 		final boolean doOutput = nonEmptyString(urlParameters);
 		HttpURLConnection connection = null;
 		try

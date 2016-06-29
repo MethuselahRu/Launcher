@@ -154,8 +154,8 @@ public final class ProjectFrame extends Designer
 			@Override
 			public void run()
 			{
+				Launcher.getInstance().logger.info("Кто-то пытается меня закрыть!");
 				launcher.properties.saveToDisk();
-				Launcher.getInstance().logger.error("Кто-то пытается меня закрыть!");
 				System.exit(0);
 			}
 		});

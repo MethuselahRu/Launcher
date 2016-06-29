@@ -61,11 +61,13 @@ public class MojangVersionManager
 			final MojangVersionDetails details = gson.fromJson(result, MojangVersionDetails.class);
 			final JsonArray libraries = parsed.getAsJsonObject().get("libraries").getAsJsonArray();
 			for(JsonElement lib : libraries)
+			{
 				for(Map.Entry<String, JsonElement> entry : lib.getAsJsonObject().entrySet())
 				{
 					fields.add(entry.getKey());
 					Launcher.getInstance().logger.info(entry.getKey() + " = " + entry.getValue());
 				}
+			}
 		} catch(JsonParseException ex) {
 		}
 		return fields;
