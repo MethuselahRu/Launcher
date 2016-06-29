@@ -5,6 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -27,13 +28,13 @@ public class MojangVersionManager
 	public MojangVersionManager()
 	{
 	}
-	public void loadManifest()
+	public void loadManifest() throws IOException
 	{
 		final Gson       gson = new Gson();
 		final JsonParser jp   = new JsonParser();
 		try
 		{
-			final String      result = Utilities.executePost(MANIFEST_URL, null);
+			final String      result = Utilities.executePost(MANIFEST_URL);
 			final JsonElement parsed = jp.parse(result);
 			this.latest = gson.fromJson(parsed.getAsJsonObject().get("latest"), MojangManifestLatest.class);
 			for(MojangManifestVersion version : gson.fromJson(parsed.getAsJsonObject().get("versions"), MojangManifestVersion[].class))
@@ -41,7 +42,12 @@ public class MojangVersionManager
 			this.latestSnapshot = versions.get(latest.snapshot);
 			this.latestRelease  = versions.get(latest.release);
 		} catch(JsonParseException ex) {
+			throw new IOException("Не удалось загрузить список версий Minecraft!", ex);
 		}
+	}
+	public boolean isManifestLoaded()
+	{
+		return this.latest != null;
 	}
 	public Collection<String> loadVersionDetails(MojangManifestVersion version)
 	{
@@ -50,7 +56,7 @@ public class MojangVersionManager
 		final JsonParser jp   = new JsonParser();
 		try
 		{
-			final String      result = Utilities.executePost(version.url.toString(), null);
+			final String      result = Utilities.executePost(version.url.toString());
 			final JsonElement parsed = jp.parse(result);
 			final MojangVersionDetails details = gson.fromJson(result, MojangVersionDetails.class);
 			final JsonArray libraries = parsed.getAsJsonObject().get("libraries").getAsJsonArray();
@@ -66,18 +72,25 @@ public class MojangVersionManager
 	}
 	public void test()
 	{
-		loadManifest();
-		// loadVersionDetails(latestRelease);
-		
-		final HashSet<String> librariesFields = new HashSet<>();
-		
-		for(MojangManifestVersion v : versions.values())
-			if(v.type == ReleaseType.release)
-				librariesFields.addAll(loadVersionDetails(v));
-		
-		for(String lf : librariesFields)
-			Launcher.getInstance().logger.info(lf);
-		
+		try
+		{
+			loadManifest();
+			loadVersionDetails(latestRelease);
+			
+			/*
+			final HashSet<String> librariesFields = new HashSet<>();
+
+			for(MojangManifestVersion v : versions.values())
+				if(v.type == ReleaseType.release)
+					librariesFields.addAll(loadVersionDetails(v));
+
+			for(String lf : librariesFields)
+				Launcher.getInstance().logger.info(lf);
+			*/
+			
+		} catch(IOException ex) {
+			Launcher.getInstance().logger.info("Произошла ошибка: ", ex);
+		}
 		System.exit(0);
 	}
 }

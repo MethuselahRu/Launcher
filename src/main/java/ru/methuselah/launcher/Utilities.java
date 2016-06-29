@@ -84,10 +84,13 @@ public class Utilities
 	{
 		return str != null && !"".equals(str);
 	}
+	public static String executePost(String targetURL)
+	{
+		return executePost(targetURL, null);
+	}
+	public static final String EXECUTE_POST_NO_CONNECTION = "NO CONNECTION";
 	public static String executePost(String targetURL, String urlParameters)
 	{
-		if(targetURL.startsWith("https"))
-			MethuselahPrivate.hackSSL();
 		final boolean doOutput = nonEmptyString(urlParameters);
 		HttpURLConnection connection = null;
 		try
@@ -97,29 +100,31 @@ public class Utilities
 			if(doOutput)
 			{
 				connection.setRequestMethod("POST");
-				connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-				connection.setRequestProperty("Content-Length", Integer.toString(urlParameters.getBytes().length));
+				connection.setRequestProperty("Content-Type",     "application/x-www-form-urlencoded");
+				connection.setRequestProperty("Content-Length",   Integer.toString(urlParameters.getBytes().length));
 				connection.setRequestProperty("Content-Language", "en-US");
 			}
 			connection.setDoInput(true);
 			connection.setDoOutput(doOutput);
 			connection.connect();
+			// Send output
 			if(doOutput)
 				try(DataOutputStream wr = new DataOutputStream(connection.getOutputStream()))
 				{
 					wr.writeBytes(urlParameters);
 					wr.flush();
 				}
+			// Receive input
+			final StringBuilder response = new StringBuilder();
 			try(BufferedReader rd = new BufferedReader(new InputStreamReader(connection.getInputStream())))
 			{
-				final StringBuilder response = new StringBuilder();
 				for(String line = rd.readLine(); line != null; line = rd.readLine())
-					response.append(line).append('\r');
-				return response.toString();
+					response.append(line).append("\r\n");
 			}
+			return response.toString();
 		} catch(IOException ex) {
-			logger.error("{}", ex);
-			return "NO CONNECTION";
+			logger.error("Cannot execute POST request! {}", ex);
+			return EXECUTE_POST_NO_CONNECTION;
 		} finally {
 			if(connection != null)
 				connection.disconnect();

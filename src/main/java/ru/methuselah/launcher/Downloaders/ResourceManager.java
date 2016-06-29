@@ -57,9 +57,9 @@ public class ResourceManager
 		String version = client.baseVersion;
 		if(Utilities.emptyString(version))
 			version = "legacy";
-		String json = Utilities.executePost(MOJANG_ASSETS_URL.replace("{VERSION}", version), null);
+		String json = Utilities.executePost(MOJANG_ASSETS_URL.replace("{VERSION}", version));
 		if(Utilities.emptyString(json))
-			json = Utilities.executePost("https://s3.amazonaws.com/Minecraft.Download/indexes/legacy.json", null);
+			json = Utilities.executePost("https://s3.amazonaws.com/Minecraft.Download/indexes/legacy.json");
 		final MojangAssetIndex mojangIndex = parseMojangIndex(json);
 		// Скачать дополнительный индекс для указанной сборки
 		final MojangAssetIndex voxileIndex = null; // Launcher.getInstance().voxileConnection.onLauncherClientAssets(client.project.code, client.caption);

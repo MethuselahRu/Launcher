@@ -19,7 +19,9 @@ import ru.simsonic.rscCommonsLibrary.HashAndCipherUtilities;
 
 public final class BootUpdater extends BaseUpdater
 {
-	private final static String URL_LAUNCHER_DOWNLOADS = GlobalConfig.URL_LAUNCHER_BINS + "launcher/";
+	private final static String URL_LAUNCHER_DOWNLOADS        = GlobalConfig.URL_LAUNCHER_BINS + "launcher/";
+	private final static String URL_LAUNCHER_SELF_CHECK       = GlobalConfig.URL_LAUNCHER_PHPS + "legacy/launcher.php";
+	private final static String STARTUP_PROJECT_CODE_FILENAME = "/firstrun.txt";
 	private final static Logger logger = LoggerFactory.getLogger(BootUpdater.class);
 	public static void checkForUpdates(PropertiesManager properties)
 	{
@@ -35,17 +37,17 @@ public final class BootUpdater extends BaseUpdater
 		logger.info("Поиск доступных обновлений ...");
 		try
 		{
+			// Определяю тип запуска и собтсвенный хеш md5
 			final File   runFile = new File(RuntimeConfig.RUNTIME_PATH);
 			final String runHash = RuntimeConfig.UNDER_IDE_DEBUGGING
 				? RuntimeConfig.DEVELOPER_IDE_HASH
 				: (runFile.isFile() ? HashAndCipherUtilities.fileToMD5(runFile) : "");
-			final String result = Utilities.executePost(
-				GlobalConfig.URL_LAUNCHER_PHPS + "legacy/launcher.php",
-				"launcherHash=" + runHash).trim();
+			// Является ли данный хеш хешем актуальной версии?
+			final String result = Utilities.executePost(URL_LAUNCHER_SELF_CHECK, "launcherHash=" + runHash).trim();
 			switch(result)
 			{
-				case "NO CONNECTION":
-					logger.info("Нет соединения с проверяющим сайтом!");
+				case Utilities.EXECUTE_POST_NO_CONNECTION:
+					logger.info("Нет соединения с сервером!");
 				case "OK":
 					logger.info("Обновлений не обнаружено.");
 					final String nameJar    = GlobalConfig.EXECUTABLE_NAME + ".jar";
@@ -66,6 +68,7 @@ public final class BootUpdater extends BaseUpdater
 					}
 					break;
 				default:
+					logger.info("Загрузка и применение обновлений ...");
 					updateLauncher(properties);
 					break;
 			}
@@ -75,18 +78,19 @@ public final class BootUpdater extends BaseUpdater
 	}
 	private static String getFirstRunProjectCode()
 	{
-		try(InputStreamReader isr = new InputStreamReader(PropertiesManager.class.getResourceAsStream("/firstrun.txt"), "UTF-8"))
+		try(InputStreamReader isr = new InputStreamReader(PropertiesManager.class.getResourceAsStream(STARTUP_PROJECT_CODE_FILENAME), "UTF-8"))
 		{
+			// Чтение первых пяти символов из файла
 			final char[] buffer = new char[5];
 			if(isr.read(buffer) == 5)
 				return new String(buffer).toUpperCase();
 		} catch(NullPointerException | IOException ex) {
+			// Встроенный файл с кодом проекта не обнаружен
 		}
 		return "";
 	}
 	private static void updateLauncher(PropertiesManager properties)
 	{
-		logger.info("Загрузка и применение обновлений ...");
 		final File   runFile    = new File(RuntimeConfig.RUNTIME_PATH);
 		final String nameJar    = GlobalConfig.EXECUTABLE_NAME + ".jar";
 		final File   correctJar = new File(RuntimeConfig.LAUNCHER_HOME, nameJar);

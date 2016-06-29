@@ -1,7 +1,5 @@
 package ru.methuselah.launcher;
 
-import ru.methuselah.launcher.Data.Offline;
-import ru.methuselah.launcher.Authentication.Authentication;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.IOException;
@@ -14,8 +12,10 @@ import javax.swing.JOptionPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.methuselah.authlib.methods.ResponseException;
+import ru.methuselah.launcher.Authentication.Authentication;
 import ru.methuselah.launcher.Configuration.PropertiesManager;
 import ru.methuselah.launcher.Configuration.RuntimeConfig;
+import ru.methuselah.launcher.Data.Offline;
 import ru.methuselah.launcher.Data.OfflineClient;
 import ru.methuselah.launcher.Data.OfflineProject;
 import ru.methuselah.launcher.Downloaders.BootUpdater;
@@ -25,6 +25,7 @@ import ru.methuselah.launcher.GUI.Common.SplashScreen;
 import ru.methuselah.launcher.GUI.FormProject.ProjectFrame;
 import ru.methuselah.launcher.GUI.FormProjectList.ProjectListFrame;
 import ru.methuselah.launcher.Game.GameLauncher;
+import ru.methuselah.launcher.Versions.MojangVersionManager;
 import ru.methuselah.securitylibrary.Data.Launcher.ClientInfo;
 import ru.methuselah.securitylibrary.Data.Launcher.LauncherAnswerClients;
 import ru.methuselah.securitylibrary.Data.Launcher.LauncherAnswerDesign;
