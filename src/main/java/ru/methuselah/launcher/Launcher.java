@@ -25,7 +25,6 @@ import ru.methuselah.launcher.GUI.Common.SplashScreen;
 import ru.methuselah.launcher.GUI.FormProject.ProjectFrame;
 import ru.methuselah.launcher.GUI.FormProjectList.ProjectListFrame;
 import ru.methuselah.launcher.Game.GameLauncher;
-import ru.methuselah.launcher.Versions.MojangVersionManager;
 import ru.methuselah.securitylibrary.Data.Launcher.ClientInfo;
 import ru.methuselah.securitylibrary.Data.Launcher.LauncherAnswerClients;
 import ru.methuselah.securitylibrary.Data.Launcher.LauncherAnswerDesign;
